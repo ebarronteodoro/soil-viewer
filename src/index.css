@@ -1,0 +1,157 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  background: #4c4c4c;
+}
+
+.carga {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  animation: girar 1.2s linear infinite;
+  position: relative;
+}
+
+.carga::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: linear-gradient(0deg, #ffffff 0%, #6b6b6b 100%);
+  z-index: -1;
+}
+
+.carga::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  background-color: #4c4c4c;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+@keyframes girar {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 1s ease;
+  pointer-events: none;
+  z-index: 9999;
+  background: #4c4c4c;
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menubar {
+  position: absolute;
+  bottom: 1rem;
+  display: flex;
+  gap: 5px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.typo-img {
+  position: absolute;
+  right: 1rem;
+  top: 2rem;
+
+  & img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+  }
+}
+
+.loader2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: opacity 1s ease;
+  z-index: 9999;
+}
+
+.vista360 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.carga2 {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  animation: girar 1.2s linear infinite;
+  position: relative;
+}
+
+.carga2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: linear-gradient(0deg, #ffffff 0%, #6b6b6b 100%);
+  z-index: -1;
+}
+
+.carga2::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  background-color: #4c4c4c;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
