@@ -155,3 +155,86 @@ body {
   transform: translate(-50%, -50%);
   z-index: 1;
 }
+
+.loader-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.loader-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.loader-button:active {
+  transform: scale(0.95);
+}
+
+.button-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.soil-logo {
+  width: 250px;
+  height: auto;
+  position: relative;
+  top: 20px;
+  opacity: 0.9;
+  margin-bottom: 3em;
+}
+
+.soil-info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background: #00000060;
+  padding: 1rem;
+  border-radius: 0 0 10px 0;
+
+  & img {
+    width: 150px;
+    user-select: none;
+    height: auto;
+  }
+
+  & h1 {
+    margin-top: 1em;
+    font-size: 1.2em;
+    color: #fff;
+    user-select: none;
+  }
+
+  & a {
+    font-size: 0.75em;
+    color: #fff;
+    margin-bottom: 0.3em;
+    text-decoration: none;
+    width: fit-content;
+    user-select: none;
+  }
+
+  & span {
+    font-size: 0.95em;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    width: fit-content;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

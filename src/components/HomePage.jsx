@@ -8,7 +8,8 @@ import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
 import * as THREE from 'three'
-import Vista360 from './Vista360'
+import View360 from './View360'
+import EyeIcon from './icons/EyeIcon'
 
 const CameraController = () => {
   const { camera } = useThree()
@@ -35,6 +36,7 @@ function HomePage () {
   const [activeMeshIndex, setActiveMeshIndex] = useState(null)
   const [buttonRoute, setButtonRoute] = useState(null)
   const [selectedFloor, setSelectedFloor] = useState(null)
+  const [copied, setCopied] = useState(false)
 
   const minZoom = 0.35
   const maxZoom = 1
@@ -143,7 +145,7 @@ function HomePage () {
     } else if (piso === 6) {
       setButtonRoute('/tipo-b')
     } else {
-      setButtonRoute(null) // No hay ruta disponible
+      setButtonRoute(null)
       console.log(`No hay página disponible para el Piso ${piso}`)
     }
   }
@@ -152,32 +154,31 @@ function HomePage () {
     setShowLoader(false)
   }
 
+  const handleCopy = (e) => {
+    const number = e.target.innerText
+    navigator.clipboard.writeText(number)
+    setCopied(true)
+
+    setTimeout(() => setCopied(false), 3000)
+  }
+
   return (
     <div
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       onWheel={handleWheel}
-      style={{ width: '100vw', height: '100vh', position: 'relative' }}
+      className='viewport-container'
     >
       {showLoader && (
         <div className='loader2'>
           <div className='vista360'>
-            <Vista360 />
+            <View360 scene='/models/hdri/untitled.png' />
           </div>
-          <button
-            onClick={handleLoaderButtonClick}
-            style={{
-              padding: '10px 20px',
-              fontSize: '16px',
-              cursor: 'pointer',
-              backgroundColor: '#fff',
-              border: 'none',
-              borderRadius: '8px',
-              zIndex: 10
-            }}
-          >
-            Entrar
+          <img className='soil-logo' src='/images/soil_logo.png' alt='Soil-Logo' />
+          <button className='loader-button' onClick={handleLoaderButtonClick}>
+            <EyeIcon width='24px' height='24px' />
+            <span className='button-text'>VER EDIFICIO</span>
           </button>
         </div>
       )}
@@ -205,23 +206,33 @@ function HomePage () {
         </Suspense>
       </Canvas>
 
-      {/* Mostrar botones de rotación y zoom solo si el modelo ya cargó */}
       {!loading && isLoaded && !showLoader && (
-        <div className='menubar'>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
-            <GlobalRotateIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomOut}>
-            <ZoomOutIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomIn}>
-            <ZoomInIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateRight}>
-            <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
-          </AnimatedButton>
-          <NavigateButton route={buttonRoute} floor={selectedFloor} />
-        </div>
+        <>
+          <div className='soil-info'>
+            <img src='/images/soil_logo.png' alt='Soil-logo' />
+            <h1>Soil Pueblo Libre</h1>
+            <a href='#'>ventas.soil@verdant.pe</a>
+            <span onClick={handleCopy}>
+              (+51) 982 172 656
+            </span>
+          </div>
+          {copied && <div style={{ background: '#B6CCA8', padding: '1em', color: 'white', borderRadius: '10px', position: 'absolute', top: '10px', left: '50%', transform: 'translateX(-50%)' }}>Número copiado correctamente: (+51) 982 172 656</div>}
+          <div className='menubar'>
+            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
+              <GlobalRotateIcon width='30px' height='30px' />
+            </AnimatedButton>
+            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomOut}>
+              <ZoomOutIcon width='30px' height='30px' />
+            </AnimatedButton>
+            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomIn}>
+              <ZoomInIcon width='30px' height='30px' />
+            </AnimatedButton>
+            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateRight}>
+              <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
+            </AnimatedButton>
+            <NavigateButton route={buttonRoute} floor={selectedFloor} />
+          </div>
+        </>
       )}
     </div>
   )

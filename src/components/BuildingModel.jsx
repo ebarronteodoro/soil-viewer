@@ -87,7 +87,7 @@ const BuildingModel = ({ targetRotation, targetScale, onLoadingComplete, activeM
               >
                 <boxGeometry args={[11.5, 0.8, 4.8]} />
                 <meshStandardMaterial
-                  color={activeMeshIndex === index ? '#0000ff' : null}
+                  color={activeMeshIndex === index ? '#ACACAC' : null}
                   transparent
                   opacity={activeMeshIndex === index ? 0.5 : null}
                 />
