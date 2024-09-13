@@ -2,7 +2,6 @@ import { useFrame } from '@react-three/fiber'
 import React, { useEffect, useState } from 'react'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import * as THREE from 'three'
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
 const BuildingModel = ({ targetRotation, targetScale, onLoadingComplete, activeMeshIndex, handleClick }) => {
   const [scene, setScene] = useState(null)
@@ -95,9 +94,9 @@ const BuildingModel = ({ targetRotation, targetScale, onLoadingComplete, activeM
             ))}
           </group>
         </primitive>
-        <EffectComposer>
+        {/* <EffectComposer>
           <Bloom luminanceThreshold={0} luminanceSmoothing={0.05} intensity={0.05} />
-        </EffectComposer>
+        </EffectComposer> */}
       </>
       )
     : null
