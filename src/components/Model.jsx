@@ -23,7 +23,7 @@ function Model ({
 
   useEffect(() => {
     const loader = new GLTFLoader()
-    loader.load(modelPath, (gltf) => { // Utiliza la prop modelPath
+    loader.load(modelPath, (gltf) => {
       const scene = gltf.scene
       scene.traverse((child) => {
         if (child.isMesh) {

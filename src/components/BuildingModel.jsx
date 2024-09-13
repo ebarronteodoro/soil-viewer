@@ -1,10 +1,8 @@
 import { useFrame } from '@react-three/fiber'
-import React, { useEffect, useState } from 'react'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import React, { useState } from 'react'
 import * as THREE from 'three'
 
-const BuildingModel = ({ targetRotation, targetScale, onLoadingComplete, activeMeshIndex, handleClick }) => {
-  const [scene, setScene] = useState(null)
+const BuildingModel = ({ targetRotation, targetScale, activeMeshIndex, handleClick, object }) => {
   const [currentRotation, setCurrentRotation] = useState(targetRotation)
   const [currentScale, setCurrentScale] = useState(targetScale)
 
@@ -29,51 +27,22 @@ const BuildingModel = ({ targetRotation, targetScale, onLoadingComplete, activeM
     [1.3, 16.5, 1.4]
   ]
 
-  useEffect(() => {
-    const loader = new GLTFLoader()
-    loader.load('/models/Edificio optimizado.glb', (gltf) => {
-      const loadedScene = gltf.scene
-      loadedScene.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true
-          child.receiveShadow = true
-          child.material.metalness = 0.5
-          child.material.roughness = 0.2
-        }
-      })
-      setScene(loadedScene)
-      if (typeof onLoadingComplete === 'function') {
-        onLoadingComplete(false)
-      }
-    })
-  }, [onLoadingComplete])
-
-  useEffect(() => {
-    if (scene) {
-      scene.traverse((child) => {
-        if (child.isMesh) {
-          child.material.needsUpdate = true
-        }
-      })
-    }
-  }, [activeMeshIndex, scene])
-
   useFrame(() => {
-    if (scene) {
+    if (object) {
       setCurrentRotation(
         THREE.MathUtils.lerp(currentRotation, targetRotation, 0.1)
       )
-      scene.rotation.y = currentRotation
+      object.rotation.y = currentRotation
 
       setCurrentScale(THREE.MathUtils.lerp(currentScale, targetScale, 0.1))
-      scene.scale.set(currentScale, currentScale, currentScale)
+      object.scale.set(currentScale, currentScale, currentScale)
     }
   })
 
-  return scene
+  return object
     ? (
       <>
-        <primitive object={scene} position={[-1, -8, 0]} scale={[1, 1, 1]}>
+        <primitive object={object} position={[-1, -8, 0]} scale={[1, 1, 1]}>
           <group>
             {floorPositions.map((position, index) => (
               <mesh
@@ -94,9 +63,6 @@ const BuildingModel = ({ targetRotation, targetScale, onLoadingComplete, activeM
             ))}
           </group>
         </primitive>
-        {/* <EffectComposer>
-          <Bloom luminanceThreshold={0} luminanceSmoothing={0.05} intensity={0.05} />
-        </EffectComposer> */}
       </>
       )
     : null
