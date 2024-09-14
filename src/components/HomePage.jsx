@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useLocation } from 'react-router-dom' // Para detectar cambios de ruta
 import { Sky } from '@react-three/drei'
 import * as THREE from 'three'
 import BuildingModel from './BuildingModel'
@@ -37,6 +38,8 @@ function HomePage ({ models, isLoaded }) {
   const [showContent, setShowContent] = useState(false)
   const [applyTransition, setApplyTransition] = useState(false)
 
+  const location = useLocation()
+
   const minZoom = 0.35
   const maxZoom = 1
   const zoomStep = 0.05
@@ -47,6 +50,10 @@ function HomePage ({ models, isLoaded }) {
       return () => clearInterval(interval)
     }
   }, [autoRotate])
+
+  useEffect(() => {
+    setActiveMeshIndex(null) // Restablecer el mesh seleccionado cuando la ruta cambia
+  }, [location.pathname]) // Se activa cuando cambia la ruta
 
   const stopAutoRotation = () => {
     setAutoRotate(false)
@@ -97,7 +104,7 @@ function HomePage ({ models, isLoaded }) {
   const handleMouseMove = (event) => {
     if (!mouseDown) return
     const deltaX = event.clientX - startX
-    setRotation((prev) => prev + deltaX * 0.02)
+    setRotation((prev) => prev + deltaX * 0.002)
     setStartX(event.clientX)
   }
 
@@ -194,7 +201,7 @@ function HomePage ({ models, isLoaded }) {
             <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateRight}>
               <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
             </AnimatedButton>
-            <NavigateButton route={buttonRoute} floor={selectedFloor} />
+            <NavigateButton route={buttonRoute} floor={selectedFloor} clearSelection={() => handleClick(null)} />
           </div>
         </>
       )}

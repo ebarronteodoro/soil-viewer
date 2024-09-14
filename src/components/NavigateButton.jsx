@@ -2,10 +2,11 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import './NavigateButton.css'
 
-function NavigateButton ({ route, floor }) {
+function NavigateButton ({ route, floor, clearSelection }) {
   const navigate = useNavigate()
 
   const handleClick = () => {
+    clearSelection()
     if (route) {
       navigate(route)
     } else {
@@ -17,7 +18,7 @@ function NavigateButton ({ route, floor }) {
     <button
       className='navigate-button'
       onClick={handleClick}
-      disabled={!route} // Deshabilitar si no hay ruta
+      disabled={!route}
     >
       {route ? `Ir al piso ${floor}` : `Piso ${floor} no disponible`}
     </button>

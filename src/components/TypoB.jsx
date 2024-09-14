@@ -8,19 +8,16 @@ import ZoomOutIcon from './icons/ZoomOutIcon'
 import { useNavigate } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
 
-function TypoB () {
+function TypoB ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(0.025)
-  const [loading, setLoading] = useState(true)
-  const [loaderVisible, setLoaderVisible] = useState(true)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [zoom, setZoom] = useState(0.65)
   const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
   const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] = useState(false)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
 
-  const minZoom = 0.025
-  const maxZoom = 0.035
-  const zoomStep = 0.005
+  const minZoom = 0.5
+  const maxZoom = 0.75
+  const zoomStep = 0.05
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -39,20 +36,10 @@ function TypoB () {
     }
   }, [])
 
-  useEffect(() => {
-    if (!loading) {
-      const timer = setTimeout(() => {
-        setLoaderVisible(false)
-        setIsLoaded(true)
-      }, 1000)
-      return () => clearTimeout(timer)
-    }
-  }, [loading])
-
-  const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
-  const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
-  const zoomIn = () => setZoom(prev => Math.min(prev + zoomStep, maxZoom))
-  const zoomOut = () => setZoom(prev => Math.max(prev - zoomStep, minZoom))
+  const rotateLeft = () => setRotation((prev) => prev + Math.PI / 8)
+  const rotateRight = () => setRotation((prev) => prev - Math.PI / 8)
+  const zoomIn = () => setZoom((prev) => Math.min(prev + zoomStep, maxZoom))
+  const zoomOut = () => setZoom((prev) => Math.max(prev - zoomStep, minZoom))
   const navigate = useNavigate()
 
   const returnHome = () => {
@@ -78,50 +65,34 @@ function TypoB () {
 
   return (
     <div>
-      <div
-        style={{
-          opacity: loaderVisible ? 1 : 0
-        }}
-        className='loader'
-      >
-        <div className='carga' />
-        <p style={{ color: 'white' }}>Cargando</p>
-      </div>
       <Canvas>
         <ambientLight intensity={7} />
         <Suspense fallback={null}>
           <Model
-            modelPath='/models/typologies/TIPO-B.glb'
             targetRotation={rotation}
             targetScale={zoom}
-            setLoading={setLoading}
             stateView={stateView}
             playAnimation={isAnimationTriggered}
             reverseAnimation={isReverseAnimationTriggered}
             environmentPath='/models/hdri/brown_photostudio_01_4k.hdr'
+            object={activeModel.scene}
           />
           <CameraController />
         </Suspense>
       </Canvas>
-      {!loading && isLoaded && (
+      {isLoaded && (
         <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'flex', gap: '15px' }}>
-          <button onClick={returnHome}>
-            Volver
-          </button>
-          <button onClick={triggerAnimation}>
-            Start Animation
-          </button>
+          <button onClick={returnHome}>Volver</button>
+          <button onClick={triggerAnimation}>Start Animation</button>
           {isAnimationTriggered && (
             <>
               <button onClick={toggleView}>Toggle View</button>
-              <button onClick={triggerReverseAnimation}>
-                Reverse Animation
-              </button>
+              <button onClick={triggerReverseAnimation}>Reverse Animation</button>
             </>
           )}
         </div>
       )}
-      {!loading && isLoaded && (
+      {isLoaded && (
         <div className='menubar'>
           <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
             <GlobalRotateIcon width='30px' height='30px' />
@@ -138,7 +109,7 @@ function TypoB () {
         </div>
       )}
 
-      {!loading && isLoaded && (
+      {isLoaded && (
         <div className='typo-img'>
           <img src='/typologies images/TIPO-2-B.jpg' alt='Tipología 2-B' />
         </div>

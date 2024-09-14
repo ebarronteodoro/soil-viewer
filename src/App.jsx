@@ -18,9 +18,13 @@ function App () {
     edificio: null
   })
   const [isLoaded, setIsLoaded] = useState(false)
+  const [loadingProgress, setLoadingProgress] = useState(0)
 
   useEffect(() => {
     const loadModels = async () => {
+      const totalModels = 5
+      let loadedModels = 0
+
       const modelPaths = [
         '/models/draco_models/903.glb',
         '/models/draco_models/1901.glb',
@@ -32,19 +36,30 @@ function App () {
       const loader = new GLTFLoader()
       loader.setDRACOLoader(dracoLoader)
 
-      const modelPromises = modelPaths.map(path => {
-        return new Promise(resolve => {
-          loader.load(path, (gltf) => {
-            gltf.scene.traverse((child) => {
-              if (child.isMesh) {
-                child.castShadow = true
-                child.receiveShadow = true
-                child.material.metalness = 0.5
-                child.material.roughness = 0.2
-              }
-            })
-            resolve(gltf)
-          })
+      const modelPromises = modelPaths.map((path) => {
+        return new Promise((resolve) => {
+          loader.load(
+            path,
+            (gltf) => {
+              gltf.scene.traverse((child) => {
+                if (child.isMesh) {
+                  child.castShadow = true
+                  child.receiveShadow = true
+                  child.material.metalness = 0.5
+                  child.material.roughness = 0.2
+                }
+              })
+              loadedModels++
+              const totalProgress = Math.round((loadedModels / totalModels) * 100)
+              setLoadingProgress(totalProgress)
+              resolve(gltf)
+            },
+            undefined,
+            (error) => {
+              console.error('Error al cargar el modelo:', error)
+              resolve(null)
+            }
+          )
         })
       })
 
@@ -59,18 +74,21 @@ function App () {
     loadModels()
   }, [])
 
+  useEffect(() => {
+    console.log(loadingProgress)
+  }, [loadingProgress])
+
   return (
     <Router>
-      <PreloadModels isLoaded={isLoaded} />
-      {isLoaded &&
-        (
-          <Routes>
-            <Route path='/:modelId' element={<DynamicModelViewer models={models} isLoaded={isLoaded} />} />
-            <Route path='/' element={<DynamicModelViewer models={models} isLoaded={isLoaded} />} />
-            <Route path='/tipo-a' element={<TypoA />} />
-            <Route path='/tipo-b' element={<TypoB />} />
-          </Routes>
-        )}
+      <PreloadModels loadingProgress={loadingProgress} isLoaded={isLoaded} />
+      {isLoaded && (
+        <Routes>
+          <Route path='/:modelId' element={<DynamicModelViewer models={models} isLoaded={isLoaded} />} />
+          <Route path='/' element={<DynamicModelViewer models={models} isLoaded={isLoaded} />} />
+          <Route path='/tipo-a' element={<TypoA />} />
+          <Route path='/tipo-b' element={<TypoB />} />
+        </Routes>
+      )}
     </Router>
   )
 }

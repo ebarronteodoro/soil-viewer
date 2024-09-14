@@ -1,10 +1,14 @@
 import { useFrame } from '@react-three/fiber'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as THREE from 'three'
+import { useLocation } from 'react-router-dom'
 
 const BuildingModel = ({ targetRotation, targetScale, activeMeshIndex, handleClick, object }) => {
   const [currentRotation, setCurrentRotation] = useState(targetRotation)
   const [currentScale, setCurrentScale] = useState(targetScale)
+  const [renderFloors, setRenderFloors] = useState(true)
+
+  const location = useLocation()
 
   const floorPositions = [
     [1.3, 2.8, 1.4],
@@ -39,29 +43,45 @@ const BuildingModel = ({ targetRotation, targetScale, activeMeshIndex, handleCli
     }
   })
 
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setRenderFloors(false) // Si no estamos en la página principal, no renderizar los floors
+    } else {
+      setRenderFloors(true) // Si estamos en la página principal, renderizar los floors
+    }
+  }, [location.pathname])
+
+  useEffect(() => {
+    if (!renderFloors) {
+      handleClick(null)
+    }
+  }, [renderFloors])
+
   return object
     ? (
       <>
         <primitive object={object} position={[-1, -8, 0]} scale={[1, 1, 1]}>
-          <group>
-            {floorPositions.map((position, index) => (
-              <mesh
-                key={index}
-                position={position}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  handleClick(index)
-                }}
-              >
-                <boxGeometry args={[11.5, 0.8, 4.8]} />
-                <meshStandardMaterial
-                  color={activeMeshIndex === index ? '#ACACAC' : null}
-                  transparent
-                  opacity={activeMeshIndex === index ? 0.5 : null}
-                />
-              </mesh>
-            ))}
-          </group>
+          {renderFloors && (
+            <group>
+              {floorPositions.map((position, index) => (
+                <mesh
+                  key={index}
+                  position={position}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleClick(index)
+                  }}
+                >
+                  <boxGeometry args={[11.5, 0.8, 4.8]} />
+                  <meshStandardMaterial
+                    color={activeMeshIndex === index ? '#ACACAC' : '#ffffff'}
+                    transparent
+                    opacity={activeMeshIndex === index ? 0.5 : 0}
+                  />
+                </mesh>
+              ))}
+            </group>
+          )}
         </primitive>
       </>
       )
