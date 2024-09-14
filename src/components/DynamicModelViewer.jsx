@@ -1,16 +1,13 @@
-// import { Canvas } from '@react-three/fiber'
-// import { OrbitControls } from '@react-three/drei'
-// import { Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import HomePage from './HomePage'
 import TypoB from './TypoB'
 
-function DynamicModelViewer (models, isLoaded) {
+function DynamicModelViewer ({ models, isLoaded, setIsOpened }) {
   const { modelId } = useParams()
-  const activeModel = models.models[modelId] || models.models.edificio
+  const activeModel = models[modelId] || models.edificio
 
-  if (activeModel === models.models.edificio) {
-    return <HomePage models={models.models.edificio} isLoaded={isLoaded} />
+  if (activeModel === models.edificio) {
+    return <HomePage models={models.edificio} isLoaded={isLoaded} setIsOpened={setIsOpened} />
   } else {
     return <TypoB activeModel={activeModel} isLoaded={isLoaded} />
   }

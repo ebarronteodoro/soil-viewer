@@ -3,17 +3,20 @@ import View360 from './View360'
 import EyeIcon from './icons/EyeIcon'
 import { useState, useEffect } from 'react'
 
-function PreloadModels ({ loadingProgress, isLoaded }) {
+function PreloadModels ({ loadingProgress, setIsOpened, isModalClosed }) {
   const [fadeOutLoader, setFadeOutLoader] = useState(false)
   const [showLoader, setShowLoader] = useState(true)
-  const [statusMessage, setStatusMessage] = useState('0%') // Mensaje de estado
+  const [statusMessage, setStatusMessage] = useState('0%')
   const navigate = useNavigate()
 
   const handleLoaderButtonClick = () => {
     setFadeOutLoader(true)
+    if (!isModalClosed) {
+      setIsOpened(true)
+    }
     setTimeout(() => {
       setShowLoader(false)
-      navigate('/') // Redirige al modelo principal o la página de inicio
+      navigate('/')
     }, 1000)
   }
 
@@ -30,7 +33,7 @@ function PreloadModels ({ loadingProgress, isLoaded }) {
         if (loadingProgress < 100) {
           setStatusMessage(`${loadingProgress}%`)
         }
-      }, 500) // Actualizamos cada 500ms
+      }, 300)
 
       return () => clearInterval(interval)
     }

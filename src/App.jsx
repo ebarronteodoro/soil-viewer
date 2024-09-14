@@ -5,11 +5,11 @@ import { DRACOLoader, GLTFLoader } from 'three/examples/jsm/Addons.js'
 import { useEffect, useState } from 'react'
 import DynamicModelViewer from './components/DynamicModelViewer'
 import PreloadModels from './components/PreloadModels'
+import InstructionsModal from './components/InstructionsModal'
 
 function App () {
   const dracoLoader = new DRACOLoader()
   dracoLoader.setDecoderPath('/draco/')
-
   const [models, setModels] = useState({
     model1: null,
     model2: null,
@@ -17,8 +17,10 @@ function App () {
     model4: null,
     edificio: null
   })
+  const [isOpened, setIsOpened] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const isModalClosed = window.localStorage.getItem('instructionsModalClosed')
 
   useEffect(() => {
     const loadModels = async () => {
@@ -72,19 +74,20 @@ function App () {
     }
 
     loadModels()
-  }, [])
 
-  useEffect(() => {
-    console.log(loadingProgress)
-  }, [loadingProgress])
+    if (isModalClosed === true) {
+      setIsOpened(false)
+    }
+  }, [])
 
   return (
     <Router>
-      <PreloadModels loadingProgress={loadingProgress} isLoaded={isLoaded} />
+      <PreloadModels loadingProgress={loadingProgress} isOpened={isOpened} setIsOpened={setIsOpened} isModalClosed={isModalClosed} />
+      {isOpened === true && <InstructionsModal isOpened={isOpened} setIsOpened={setIsOpened} />}
       {isLoaded && (
         <Routes>
-          <Route path='/:modelId' element={<DynamicModelViewer models={models} isLoaded={isLoaded} />} />
-          <Route path='/' element={<DynamicModelViewer models={models} isLoaded={isLoaded} />} />
+          <Route path='/:modelId' element={<DynamicModelViewer models={models} isLoaded={isLoaded} setIsOpened={setIsOpened} />} />
+          <Route path='/' element={<DynamicModelViewer models={models} isLoaded={isLoaded} setIsOpened={setIsOpened} />} />
           <Route path='/tipo-a' element={<TypoA />} />
           <Route path='/tipo-b' element={<TypoB />} />
         </Routes>

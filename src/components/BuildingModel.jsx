@@ -45,9 +45,9 @@ const BuildingModel = ({ targetRotation, targetScale, activeMeshIndex, handleCli
 
   useEffect(() => {
     if (location.pathname !== '/') {
-      setRenderFloors(false) // Si no estamos en la página principal, no renderizar los floors
+      setRenderFloors(false)
     } else {
-      setRenderFloors(true) // Si estamos en la página principal, renderizar los floors
+      setRenderFloors(true)
     }
   }, [location.pathname])
 
@@ -62,7 +62,7 @@ const BuildingModel = ({ targetRotation, targetScale, activeMeshIndex, handleCli
       <>
         <primitive object={object} position={[-1, -8, 0]} scale={[1, 1, 1]}>
           {renderFloors && (
-            <group>
+            <>
               {floorPositions.map((position, index) => (
                 <mesh
                   key={index}
@@ -80,7 +80,7 @@ const BuildingModel = ({ targetRotation, targetScale, activeMeshIndex, handleCli
                   />
                 </mesh>
               ))}
-            </group>
+            </>
           )}
         </primitive>
       </>

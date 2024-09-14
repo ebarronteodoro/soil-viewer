@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useLocation } from 'react-router-dom' // Para detectar cambios de ruta
+import { useLocation } from 'react-router-dom'
 import { Sky } from '@react-three/drei'
 import * as THREE from 'three'
 import BuildingModel from './BuildingModel'
@@ -9,6 +9,7 @@ import AnimatedButton from './AnimatedButton'
 import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
+import IconChecklist from './icons/IconChecklist'
 
 const CameraController = () => {
   const { camera } = useThree()
@@ -23,7 +24,7 @@ const CameraController = () => {
   return null
 }
 
-function HomePage ({ models, isLoaded }) {
+function HomePage ({ models, isLoaded, setIsOpened }) {
   const [rotation, setRotation] = useState(Math.PI / 4)
   const [zoom, setZoom] = useState(0.5)
   const [activeModel, setActiveModel] = useState(null)
@@ -52,8 +53,8 @@ function HomePage ({ models, isLoaded }) {
   }, [autoRotate])
 
   useEffect(() => {
-    setActiveMeshIndex(null) // Restablecer el mesh seleccionado cuando la ruta cambia
-  }, [location.pathname]) // Se activa cuando cambia la ruta
+    setActiveMeshIndex(null)
+  }, [location.pathname])
 
   const stopAutoRotation = () => {
     setAutoRotate(false)
@@ -62,7 +63,7 @@ function HomePage ({ models, isLoaded }) {
 
   const restartAutoRotation = () => {
     clearTimeout(interactionTimeout)
-    const timeout = setTimeout(() => setAutoRotate(true), 3000)
+    const timeout = setTimeout(() => setAutoRotate(true), 10000)
     setInteractionTimeout(timeout)
   }
 
@@ -154,8 +155,8 @@ function HomePage ({ models, isLoaded }) {
       <Canvas shadows>
         <Suspense fallback={null}>
           <Sky sunPosition={[50, 40, 5]} turbidity={1} rayleigh={1} />
-          <directionalLight position={[30, 30, 30]} intensity={2.5} castShadow />
           <ambientLight intensity={2} />
+          <directionalLight position={[30, 30, 30]} intensity={2.5} castShadow />
           {activeModel && (
             <BuildingModel
               targetRotation={rotation}
@@ -189,6 +190,9 @@ function HomePage ({ models, isLoaded }) {
           )}
 
           <div className={`menubar2 ${applyTransition ? 'show' : ''}`}>
+            <AnimatedButton title='Ver Instrucciones' style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={() => setIsOpened(true)}>
+              <IconChecklist width='30px' />
+            </AnimatedButton>
             <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
               <GlobalRotateIcon width='30px' height='30px' />
             </AnimatedButton>

@@ -1,4 +1,4 @@
-button {
+.animatedbutton {
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease;
