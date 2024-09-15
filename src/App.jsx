@@ -1,103 +1,115 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import TypoA from './components/TypoA'
-import TypoB from './components/TypoB'
-import { DRACOLoader, GLTFLoader } from 'three/examples/jsm/Addons.js'
-import { useEffect, useState, useRef } from 'react'
-import DynamicModelViewer from './components/DynamicModelViewer'
-import PreloadModels from './components/PreloadModels'
-import InstructionsModal from './components/InstructionsModal'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { useState, useRef, useEffect } from "react";
+import DynamicModelViewer from "./components/DynamicModelViewer";
+import PreloadModels from "./components/PreloadModels";
+import InstructionsModal from "./components/InstructionsModal";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-function App () {
-  const dracoLoader = new DRACOLoader()
-  dracoLoader.setDecoderPath('/draco/')
-  const [models, setModels] = useState({
-    model1: null,
-    model2: null,
-    model3: null,
-    model4: null,
-    edificio: null
-  })
-  const [isOpened, setIsOpened] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [loadingProgress, setLoadingProgress] = useState(0)
-  const progressRef = useRef(0) // Referencia para evitar múltiples renders
-  const isModalClosed = window.localStorage.getItem('instructionsModalClosed')
+function App() {
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath("/draco/");
+
+  const [models, setModels] = useState({});
+  const [isOpened, setIsOpened] = useState(false);
+  const [isRouteModelLoaded, setIsRouteModelLoaded] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const progressRef = useRef(0);
+  const isModalClosed = window.localStorage.getItem("instructionsModalClosed");
 
   useEffect(() => {
-    const loadModels = async () => {
-      const totalModels = 5
-      let loadedModels = 0
-
+    const loadAllModels = async () => {
       const modelPaths = [
-        '/models/draco_models/903.glb',
-        '/models/draco_models/1901.glb',
-        '/models/draco_models/1905.glb',
-        '/models/draco_models/TERRAZA.glb',
-        '/models/Edificio optimizado.glb'
-      ]
+        { name: "t903", path: "/models/draco_models/903.glb" },
+        { name: "t1901", path: "/models/draco_models/1901.glb" },
+        { name: "t1905", path: "/models/draco_models/1905.glb" },
+        { name: "terraza", path: "/models/draco_models/TERRAZA.glb" },
+        { name: "edificio", path: "/models/Edificio optimizado.glb" },
+      ];
 
-      const loader = new GLTFLoader()
-      loader.setDRACOLoader(dracoLoader)
+      const loader = new GLTFLoader();
+      loader.setDRACOLoader(dracoLoader);
 
-      const modelPromises = modelPaths.map((path) => {
-        return new Promise((resolve) => {
-          loader.load(
-            path,
-            (gltf) => {
-              gltf.scene.traverse((child) => {
-                if (child.isMesh) {
-                  child.castShadow = true
-                  child.receiveShadow = true
-                  child.material.metalness = 0.5
-                  child.material.roughness = 0.2
-                }
-              })
-              loadedModels++
-              const totalProgress = Math.round((loadedModels / totalModels) * 100)
-              if (totalProgress !== progressRef.current) { // Solo actualiza si hay un cambio
-                progressRef.current = totalProgress
-                setLoadingProgress(totalProgress)
+      const modelPromises = modelPaths.map(
+        (modelInfo) =>
+          new Promise((resolve) => {
+            loader.load(
+              modelInfo.path,
+              (gltf) => {
+                const totalProgress = Math.round(
+                  (++progressRef.current / modelPaths.length) * 100
+                );
+                setLoadingProgress(totalProgress);
+                resolve({ name: modelInfo.name, gltf });
+              },
+              undefined,
+              (error) => {
+                console.error(`Error al cargar ${modelInfo.name}:`, error);
+                resolve({ name: modelInfo.name, gltf: null });
               }
-              resolve(gltf)
-            },
-            undefined,
-            (error) => {
-              console.error('Error al cargar el modelo:', error)
-              resolve(null)
-            }
-          )
-        })
-      })
+            );
+          })
+      );
 
-      const [model1, model2, model3, model4, edificio] = await Promise.all(
-        modelPromises
-      )
+      const loadedModels = await Promise.all(modelPromises);
+      const models = loadedModels.reduce((acc, { name, gltf }) => {
+        acc[name] = gltf;
+        return acc;
+      }, {});
 
-      setModels({ model1, model2, model3, model4, edificio })
-      setIsLoaded(true)
-    }
+      setModels(models);
+      setIsButtonEnabled(true);
+    };
 
-    loadModels()
-
-    if (isModalClosed === true) {
-      setIsOpened(false)
-    }
-  }, [])
+    loadAllModels();
+  }, [dracoLoader]);
 
   return (
     <Router>
-      <PreloadModels loadingProgress={loadingProgress} isOpened={isOpened} setIsOpened={setIsOpened} isModalClosed={isModalClosed} />
-      {isOpened === true && <InstructionsModal isOpened={isOpened} setIsOpened={setIsOpened} />}
-      {isLoaded && (
-        <Routes>
-          <Route path='/:modelId' element={<DynamicModelViewer models={models} isLoaded={isLoaded} setIsOpened={setIsOpened} />} />
-          <Route path='/' element={<DynamicModelViewer models={models} isLoaded={isLoaded} setIsOpened={setIsOpened} />} />
-          <Route path='/tipo-a' element={<TypoA />} />
-          <Route path='/tipo-b' element={<TypoB />} />
-        </Routes>
+      <Routes>
+        <Route
+          path="/:modelId"
+          element={
+            <DynamicModelViewer
+              models={models}
+              isLoaded={isRouteModelLoaded}
+              setIsOpened={setIsOpened}
+              dracoLoader={dracoLoader}
+              setLoadingProgress={setLoadingProgress}
+              setIsRouteModelLoaded={setIsRouteModelLoaded}
+              isButtonEnabled={isButtonEnabled}
+            />
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <DynamicModelViewer
+              models={models}
+              isLoaded={isRouteModelLoaded}
+              setIsOpened={setIsOpened}
+              dracoLoader={dracoLoader}
+              setLoadingProgress={setLoadingProgress}
+              setIsRouteModelLoaded={setIsRouteModelLoaded}
+              isButtonEnabled={isButtonEnabled}
+            />
+          }
+        />
+      </Routes>
+      <PreloadModels
+        loadingProgress={loadingProgress}
+        isOpened={isOpened}
+        setIsOpened={setIsOpened}
+        isModalClosed={isModalClosed}
+        isRouteModelLoaded={isRouteModelLoaded}
+        isButtonEnabled={isButtonEnabled}
+      />
+      {isOpened === true && (
+        <InstructionsModal isOpened={isOpened} setIsOpened={setIsOpened} />
       )}
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
