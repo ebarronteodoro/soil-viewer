@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
-const View360 = ({ scene }) => {
+function View360 ({ scene }) {
   const containerRef = useRef(null)
   const [isMounted, setIsMounted] = useState(false)
 

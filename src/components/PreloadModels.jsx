@@ -36,7 +36,7 @@ function PreloadModels ({ loadingProgress, setIsOpened, isModalClosed }) {
       {showLoader && (
         <div className={`loader2 ${fadeOutLoader ? 'fade-out' : ''}`}>
           <div className='vista360'>
-            <View360 scene='/models/hdri/untitled.png' />
+            {/* <View360 scene='/models/hdri/untitled.png' /> */}
           </div>
           <img
             className='soil-logo'
