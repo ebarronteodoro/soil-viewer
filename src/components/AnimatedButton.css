@@ -1,6 +1,9 @@
 .animatedbutton {
   border: none;
   cursor: pointer;
+  display: flex;
+  background: none;
+  height: fit-content;
   transition: transform 0.2s ease;
 
   &:hover {

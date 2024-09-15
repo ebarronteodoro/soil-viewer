@@ -22,20 +22,12 @@ function PreloadModels ({ loadingProgress, setIsOpened, isModalClosed }) {
 
   useEffect(() => {
     if (loadingProgress === 100) {
+      setStatusMessage('¡Cargado!')
       setTimeout(() => {
-        setStatusMessage('¡Cargado!')
-        setTimeout(() => {
-          setStatusMessage('¡Dale click al botón de abajo!')
-        }, 1000)
+        setStatusMessage('¡Dale click al botón de abajo!')
       }, 1000)
     } else {
-      const interval = setInterval(() => {
-        if (loadingProgress < 100) {
-          setStatusMessage(`${loadingProgress}%`)
-        }
-      }, 300)
-
-      return () => clearInterval(interval)
+      setStatusMessage(`${loadingProgress}%`)
     }
   }, [loadingProgress])
 
@@ -51,7 +43,7 @@ function PreloadModels ({ loadingProgress, setIsOpened, isModalClosed }) {
             src='/images/soil_logo.png'
             alt='Soil-Logo'
           />
-          <div className='loading-containter'>
+          <div className='loading-container'>
             {loadingProgress !== 100 && (
               <h2 className='loading-text'>
                 cargando

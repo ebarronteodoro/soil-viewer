@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import TypoA from './components/TypoA'
 import TypoB from './components/TypoB'
 import { DRACOLoader, GLTFLoader } from 'three/examples/jsm/Addons.js'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import DynamicModelViewer from './components/DynamicModelViewer'
 import PreloadModels from './components/PreloadModels'
 import InstructionsModal from './components/InstructionsModal'
@@ -20,6 +20,7 @@ function App () {
   const [isOpened, setIsOpened] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const progressRef = useRef(0) // Referencia para evitar múltiples renders
   const isModalClosed = window.localStorage.getItem('instructionsModalClosed')
 
   useEffect(() => {
@@ -53,7 +54,10 @@ function App () {
               })
               loadedModels++
               const totalProgress = Math.round((loadedModels / totalModels) * 100)
-              setLoadingProgress(totalProgress)
+              if (totalProgress !== progressRef.current) { // Solo actualiza si hay un cambio
+                progressRef.current = totalProgress
+                setLoadingProgress(totalProgress)
+              }
               resolve(gltf)
             },
             undefined,

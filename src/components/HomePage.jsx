@@ -30,6 +30,7 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
   const [activeModel, setActiveModel] = useState(null)
   const [mouseDown, setMouseDown] = useState(false)
   const [startX, setStartX] = useState(0)
+  const [startY, setStartY] = useState(0)
   const [autoRotate, setAutoRotate] = useState(true)
   const [interactionTimeout, setInteractionTimeout] = useState(null)
   const [activeMeshIndex, setActiveMeshIndex] = useState(null)
@@ -94,6 +95,7 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
   const handleMouseDown = (event) => {
     setMouseDown(true)
     setStartX(event.clientX)
+    setStartY(event.clientY)
     stopAutoRotation()
   }
 
@@ -105,14 +107,40 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
   const handleMouseMove = (event) => {
     if (!mouseDown) return
     const deltaX = event.clientX - startX
+    const deltaY = event.clientY - startY
     setRotation((prev) => prev + deltaX * 0.002)
     setStartX(event.clientX)
+    setStartY(event.clientY)
   }
 
   const handleWheel = (event) => {
     const direction = event.deltaY < 0 ? 1 : -1
     setZoom((prev) => Math.max(minZoom, Math.min(prev + direction * zoomStep, maxZoom)))
     stopAutoRotation()
+  }
+
+  // Nuevos controladores para eventos táctiles
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0]
+    setMouseDown(true)
+    setStartX(touch.clientX)
+    setStartY(touch.clientY)
+    stopAutoRotation()
+  }
+
+  const handleTouchEnd = () => {
+    setMouseDown(false)
+    restartAutoRotation()
+  }
+
+  const handleTouchMove = (event) => {
+    if (!mouseDown) return
+    const touch = event.touches[0]
+    const deltaX = touch.clientX - startX
+    const deltaY = touch.clientY - startY
+    setRotation((prev) => prev + deltaX * 0.002)
+    setStartX(touch.clientX)
+    setStartY(touch.clientY)
   }
 
   const handleClick = (index) => {
@@ -144,12 +172,21 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
     return () => window.removeEventListener('wheel', preventDefault)
   }, [isLoaded, models])
 
+  useEffect(() => {
+    const preventDefaultTouch = (event) => event.preventDefault()
+    window.addEventListener('touchmove', preventDefaultTouch, { passive: false })
+    return () => window.removeEventListener('touchmove', preventDefaultTouch)
+  }, [])
+
   return (
     <div
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchMove={handleTouchMove}
       className='viewport-container'
     >
       <Canvas shadows>
@@ -190,8 +227,8 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
           )}
 
           <div className={`menubar2 ${applyTransition ? 'show' : ''}`}>
-            <AnimatedButton title='Ver Instrucciones' style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={() => setIsOpened(true)}>
-              <IconChecklist width='30px' />
+            <AnimatedButton title='Ver Instrucciones' style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }}>
+              <IconChecklist width='30px' height='30px' />
             </AnimatedButton>
             <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
               <GlobalRotateIcon width='30px' height='30px' />
