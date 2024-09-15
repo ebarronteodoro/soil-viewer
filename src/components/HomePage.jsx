@@ -119,7 +119,6 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
     stopAutoRotation()
   }
 
-  // Nuevos controladores para eventos táctiles
   const handleTouchStart = (event) => {
     const touch = event.touches[0]
     setMouseDown(true)
@@ -148,8 +147,8 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
     const piso = index + 3
     setSelectedFloor(piso)
 
-    if (piso === 5) setButtonRoute('/model1')
-    else if (piso === 6) setButtonRoute('/model2')
+    if (piso === 5) setButtonRoute('/t903')
+    else if (piso === 6) setButtonRoute('/t1901')
     else setButtonRoute(null)
   }
 
