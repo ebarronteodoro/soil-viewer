@@ -94,8 +94,8 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
 
   const handleMouseDown = (event) => {
     setMouseDown(true)
-    setStartX(event.clientX)
-    setStartY(event.clientY)
+    setStartX(event.clientX || event.touches[0].clientX)
+    setStartY(event.clientY || event.touches[0].clientY)
     stopAutoRotation()
   }
 
@@ -106,11 +106,11 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
 
   const handleMouseMove = (event) => {
     if (!mouseDown) return
-    const deltaX = event.clientX - startX
-    const deltaY = event.clientY - startY
+    const deltaX = (event.clientX || event.touches[0].clientX) - startX
+    const deltaY = (event.clientY || event.touches[0].clientY) - startY
     setRotation((prev) => prev + deltaX * 0.002)
-    setStartX(event.clientX)
-    setStartY(event.clientY)
+    setStartX(event.clientX || event.touches[0].clientX)
+    setStartY(event.clientY || event.touches[0].clientY)
   }
 
   const handleWheel = (event) => {
@@ -226,7 +226,7 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
           )}
 
           <div className={`menubar2 ${applyTransition ? 'show' : ''}`}>
-            <AnimatedButton title='Ver Instrucciones' style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }}>
+            <AnimatedButton title='Ver Instrucciones' style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={() => setIsOpened(true)}>
               <IconChecklist width='30px' height='30px' />
             </AnimatedButton>
             <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
