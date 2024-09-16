@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import HomePage from "./HomePage";
 import TypoB from "./TypoB";
 
@@ -14,14 +14,28 @@ function DynamicModelViewer({
 }) {
   const { modelId } = useParams();
 
+  // Efecto para monitorear el ciclo de vida del componente
   useEffect(() => {
-    if (isButtonEnabled) {
+    console.log("DynamicModelViewer montado");
+    return () => {
+      console.log("DynamicModelViewer desmontado");
+    };
+  }, []);
+
+  // Efecto para actualizar el estado de carga cuando los modelos y el botón están habilitados
+  useEffect(() => {
+    if (isButtonEnabled && models && Object.keys(models).length > 0) {
+      console.log("Modelos disponibles y botón habilitado");
       setIsRouteModelLoaded(true);
     }
-  }, [isButtonEnabled, setIsRouteModelLoaded]);
+  }, [isButtonEnabled, models, setIsRouteModelLoaded]);
 
-  const activeModel = models[modelId] || models.edificio;
+  // Usamos useMemo para evitar cálculos innecesarios si los modelos no cambian
+  const activeModel = useMemo(() => {
+    return models[modelId] || models.edificio;
+  }, [models, modelId]);
 
+  // Condicional para mostrar un indicador de carga si el modelo no está disponible aún
   if (!activeModel) {
     return <div>Loading...</div>;
   }

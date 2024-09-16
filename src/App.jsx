@@ -1,14 +1,18 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import DynamicModelViewer from "./components/DynamicModelViewer";
 import PreloadModels from "./components/PreloadModels";
 import InstructionsModal from "./components/InstructionsModal";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 function App() {
-  const dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderPath("/draco/");
+  // Memoizamos dracoLoader para evitar recrearlo en cada render
+  const dracoLoader = useMemo(() => {
+    const loader = new DRACOLoader();
+    loader.setDecoderPath("/draco/");
+    return loader;
+  }, []);
 
   const [models, setModels] = useState({});
   const [isOpened, setIsOpened] = useState(false);
@@ -17,6 +21,10 @@ function App() {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const progressRef = useRef(0);
   const isModalClosed = window.localStorage.getItem("instructionsModalClosed");
+
+  useEffect(() => {
+    console.log("App se está renderizando: "+ loadingProgress);
+  });
 
   useEffect(() => {
     const loadAllModels = async () => {
@@ -40,8 +48,14 @@ function App() {
                 const totalProgress = Math.round(
                   (++progressRef.current / modelPaths.length) * 100
                 );
-                setLoadingProgress(totalProgress);
+                setLoadingProgress((prev) => {
+                  if (prev !== totalProgress) {
+                    return totalProgress;
+                  }
+                  return prev;
+                });
                 resolve({ name: modelInfo.name, gltf });
+                console.log("Modelo cargado: " + modelInfo.name);
               },
               undefined,
               (error) => {
@@ -53,13 +67,24 @@ function App() {
       );
 
       const loadedModels = await Promise.all(modelPromises);
-      const models = loadedModels.reduce((acc, { name, gltf }) => {
+      const newModels = loadedModels.reduce((acc, { name, gltf }) => {
         acc[name] = gltf;
         return acc;
       }, {});
 
-      setModels(models);
-      setIsButtonEnabled(true);
+      setModels((prevModels) => {
+        if (JSON.stringify(prevModels) !== JSON.stringify(newModels)) {
+          return newModels;
+        }
+        return prevModels;
+      });
+
+      console.log("Modelos asignados");
+
+      setIsButtonEnabled((prev) => {
+        if (!prev) return true;
+        return prev;
+      });
     };
 
     loadAllModels();
