@@ -20,7 +20,17 @@ function NavigateButton ({ route, floor, clearSelection }) {
       onClick={handleClick}
       disabled={!route}
     >
-      {route ? `Ir al piso ${floor}` : `Piso ${floor} no disponible`}
+      {floor === 1
+        ? (
+            route ? 'Ver piso 1 y 2' : 'Piso 1 y 2 no disponible'
+          )
+        : floor === 21
+          ? (
+              route ? 'Ver terraza' : 'Terraza no disponible'
+            )
+          : (
+              route ? `Ver piso ${floor}` : `Piso ${floor} no disponible`
+            )}
     </button>
   )
 }

@@ -29,9 +29,7 @@ function TypoB ({ activeModel, isLoaded }) {
         zoomOut()
       }
     }
-
     window.addEventListener('wheel', handleWheel, { passive: false })
-
     return () => {
       window.removeEventListener('wheel', handleWheel)
     }
@@ -109,7 +107,6 @@ function TypoB ({ activeModel, isLoaded }) {
           </AnimatedButton>
         </div>
       )}
-
       {isLoaded && (
         <div className='typo-img'>
           <img src='/typologies images/TIPO-2-B.jpg' alt='Tipología 2-B' />

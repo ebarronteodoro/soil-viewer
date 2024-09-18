@@ -7,13 +7,14 @@
 
 canvas {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
 }
 
 body {
   background: #4c4c4c;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .carga {
@@ -91,6 +92,39 @@ body {
   transform: translate(-50%, 0);
   opacity: 0;
   transition: opacity 0.8s ease-out;
+  z-index: 11;
+
+  &.showinstructions {
+    & button {
+      opacity: 0.3;
+
+      &.animatedbutton {
+        display: flex;
+        border: none;
+        background: none;
+        color: white;
+        position: relative;
+      }
+
+      &.on {
+        opacity: 1;
+        z-index: 11;
+      }
+    }
+
+    &::after {
+      content: "";
+      background: rgba(0, 0, 0, 0);
+      position: absolute;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &.hideinstructions::after {
+    display: none;
+  }
 }
 
 .typo-img {
@@ -110,7 +144,7 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +163,7 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   z-index: -1;
 }
 
@@ -187,22 +221,19 @@ body {
   transition: background-color 0.3s ease, transform 0.2s ease;
   border: none;
   cursor: pointer;
-}
-
-.loader-button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
-}
-
-.loader-button:disabled {
   &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1);
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
   }
-}
-
-.loader-button:active {
-  transform: scale(0.95);
+  &:disabled {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1);
+    }
+  }
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .button-text {
@@ -374,48 +405,85 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #00000086;
+  background: rgba(0, 0, 0, 0.7);
 
   & .instructions-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 500px;
-    background: #0000005e;
-
-    padding: 2em 1em;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 2em;
     border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 
     & h2 {
-      text-align: center;
-      margin-bottom: 1em;
-      color: white;
+      font-size: 2.5em;
+      color: #ffffff;
     }
 
     & p {
-      text-align: center;
-      color: white;
-      margin-top: 0.4em;
+      font-size: 1.1em;
+      color: #ffffff;
+      font-family: "Rossanova", sans-serif;
+      margin-top: 1em;
+      line-height: 1.2;
     }
 
-    & button {
+    & .instructions-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
       margin-top: 1.5em;
-      background-color: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease;
 
-      &:hover {
-        transform: scale(1.15);
+      & button {
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 0.75em 1.5em;
+        border-radius: 9999px;
+        border: none;
+        cursor: pointer;
+        font-size: 1em;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        &:active {
+          transform: scale(1.025);
+        }
       }
 
-      &:active {
-        transform: scale(1.05);
+      & button:first-child {
+        background-color: #4caf50;
+        padding: 0.55em 1.2em;
       }
+
+      & button:last-child {
+        background-color: rgba(255, 0, 0, 0.2);
+        padding: 0.55em 1.2em;
+      }
+    }
+
+    & .instructions-buttons .back-button {
+      background-color: #f39c12;
+      padding: 0.75em 1.5em;
+      margin-right: 10px;
     }
   }
+}
+
+.inner-shadow {
+  box-shadow: inset 0px 0px 30px 10px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  z-index: 99999;
+  pointer-events: none;
 }

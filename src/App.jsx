@@ -18,12 +18,9 @@ function App () {
   const [isRouteModelLoaded, setIsRouteModelLoaded] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
+  const [instructionStep, setInstructionStep] = useState(0)
   const progressRef = useRef(0)
-  const isModalClosed = window.localStorage.getItem('instructionsModalClosed')
-
-  useEffect(() => {
-    console.log('App se está renderizando: ' + loadingProgress)
-  }, [loadingProgress])
+  const isModalClosed = window.localStorage.getItem('InstructionsModalClosed')
 
   useEffect(() => {
     const loadAllModels = async () => {
@@ -32,7 +29,7 @@ function App () {
         { name: 't1901', path: '/models/draco_models/1901.glb' },
         { name: 't1905', path: '/models/draco_models/1905.glb' },
         { name: 'terraza', path: '/models/draco_models/TERRAZA.glb' },
-        { name: 'edificio', path: '/models/Edificio optimizado.glb' }
+        { name: 'edificio', path: '/models/edficio_mil_objetos.glb' }
       ]
 
       const loader = new GLTFLoader()
@@ -47,14 +44,21 @@ function App () {
                 const totalProgress = Math.round(
                   (++progressRef.current / modelPaths.length) * 100
                 )
-                setLoadingProgress((prev) => {
-                  if (prev !== totalProgress) {
-                    return totalProgress
+                setLoadingProgress(totalProgress)
+
+                gltf.scene.traverse((child) => {
+                  if (child.isMesh) {
+                    if (modelInfo.name === 'edificio') {
+                      child.material.metalness = 0.3
+                      child.material.roughness = 0.3
+                    } else {
+                      child.material.metalness = 0.6
+                      child.material.roughness = 0.2
+                    }
                   }
-                  return prev
                 })
+
                 resolve({ name: modelInfo.name, gltf })
-                console.log('Modelo cargado: ' + modelInfo.name)
               },
               undefined,
               (error) => {
@@ -71,15 +75,12 @@ function App () {
         return acc
       }, {})
 
-      setModels(newModels) // Asignamos los nuevos modelos sin comparar
-
-      console.log('Modelos asignados')
-
-      setIsButtonEnabled(true) // Habilitar el botón después de cargar modelos
+      setModels(newModels)
+      setIsButtonEnabled(true)
     }
 
     loadAllModels()
-  }, [dracoLoader])
+  }, [])
 
   return (
     <Router>
@@ -90,11 +91,11 @@ function App () {
             <DynamicModelViewer
               models={models}
               isLoaded={isRouteModelLoaded}
+              isOpened={isOpened}
               setIsOpened={setIsOpened}
-              dracoLoader={dracoLoader}
-              setLoadingProgress={setLoadingProgress}
               setIsRouteModelLoaded={setIsRouteModelLoaded}
               isButtonEnabled={isButtonEnabled}
+              instructionStep={instructionStep}
             />
           }
         />
@@ -104,11 +105,11 @@ function App () {
             <DynamicModelViewer
               models={models}
               isLoaded={isRouteModelLoaded}
+              isOpened={isOpened}
               setIsOpened={setIsOpened}
-              dracoLoader={dracoLoader}
-              setLoadingProgress={setLoadingProgress}
               setIsRouteModelLoaded={setIsRouteModelLoaded}
               isButtonEnabled={isButtonEnabled}
+              instructionStep={instructionStep}
             />
           }
         />
@@ -122,7 +123,7 @@ function App () {
         isButtonEnabled={isButtonEnabled}
       />
       {isOpened === true && (
-        <InstructionsModal isOpened={isOpened} setIsOpened={setIsOpened} />
+        <InstructionsModal isOpened={isOpened} setIsOpened={setIsOpened} setInstructionStep={setInstructionStep} />
       )}
     </Router>
   )

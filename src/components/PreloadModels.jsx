@@ -34,6 +34,7 @@ function PreloadModels ({
 
   return (
     <>
+      <div className='inner-shadow' />
       {showLoader && (
         <div className={`loader2 ${fadeOutLoader ? 'fade-out' : ''}`}>
           <div className='vista360'>

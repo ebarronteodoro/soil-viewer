@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import { useLocation } from 'react-router-dom'
-import { Sky } from '@react-three/drei'
+// import { Sky } from '@react-three/drei'
 import * as THREE from 'three'
 import BuildingModel from './BuildingModel'
 import NavigateButton from './NavigateButton'
@@ -10,6 +10,18 @@ import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
 import IconChecklist from './icons/IconChecklist'
+import { RGBELoader } from 'three/examples/jsm/Addons.js'
+
+function Environment2 () {
+  const hdrTexture = useLoader(RGBELoader, '/models/hdri/sky.hdr')
+
+  hdrTexture.mapping = THREE.EquirectangularReflectionMapping
+  hdrTexture.encoding = THREE.sRGBEncoding
+
+  return (
+    <primitive attach='background' object={hdrTexture} />
+  )
+}
 
 const CameraController = () => {
   const { camera } = useThree()
@@ -24,13 +36,12 @@ const CameraController = () => {
   return null
 }
 
-function HomePage ({ models, isLoaded, setIsOpened }) {
+function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep }) {
   const [rotation, setRotation] = useState(Math.PI / 4)
-  const [zoom, setZoom] = useState(0.5)
+  const [zoom, setZoom] = useState(0.18)
   const [activeModel, setActiveModel] = useState(null)
   const [mouseDown, setMouseDown] = useState(false)
   const [startX, setStartX] = useState(0)
-  const [startY, setStartY] = useState(0)
   const [autoRotate, setAutoRotate] = useState(true)
   const [interactionTimeout, setInteractionTimeout] = useState(null)
   const [activeMeshIndex, setActiveMeshIndex] = useState(null)
@@ -42,8 +53,8 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
 
   const location = useLocation()
 
-  const minZoom = 0.35
-  const maxZoom = 1
+  const minZoom = 0.13
+  const maxZoom = 0.30
   const zoomStep = 0.05
 
   useEffect(() => {
@@ -69,13 +80,13 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
   }
 
   const rotateLeft = () => {
-    setRotation((prev) => prev + Math.PI / 8)
+    setRotation((prev) => prev + Math.PI / 12)
     stopAutoRotation()
     restartAutoRotation()
   }
 
   const rotateRight = () => {
-    setRotation((prev) => prev - Math.PI / 8)
+    setRotation((prev) => prev - Math.PI / 12)
     stopAutoRotation()
     restartAutoRotation()
   }
@@ -95,7 +106,6 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
   const handleMouseDown = (event) => {
     setMouseDown(true)
     setStartX(event.clientX || event.touches[0].clientX)
-    setStartY(event.clientY || event.touches[0].clientY)
     stopAutoRotation()
   }
 
@@ -107,10 +117,8 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
   const handleMouseMove = (event) => {
     if (!mouseDown) return
     const deltaX = (event.clientX || event.touches[0].clientX) - startX
-    const deltaY = (event.clientY || event.touches[0].clientY) - startY
-    setRotation((prev) => prev + deltaX * 0.002)
+    setRotation((prev) => prev + deltaX * 0.001)
     setStartX(event.clientX || event.touches[0].clientX)
-    setStartY(event.clientY || event.touches[0].clientY)
   }
 
   const handleWheel = (event) => {
@@ -123,7 +131,6 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
     const touch = event.touches[0]
     setMouseDown(true)
     setStartX(touch.clientX)
-    setStartY(touch.clientY)
     stopAutoRotation()
   }
 
@@ -136,19 +143,23 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
     if (!mouseDown) return
     const touch = event.touches[0]
     const deltaX = touch.clientX - startX
-    const deltaY = touch.clientY - startY
     setRotation((prev) => prev + deltaX * 0.002)
     setStartX(touch.clientX)
-    setStartY(touch.clientY)
   }
 
   const handleClick = (index) => {
     setActiveMeshIndex(index)
-    const piso = index + 3
+    let piso
+    if (index === 0) {
+      piso = 1
+    } else {
+      piso = index + 2
+    }
     setSelectedFloor(piso)
-
-    if (piso === 5) setButtonRoute('/t903')
-    else if (piso === 6) setButtonRoute('/t1901')
+    if (piso === 9) setButtonRoute('/t903')
+    else if (piso === 19) setButtonRoute('/t1901')
+    else if (piso === 20) setButtonRoute('/t1905')
+    else if (piso === 21) setButtonRoute('/terraza')
     else setButtonRoute(null)
   }
 
@@ -162,12 +173,11 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
     const preventDefault = (event) => event.preventDefault()
     window.addEventListener('wheel', preventDefault, { passive: false })
     isLoaded && setActiveModel(models)
-    isLoaded && (
+    isLoaded &&
       setTimeout(() => {
         setShowContent(true)
         setTimeout(() => setApplyTransition(true), 500)
       }, 1000)
-    )
     return () => window.removeEventListener('wheel', preventDefault)
   }, [isLoaded, models])
 
@@ -190,9 +200,6 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
     >
       <Canvas shadows>
         <Suspense fallback={null}>
-          <Sky sunPosition={[50, 40, 5]} turbidity={1} rayleigh={1} />
-          <ambientLight intensity={2} />
-          <directionalLight position={[30, 30, 30]} intensity={2.5} castShadow />
           {activeModel && (
             <BuildingModel
               targetRotation={rotation}
@@ -200,14 +207,17 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
               activeMeshIndex={activeMeshIndex}
               handleClick={handleClick}
               object={activeModel.scene}
+              castShadow
+              receiveShadow
             />
           )}
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -9, 0]}>
-            <planeGeometry attach='geometry' args={[10000, 10000]} />
-            <meshStandardMaterial attach='material' color='#2a2a2a' metalness={0.8} roughness={0.2} />
-          </mesh>
+          {/* <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -10, 0]} receiveShadow>
+            <planeGeometry args={[1000, 1000]} />
+            <meshStandardMaterial color='#313131' metalness={0.8} roughness={0.2} />
+          </mesh> */}
           <CameraController />
         </Suspense>
+        <Environment2 />
       </Canvas>
 
       {showContent && (
@@ -219,26 +229,37 @@ function HomePage ({ models, isLoaded, setIsOpened }) {
             <span onClick={handleCopy}>(+51) 982 172 656</span>
           </div>
 
-          {copied && (
-            <div className='copy-notification'>
-              Número copiado correctamente: (+51) 982 172 656
-            </div>
-          )}
+          {copied && <div className='copy-notification'>Número copiado correctamente: (+51) 982 172 656</div>}
 
-          <div className={`menubar2 ${applyTransition ? 'show' : ''}`}>
-            <AnimatedButton title='Ver Instrucciones' style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={() => setIsOpened(true)}>
+          <div className={`menubar2 ${applyTransition ? 'show' : ''} ${!isOpened ? 'hideinstructions' : 'showinstructions'}`}>
+            <AnimatedButton
+              onClick={() => setIsOpened(true)}
+              className={instructionStep === 5 ? 'on' : ''}
+            >
               <IconChecklist width='30px' height='30px' />
             </AnimatedButton>
-            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
+            <AnimatedButton
+              onClick={rotateLeft}
+              className={instructionStep === 1 ? 'on' : ''}
+            >
               <GlobalRotateIcon width='30px' height='30px' />
             </AnimatedButton>
-            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomOut}>
+            <AnimatedButton
+              onClick={zoomOut}
+              className={instructionStep === 2 ? 'on' : ''}
+            >
               <ZoomOutIcon width='30px' height='30px' />
             </AnimatedButton>
-            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomIn}>
+            <AnimatedButton
+              onClick={zoomIn}
+              className={instructionStep === 2 ? 'on' : ''}
+            >
               <ZoomInIcon width='30px' height='30px' />
             </AnimatedButton>
-            <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateRight}>
+            <AnimatedButton
+              onClick={rotateRight}
+              className={instructionStep === 1 ? 'on' : ''}
+            >
               <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
             </AnimatedButton>
             <NavigateButton route={buttonRoute} floor={selectedFloor} clearSelection={() => handleClick(null)} />

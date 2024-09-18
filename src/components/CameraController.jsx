@@ -17,7 +17,6 @@ function CameraController () {
   const returnSpeed = 0.05
 
   useEffect(() => {
-    // Manejador para eventos de mouse
     const handleMouseDown = (event) => {
       setIsDragging(true)
       setStartX(event.clientX)
