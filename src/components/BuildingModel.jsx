@@ -4,7 +4,6 @@ import * as THREE from 'three'
 import { useLocation } from 'react-router-dom'
 import { EffectComposer } from '@react-three/postprocessing'
 
-// Componente para manejar los pisos
 const Floors = ({ floorPositions, activeMeshIndex, handleClick, renderFloors }) => {
   return (
     <>
@@ -31,13 +30,26 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick, renderFloors }) 
   )
 }
 
-// Componente para las luces de la escena
-const Lighting = () => (
-  <>
-    <ambientLight intensity={1} />
-    <directionalLight position={[-50, 80, 80]} intensity={0.8} castShadow />
-  </>
-)
+const Lighting = () => {
+  const rectLightRef = React.useRef()
+
+  useEffect(() => {
+    if (rectLightRef.current) {
+      rectLightRef.current.lookAt(0, 0, 0)
+    }
+  }, [])
+
+  return (
+    <>
+      <ambientLight intensity={0.5} />
+      <directionalLight
+        position={[-50, 80, 80]}
+        intensity={2.8}
+        castShadow
+      />
+    </>
+  )
+}
 
 const BuildingModel = ({
   targetRotation,
@@ -52,7 +64,6 @@ const BuildingModel = ({
 
   const location = useLocation()
 
-  // Posiciones y tamaños de los pisos
   const floorPositions = [
     { position: [0.95, 4, 1], args: [15.5, 6, 37.5] },
     { position: [0.95, 8.6, 1], args: [15.5, 2.9, 37.5] },
@@ -76,7 +87,6 @@ const BuildingModel = ({
     { position: [0.95, 60.6, -0.7], args: [15.5, 2.9, 34.2] }
   ]
 
-  // Control de la rotación y escala del modelo
   useFrame(() => {
     if (object) {
       setCurrentRotation(THREE.MathUtils.lerp(currentRotation, targetRotation, 0.1))
@@ -87,7 +97,6 @@ const BuildingModel = ({
     }
   })
 
-  // Control de los pisos visibles según la ruta
   useEffect(() => {
     setRenderFloors(location.pathname === '/')
   }, [location.pathname])
@@ -103,7 +112,7 @@ const BuildingModel = ({
       <>
         <primitive
           object={object}
-          position={[0, -8, 0]}
+          position={[0, -7.8, 0]}
           scale={[1, 1, 1]}
           receiveShadow
         >

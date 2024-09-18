@@ -56,22 +56,23 @@ function InstructionsModal ({ setIsOpened, setInstructionStep }) {
   return (
     <div className='instructions-modal'>
       <div className='instructions-content'>
+        <img src='/images/soil_logo.png' alt='Soil-logo' />
         <h2>{stepsContent[step].title}</h2>
         <p>{stepsContent[step].description}</p>
 
         <div className='instructions-buttons'>
           {step > 0 && (
-            <button onClick={prevStep} style={{ marginRight: '10px' }}>
-              Volver
+            <button onClick={prevStep}>
+              VOLVER
             </button>
           )}
 
           {step < stepsContent.length - 1
             ? (
               <>
-                <button onClick={nextStep}>Siguiente</button>
-                <button onClick={handleClose} style={{ marginLeft: '10px' }}>
-                  Omitir
+                <button onClick={nextStep}>SIGUIENTE</button>
+                <button title='Omitir Tutorial' className='skipButton' onClick={handleClose}>
+                  OMITIR
                 </button>
               </>
               )

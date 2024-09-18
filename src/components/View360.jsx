@@ -8,17 +8,12 @@ function View360 ({ scene }) {
     let renderer, camera, scene3D, sphere, animationId
 
     const init = () => {
-      // Configuración inicial
       scene3D = new THREE.Scene()
-
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
       camera.position.set(0, -10, 5)
-
       renderer = new THREE.WebGLRenderer({ antialias: true })
       renderer.setSize(window.innerWidth, window.innerHeight)
       containerRef.current.appendChild(renderer.domElement)
-
-      // Cargar la textura y crear la esfera
       const textureLoader = new THREE.TextureLoader()
       textureLoader.load(scene, (texture) => {
         const geometry = new THREE.SphereGeometry(300, 32, 32)
@@ -30,27 +25,23 @@ function View360 ({ scene }) {
     }
 
     const animate = () => {
-      // Controlar la animación
       animationId = window.requestAnimationFrame(animate)
       camera.rotation.y += 0.0005
       renderer.render(scene3D, camera)
     }
 
     const handleResize = () => {
-      // Ajuste de la cámara y el renderizador cuando cambia el tamaño de la ventana
       camera.aspect = window.innerWidth / window.innerHeight
       camera.updateProjectionMatrix()
       renderer.setSize(window.innerWidth, window.innerHeight)
     }
 
-    // Inicializar la escena
     init()
     animate()
 
     window.addEventListener('resize', handleResize)
 
     return () => {
-      // Limpiar recursos al desmontar el componente
       window.removeEventListener('resize', handleResize)
       window.cancelAnimationFrame(animationId)
 
@@ -68,7 +59,7 @@ function View360 ({ scene }) {
     }
   }, [scene])
 
-  return <div ref={containerRef} style={{ width: '100vw', height: '100vh' }} />
+  return <div ref={containerRef} style={{ width: '100vw', height: '100dvh' }} />
 }
 
 export default View360

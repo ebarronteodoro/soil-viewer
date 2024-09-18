@@ -28,9 +28,13 @@ function NavigateButton ({ route, floor, clearSelection }) {
           ? (
               route ? 'Ver terraza' : 'Terraza no disponible'
             )
-          : (
-              route ? `Ver piso ${floor}` : `Piso ${floor} no disponible`
-            )}
+          : floor === null
+            ? (
+                'Piso sin seleccionar'
+              )
+            : (
+                route ? `Ver piso ${floor}` : `Piso ${floor} no disponible`
+              )}
     </button>
   )
 }

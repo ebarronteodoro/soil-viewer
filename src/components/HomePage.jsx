@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react'
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useLocation } from 'react-router-dom'
-// import { Sky } from '@react-three/drei'
 import * as THREE from 'three'
 import BuildingModel from './BuildingModel'
 import NavigateButton from './NavigateButton'
@@ -10,18 +9,7 @@ import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
 import IconChecklist from './icons/IconChecklist'
-import { RGBELoader } from 'three/examples/jsm/Addons.js'
-
-function Environment2 () {
-  const hdrTexture = useLoader(RGBELoader, '/models/hdri/sky.hdr')
-
-  hdrTexture.mapping = THREE.EquirectangularReflectionMapping
-  hdrTexture.encoding = THREE.sRGBEncoding
-
-  return (
-    <primitive attach='background' object={hdrTexture} />
-  )
-}
+import { Environment } from '@react-three/drei'
 
 const CameraController = () => {
   const { camera } = useThree()
@@ -37,8 +25,8 @@ const CameraController = () => {
 }
 
 function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep }) {
-  const [rotation, setRotation] = useState(Math.PI / 4)
-  const [zoom, setZoom] = useState(0.18)
+  const [rotation, setRotation] = useState(Math.PI / 1.5)
+  const [zoom, setZoom] = useState(0.16)
   const [activeModel, setActiveModel] = useState(null)
   const [mouseDown, setMouseDown] = useState(false)
   const [startX, setStartX] = useState(0)
@@ -217,7 +205,7 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
           </mesh> */}
           <CameraController />
         </Suspense>
-        <Environment2 />
+        <Environment files='/models/hdri/sky.hdr' background blur={0.5} />
       </Canvas>
 
       {showContent && (
@@ -245,6 +233,12 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
               <GlobalRotateIcon width='30px' height='30px' />
             </AnimatedButton>
             <AnimatedButton
+              onClick={rotateRight}
+              className={instructionStep === 1 ? 'on' : ''}
+            >
+              <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
+            </AnimatedButton>
+            <AnimatedButton
               onClick={zoomOut}
               className={instructionStep === 2 ? 'on' : ''}
             >
@@ -255,12 +249,6 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
               className={instructionStep === 2 ? 'on' : ''}
             >
               <ZoomInIcon width='30px' height='30px' />
-            </AnimatedButton>
-            <AnimatedButton
-              onClick={rotateRight}
-              className={instructionStep === 1 ? 'on' : ''}
-            >
-              <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
             </AnimatedButton>
             <NavigateButton route={buttonRoute} floor={selectedFloor} clearSelection={() => handleClick(null)} />
           </div>

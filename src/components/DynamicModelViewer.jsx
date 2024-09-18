@@ -22,7 +22,7 @@ function DynamicModelViewer ({
 
   const activeModel = useMemo(() => {
     return models[modelId] || models.edificio
-  }, [models])
+  }, [models, modelId])
 
   if (!activeModel) {
     return <div>Cargando...</div>
