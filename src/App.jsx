@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
-import { useState, useRef, useEffect, useMemo } from 'react'
-import DynamicModelViewer from './components/DynamicModelViewer'
+import { useState, useRef, useEffect, useMemo, lazy, Suspense } from 'react'
 import PreloadModels from './components/PreloadModels'
 import InstructionsModal from './components/InstructionsModal'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+
+// Carga diferida de componentes pesados
+const DynamicModelViewer = lazy(() => import('./components/DynamicModelViewer'))
 
 function App () {
   const dracoLoader = useMemo(() => {
@@ -35,6 +37,7 @@ function App () {
       const loader = new GLTFLoader()
       loader.setDRACOLoader(dracoLoader)
 
+      // Cargar los modelos en paralelo y manejar el progreso
       const modelPromises = modelPaths.map(
         (modelInfo) =>
           new Promise((resolve) => {
@@ -48,13 +51,9 @@ function App () {
 
                 gltf.scene.traverse((child) => {
                   if (child.isMesh) {
-                    if (modelInfo.name === 'edificio') {
-                      child.material.metalness = 0.5
-                      child.material.roughness = 0.3
-                    } else {
-                      child.material.metalness = 0.6
-                      child.material.roughness = 0.2
-                    }
+                    // Optimizar materiales según el modelo
+                    child.material.metalness = modelInfo.name === 'edificio' ? 0.5 : 0.6
+                    child.material.roughness = modelInfo.name === 'edificio' ? 0.3 : 0.2
                   }
                 })
 
@@ -80,40 +79,42 @@ function App () {
     }
 
     loadAllModels()
-  }, [])
+  }, [dracoLoader])
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path='/:modelId'
-          element={
-            <DynamicModelViewer
-              models={models}
-              isLoaded={isRouteModelLoaded}
-              isOpened={isOpened}
-              setIsOpened={setIsOpened}
-              setIsRouteModelLoaded={setIsRouteModelLoaded}
-              isButtonEnabled={isButtonEnabled}
-              instructionStep={instructionStep}
-            />
-          }
-        />
-        <Route
-          path='/'
-          element={
-            <DynamicModelViewer
-              models={models}
-              isLoaded={isRouteModelLoaded}
-              isOpened={isOpened}
-              setIsOpened={setIsOpened}
-              setIsRouteModelLoaded={setIsRouteModelLoaded}
-              isButtonEnabled={isButtonEnabled}
-              instructionStep={instructionStep}
-            />
-          }
-        />
-      </Routes>
+      <Suspense fallback={<div>Cargando modelos...</div>}>
+        <Routes>
+          <Route
+            path='/:modelId'
+            element={
+              <DynamicModelViewer
+                models={models}
+                isLoaded={isRouteModelLoaded}
+                isOpened={isOpened}
+                setIsOpened={setIsOpened}
+                setIsRouteModelLoaded={setIsRouteModelLoaded}
+                isButtonEnabled={isButtonEnabled}
+                instructionStep={instructionStep}
+              />
+            }
+          />
+          <Route
+            path='/'
+            element={
+              <DynamicModelViewer
+                models={models}
+                isLoaded={isRouteModelLoaded}
+                isOpened={isOpened}
+                setIsOpened={setIsOpened}
+                setIsRouteModelLoaded={setIsRouteModelLoaded}
+                isButtonEnabled={isButtonEnabled}
+                instructionStep={instructionStep}
+              />
+            }
+          />
+        </Routes>
+      </Suspense>
       <PreloadModels
         loadingProgress={loadingProgress}
         isOpened={isOpened}
@@ -123,7 +124,11 @@ function App () {
         isButtonEnabled={isButtonEnabled}
       />
       {isOpened === true && (
-        <InstructionsModal isOpened={isOpened} setIsOpened={setIsOpened} setInstructionStep={setInstructionStep} />
+        <InstructionsModal
+          isOpened={isOpened}
+          setIsOpened={setIsOpened}
+          setInstructionStep={setInstructionStep}
+        />
       )}
     </Router>
   )

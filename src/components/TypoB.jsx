@@ -14,7 +14,6 @@ function TypoB ({ activeModel, isLoaded }) {
   const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
   const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] = useState(false)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
-  console.log(activeModel)
 
   const minZoom = 0.5
   const maxZoom = 0.75

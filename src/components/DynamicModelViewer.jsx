@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import HomePage from './HomePage'
 import TypoB from './TypoB'
 
@@ -14,18 +14,26 @@ function DynamicModelViewer ({
 }) {
   const { modelId } = useParams()
 
+  const [isModelLoading, setIsModelLoading] = useState(true)
+
   useEffect(() => {
     if (isButtonEnabled && models && Object.keys(models).length > 0) {
       setIsRouteModelLoaded(true)
+      setIsModelLoading(false)
     }
-  }, [isButtonEnabled])
+  }, [isButtonEnabled, models, setIsRouteModelLoaded])
 
   const activeModel = useMemo(() => {
+    if (!models || Object.keys(models).length === 0) return null
     return models[modelId] || models.edificio
   }, [models, modelId])
 
-  if (!activeModel) {
+  if (isModelLoading) {
     return <div>Cargando...</div>
+  }
+
+  if (!activeModel) {
+    return <div>Error al cargar el modelo</div>
   }
 
   return activeModel === models.edificio
