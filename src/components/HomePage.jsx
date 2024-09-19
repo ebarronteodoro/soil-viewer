@@ -205,7 +205,7 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
           </mesh> */}
           <CameraController />
         </Suspense>
-        <Environment files='/models/hdri/sky.hdr' background blur={0.5} />
+        {/* <Environment files='/models/hdri/sky.hdr' background blur={0.5} /> */}
       </Canvas>
 
       {showContent && (

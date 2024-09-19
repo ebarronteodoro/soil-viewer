@@ -9,6 +9,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 const DynamicModelViewer = lazy(() => import('./components/DynamicModelViewer'))
 
 function App () {
+
+  console.log("Se renderiza app");
   const dracoLoader = useMemo(() => {
     const loader = new DRACOLoader()
     loader.setDecoderPath('/draco/')
@@ -25,6 +27,10 @@ function App () {
   const isModalClosed = window.localStorage.getItem('InstructionsModalClosed')
 
   useEffect(() => {
+
+    console.log("Se renderiza app: use effect");
+    
+
     const loadAllModels = async () => {
       const modelPaths = [
         { name: 't903', path: '/models/draco_models/903.glb' },
@@ -56,6 +62,8 @@ function App () {
                     child.material.roughness = modelInfo.name === 'edificio' ? 0.3 : 0.2
                   }
                 })
+                console.log("Se carga el modelo: "+ modelInfo.name);
+                
 
                 resolve({ name: modelInfo.name, gltf })
               },
@@ -79,7 +87,7 @@ function App () {
     }
 
     loadAllModels()
-  }, [dracoLoader])
+  }, [])
 
   return (
     <Router>
