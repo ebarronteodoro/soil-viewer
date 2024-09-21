@@ -98,7 +98,7 @@ function TypoA () {
             stateView={stateView}
             playAnimation={isAnimationTriggered}
             reverseAnimation={isReverseAnimationTriggered}
-            environmentPath='/models/hdri/studio.hdr'
+            environmentPath='/models/hdri/TypoA.jpg'
           />
           <CameraController />
         </Suspense>

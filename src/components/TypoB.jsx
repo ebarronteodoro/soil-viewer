@@ -72,7 +72,7 @@ function TypoB ({ activeModel, isLoaded }) {
             stateView={stateView}
             playAnimation={isAnimationTriggered}
             reverseAnimation={isReverseAnimationTriggered}
-            environmentPath='/models/hdri/brown_photostudio_01_4k.hdr'
+            environmentPath='/models/hdri/TypoB.jpg'
             object={activeModel.scene}
           />
           <CameraController />
