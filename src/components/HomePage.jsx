@@ -205,7 +205,10 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
           </mesh> */}
           <CameraController />
         </Suspense>
-        {/* <Environment files='/models/hdri/sky.hdr' background blur={0.5} /> */}
+        {/* <mesh>
+          <planeGeometry />
+          <meshBasicMaterial map={new THREE.TextureLoader().load('/models/hdri/sky.png')} />
+        </mesh> */}
       </Canvas>
 
       {showContent && (
