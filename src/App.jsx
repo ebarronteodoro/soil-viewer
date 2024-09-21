@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+// import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { useState, useRef, useEffect, useMemo, lazy, Suspense } from 'react'
 import PreloadModels from './components/PreloadModels'
 import InstructionsModal from './components/InstructionsModal'
@@ -11,11 +11,11 @@ const DynamicModelViewer = lazy(() => import('./components/DynamicModelViewer'))
 function App () {
 
   console.log("Se renderiza app");
-  const dracoLoader = useMemo(() => {
-    const loader = new DRACOLoader()
-    loader.setDecoderPath('/draco/')
-    return loader
-  }, [])
+  // const dracoLoader = useMemo(() => {
+  //   const loader = new DRACOLoader()
+  //   loader.setDecoderPath('/draco/')
+  //   return loader
+  // }, [])
 
   const [models, setModels] = useState({})
   const [isOpened, setIsOpened] = useState(false)
@@ -41,7 +41,7 @@ function App () {
       ]
 
       const loader = new GLTFLoader()
-      loader.setDRACOLoader(dracoLoader)
+      // loader.setDRACOLoader(dracoLoader)
 
       // Cargar los modelos en paralelo y manejar el progreso
       const modelPromises = modelPaths.map(
