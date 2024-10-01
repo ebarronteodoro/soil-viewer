@@ -37,7 +37,8 @@ function App () {
         { name: 't1901', path: '/models/draco_models/1901.glb' },
         { name: 't1905', path: '/models/draco_models/1905.glb' },
         { name: 'terraza', path: '/models/draco_models/TERRAZA.glb' },
-        { name: 'edificio', path: '/models/building.glb' }
+        { name: 'edificio', path: '/models/draco_models/ediificio2.glb' },
+        { name: 'piso', path: '/models/draco_models/pisoconmadera.glb'}
       ]
 
       const loader = new GLTFLoader()

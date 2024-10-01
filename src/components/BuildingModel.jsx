@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import * as THREE from 'three'
 import { useLocation } from 'react-router-dom'
 import { EffectComposer } from '@react-three/postprocessing'
+import { Sky } from '@react-three/drei'
 
 const Floors = ({ floorPositions, activeMeshIndex, handleClick, renderFloors }) => {
   return (
@@ -124,6 +125,7 @@ const BuildingModel = ({
           />
           <Lighting />
         </primitive>
+        <Sky />
 
         <EffectComposer />
       </>

@@ -2,7 +2,8 @@ import { Suspense, lazy, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 const HomePage = lazy(() => import('./HomePage'))
-const TypoB = lazy(() => import('./TypoB'))
+const TypoPage = lazy(() => import('./TypoPage'))
+const FloorPage = lazy(() => import('./FloorPage'))
 
 function DynamicModelViewer ({
   models,
@@ -31,19 +32,19 @@ function DynamicModelViewer ({
 
   return (
     <Suspense fallback={<div>Cargando...</div>}>
-      {activeModel === models.edificio
-        ? (
-          <HomePage
-            models={models.edificio}
-            isLoaded={isLoaded}
-            isOpened={isOpened}
-            setIsOpened={setIsOpened}
-            instructionStep={instructionStep}
-          />
-          )
-        : (
-          <TypoB activeModel={activeModel} isLoaded={isLoaded} />
-          )}
+      {activeModel === models.edificio ? (
+        <HomePage
+          models={models.edificio}
+          isLoaded={isLoaded}
+          isOpened={isOpened}
+          setIsOpened={setIsOpened}
+          instructionStep={instructionStep}
+        />
+      ) : activeModel === models.piso ? (
+        <FloorPage activeModel={activeModel} isLoaded={isLoaded} />
+      ) : (
+        <TypoPage activeModel={activeModel} isLoaded={isLoaded} />
+      )}
     </Suspense>
   )
 }

@@ -145,6 +145,7 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
     }
     setSelectedFloor(piso)
     if (piso === 9) setButtonRoute('/t903')
+    else if (piso === 18) setButtonRoute('/piso')
     else if (piso === 19) setButtonRoute('/t1901')
     else if (piso === 20) setButtonRoute('/t1905')
     else if (piso === 21) setButtonRoute('/terraza')
