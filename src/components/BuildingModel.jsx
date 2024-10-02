@@ -42,11 +42,10 @@ const Lighting = () => {
 
   return (
     <>
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={1.5} />
       <directionalLight
-        position={[-50, 80, 80]}
+        position={[-50, 120, 80]}
         intensity={2.8}
-        castShadow
       />
     </>
   )

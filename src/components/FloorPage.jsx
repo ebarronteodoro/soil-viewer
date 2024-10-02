@@ -12,12 +12,12 @@ function FloorPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
   const [zoom, setZoom] = useState(0.34)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
+  const [selectedObjectName, setSelectedObjectName] = useState('')
 
   const minZoom = 0.3
   const maxZoom = 0.5
   const zoomStep = 0.025
 
-  // Maneja el evento del scroll del mouse para controlar el zoom
   useEffect(() => {
     const handleWheel = (e) => {
       e.preventDefault()
@@ -33,7 +33,6 @@ function FloorPage ({ activeModel, isLoaded }) {
     }
   }, [])
 
-  // Funciones para manejar la rotación y el zoom
   const rotateLeft = () => setRotation((prev) => prev + Math.PI / 8)
   const rotateRight = () => setRotation((prev) => prev - Math.PI / 8)
   const zoomIn = () => setZoom((prev) => Math.min(prev + zoomStep, maxZoom))
@@ -41,34 +40,32 @@ function FloorPage ({ activeModel, isLoaded }) {
 
   const navigate = useNavigate()
 
-  // Navegación de retorno a la página de inicio
   const returnHome = () => {
     navigate('/')
   }
 
   return (
     <div>
-      <Canvas>
-        <ambientLight intensity={7} />
+      <Canvas shadows>
+        <ambientLight intensity={5} />
         <Suspense fallback={null}>
           <FloorModel
-            targetRotation={rotation} // Rotación basada en el estado actual
-            targetScale={zoom}         // Escala basada en el estado actual
-            stateView={stateView}       // Vista (rotación en el eje X)
-            object={activeModel.scene}  // Modelo 3D
+            targetRotation={rotation}
+            targetScale={zoom}
+            stateView={stateView}
+            object={activeModel.scene}
+            setSelectedObjectName={setSelectedObjectName}
           />
           <CameraController />
         </Suspense>
       </Canvas>
 
-      {/* Controles y botones para manejar el modelo */}
       {isLoaded && (
-        <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'flex', gap: '15px' }}>
+        <div style={{ position: 'absolute', bottom: '1rem', left: '2rem', display: 'flex' }}>
           <button onClick={returnHome}>Volver</button>
         </div>
       )}
       
-      {/* Barra de herramientas con botones de rotación y zoom */}
       {isLoaded && (
         <div className='menubar'>
           <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
@@ -85,6 +82,14 @@ function FloorPage ({ activeModel, isLoaded }) {
           </AnimatedButton>
         </div>
       )}
+      {
+        isLoaded && (
+          <aside className={`typo-selector ${selectedObjectName !== '' && 'active'}`}>
+            <h2>Tipología:</h2>
+            <span>{selectedObjectName}</span>
+          </aside>
+        )
+      }
     </div>
   )
 }
