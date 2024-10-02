@@ -7,6 +7,7 @@ import ZoomInIcon from './icons/ZoomInIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import { useNavigate } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
+import ReturnIcon from './icons/ReturnIcon'
 
 function TypoPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
@@ -80,8 +81,8 @@ function TypoPage ({ activeModel, isLoaded }) {
       </Canvas>
       {isLoaded && (
         <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'flex', gap: '15px' }}>
-          <button onClick={returnHome}>Volver</button>
-          <button onClick={triggerAnimation}>Start Animation</button>
+          <AnimatedButton onClick={returnHome}><ReturnIcon width='30px' height='30px' /></AnimatedButton>
+          <button onClick={triggerAnimation}>Vista 3d</button>
           {isAnimationTriggered && (
             <>
               <button onClick={toggleView}>Toggle View</button>

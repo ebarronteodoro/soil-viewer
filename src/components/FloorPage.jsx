@@ -7,6 +7,7 @@ import ZoomOutIcon from './icons/ZoomOutIcon'
 import { useNavigate } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
 import FloorModel from './FloorModel'
+import ReturnIcon from './icons/ReturnIcon'
 
 function FloorPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
@@ -19,7 +20,7 @@ function FloorPage ({ activeModel, isLoaded }) {
   const zoomStep = 0.025
 
   useEffect(() => {
-    const handleWheel = (e) => {
+    const handleWheel = e => {
       e.preventDefault()
       if (e.deltaY < 0) {
         zoomIn()
@@ -33,10 +34,10 @@ function FloorPage ({ activeModel, isLoaded }) {
     }
   }, [])
 
-  const rotateLeft = () => setRotation((prev) => prev + Math.PI / 8)
-  const rotateRight = () => setRotation((prev) => prev - Math.PI / 8)
-  const zoomIn = () => setZoom((prev) => Math.min(prev + zoomStep, maxZoom))
-  const zoomOut = () => setZoom((prev) => Math.max(prev - zoomStep, minZoom))
+  const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
+  const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
+  const zoomIn = () => setZoom(prev => Math.min(prev + zoomStep, maxZoom))
+  const zoomOut = () => setZoom(prev => Math.max(prev - zoomStep, minZoom))
 
   const navigate = useNavigate()
 
@@ -61,35 +62,68 @@ function FloorPage ({ activeModel, isLoaded }) {
       </Canvas>
 
       {isLoaded && (
-        <div style={{ position: 'absolute', bottom: '1rem', left: '2rem', display: 'flex' }}>
-          <button onClick={returnHome}>Volver</button>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '1rem',
+            left: '2rem',
+            display: 'flex'
+          }}
+        >
+          <AnimatedButton onClick={returnHome}><ReturnIcon width='30px' height='30px' /></AnimatedButton>
         </div>
       )}
-      
+
       {isLoaded && (
         <div className='menubar'>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
+          <AnimatedButton
+            style={{ display: 'flex', border: 'none', background: 'none' }}
+            onClick={rotateLeft}
+          >
             <GlobalRotateIcon width='30px' height='30px' />
           </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomOut}>
+          <AnimatedButton
+            style={{
+              display: 'flex',
+              border: 'none',
+              background: 'none',
+              color: 'white'
+            }}
+            onClick={zoomOut}
+          >
             <ZoomOutIcon width='30px' height='30px' />
           </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomIn}>
+          <AnimatedButton
+            style={{
+              display: 'flex',
+              border: 'none',
+              background: 'none',
+              color: 'white'
+            }}
+            onClick={zoomIn}
+          >
             <ZoomInIcon width='30px' height='30px' />
           </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateRight}>
-            <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
+          <AnimatedButton
+            style={{ display: 'flex', border: 'none', background: 'none' }}
+            onClick={rotateRight}
+          >
+            <GlobalRotateIcon
+              width='30px'
+              height='30px'
+              style={{ transform: 'scaleX(-1)' }}
+            />
           </AnimatedButton>
         </div>
       )}
-      {
-        isLoaded && (
-          <aside className={`typo-selector ${selectedObjectName !== '' && 'active'}`}>
-            <h2>Tipología:</h2>
-            <span>{selectedObjectName}</span>
-          </aside>
-        )
-      }
+      {isLoaded && (
+        <aside
+          className={`typo-selector ${selectedObjectName !== '' && 'active'}`}
+        >
+          <h2>Tipología:</h2>
+          <span>{selectedObjectName}</span>
+        </aside>
+      )}
     </div>
   )
 }
