@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Environment } from '@react-three/drei'
-// import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
 function Model ({
   targetRotation,
@@ -11,23 +10,55 @@ function Model ({
   reverseAnimation,
   stateView,
   environmentPath,
-  object
+  object,
+  animations
 }) {
   const meshRef = useRef()
-  const mixerRef = useRef()
-  const { gl } = useThree()
+  const mixerRef = useRef(null) // Referencia para el AnimationMixer
+  const actionRef = useRef(null) // Referencia para la acción de animación
 
   useEffect(() => {
-    gl.toneMappingExposure = 0.6
-  }, [gl])
+    if (animations && animations.length > 0) {
+      // Crear el mixer de animaciones si hay animaciones disponibles
+      mixerRef.current = new THREE.AnimationMixer(object)
 
-  useFrame(() => {
+      // Crear la acción de animación (ejecutaremos la primera animación por defecto)
+      actionRef.current = mixerRef.current.clipAction(animations[0])
+
+      // Configuración para que la animación solo se ejecute una vez y se quede al final
+      actionRef.current.setLoop(THREE.LoopOnce)
+      actionRef.current.clampWhenFinished = true // Mantiene el último frame al finalizar
+
+      // Reproducir la animación si playAnimation es true
+      if (playAnimation) {
+        actionRef.current.reset().play()
+        actionRef.current.setEffectiveTimeScale(1) // Normal playback
+      }
+
+      // Si reverseAnimation es true, reproducirla en reversa
+      if (reverseAnimation) {
+        actionRef.current.reset().play()
+        actionRef.current.setEffectiveTimeScale(-1) // Reverso
+        actionRef.current.setEffectiveWeight(1)
+      }
+
+      // Cleanup al desmontar el componente
+      return () => {
+        mixerRef.current.stopAllAction()
+      }
+    }
+  }, [animations, playAnimation, reverseAnimation, object])
+
+  useFrame((_, delta) => {
+    if (mixerRef.current) {
+      mixerRef.current.update(delta) // Actualiza el mixer en cada frame
+    }
+
     if (meshRef.current) {
-      const delta = 0.02
       meshRef.current.rotation.y = THREE.MathUtils.lerp(
         meshRef.current.rotation.y,
         targetRotation,
-        delta
+        0.02
       )
       meshRef.current.scale.lerp(
         new THREE.Vector3(targetScale, targetScale, targetScale),
@@ -38,10 +69,6 @@ function Model ({
         stateView[0],
         0.2
       )
-    }
-
-    if (mixerRef.current && (playAnimation || reverseAnimation)) {
-      mixerRef.current.update(0.02)
     }
   })
 
@@ -88,8 +115,6 @@ function Model ({
       />
 
       <Environment files={environmentPath} background blur={0} />
-      {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.05} intensity={0.05} /> */}
-      {/* <EffectComposer /> */}
     </>
   )
 }

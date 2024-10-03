@@ -77,6 +77,7 @@ function App () {
     }
 
     loadAllModels()
+    console.log(models)
   }, [])
 
   return (

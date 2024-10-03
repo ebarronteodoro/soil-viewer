@@ -1,0 +1,1460 @@
+{
+  "es": {
+    "switchViewText": "Vista Lateral",
+    "viewFloorText": "Ver Piso",
+    "viewTypoText": "Ver Tipología",
+    "building": {
+      "floor": {
+        "1": {
+          "id": "1",
+          "name": "Piso: 1",
+          "apartments": {
+            "101": {
+              "id": "101",
+              "name": "Departamento 101",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "102": {
+              "id": "102",
+              "name": "Departamento 102",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_paralelo.glb"
+            },
+            "103": {
+              "id": "103",
+              "name": "Departamento 103",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "104": {
+              "id": "104",
+              "name": "Departamento 104",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "105": {
+              "id": "105",
+              "name": "Departamento 105",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "2": {
+          "id": "2",
+          "name": "Piso: 2",
+          "apartments": {
+            "201": {
+              "id": "201",
+              "name": "Departamento 201",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "202": {
+              "id": "202",
+              "name": "Departamento 202",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "203": {
+              "id": "203",
+              "name": "Departamento 203",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "204": {
+              "id": "204",
+              "name": "Departamento 204",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "205": {
+              "id": "205",
+              "name": "Departamento 205",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "3": {
+          "id": "3",
+          "name": "Piso: 3",
+          "apartments": {
+            "301": {
+              "id": "301",
+              "name": "Departamento 301",
+              "type": "Penthouse",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "302": {
+              "id": "302",
+              "name": "Departamento 302",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "303": {
+              "id": "303",
+              "name": "Departamento 303",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "304": {
+              "id": "304",
+              "name": "Departamento 304",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "305": {
+              "id": "305",
+              "name": "Departamento 305",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "4": {
+          "id": "4",
+          "name": "Piso: 4",
+          "apartments": {
+            "401": {
+              "id": "401",
+              "name": "Departamento 401",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "402": {
+              "id": "402",
+              "name": "Departamento 402",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "403": {
+              "id": "403",
+              "name": "Departamento 403",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "404": {
+              "id": "404",
+              "name": "Departamento 404",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "405": {
+              "id": "405",
+              "name": "Departamento 405",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "5": {
+          "id": "5",
+          "name": "Piso: 5",
+          "apartments": {
+            "501": {
+              "id": "501",
+              "name": "Departamento 501",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "502": {
+              "id": "502",
+              "name": "Departamento 502",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "503": {
+              "id": "503",
+              "name": "Departamento 503",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "504": {
+              "id": "504",
+              "name": "Departamento 504",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "505": {
+              "id": "505",
+              "name": "Departamento 505",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "6": {
+          "id": "6",
+          "name": "Piso: 6",
+          "apartments": {
+            "601": {
+              "id": "601",
+              "name": "Departamento 601",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "602": {
+              "id": "602",
+              "name": "Departamento 602",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "603": {
+              "id": "603",
+              "name": "Departamento 603",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "604": {
+              "id": "604",
+              "name": "Departamento 604",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "605": {
+              "id": "605",
+              "name": "Departamento 605",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "7": {
+          "id": "7",
+          "name": "Piso: 7",
+          "apartments": {
+            "701": {
+              "id": "701",
+              "name": "Departamento 701",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "702": {
+              "id": "702",
+              "name": "Departamento 702",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "703": {
+              "id": "703",
+              "name": "Departamento 703",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "704": {
+              "id": "704",
+              "name": "Departamento 704",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "705": {
+              "id": "705",
+              "name": "Departamento 705",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "8": {
+          "id": "8",
+          "name": "Piso: 8",
+          "apartments": {
+            "801": {
+              "id": "801",
+              "name": "Departamento 801",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "802": {
+              "id": "802",
+              "name": "Departamento 802",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "803": {
+              "id": "803",
+              "name": "Departamento 803",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "804": {
+              "id": "804",
+              "name": "Departamento 804",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "805": {
+              "id": "805",
+              "name": "Departamento 805",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "9": {
+          "id": "9",
+          "name": "Piso: 9",
+          "apartments": {
+            "901": {
+              "id": "901",
+              "name": "Departamento 901",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "902": {
+              "id": "902",
+              "name": "Departamento 902",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "903": {
+              "id": "903",
+              "name": "Departamento 903",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "904": {
+              "id": "904",
+              "name": "Departamento 904",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "905": {
+              "id": "905",
+              "name": "Departamento 905",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "10": {
+          "id": "10",
+          "name": "Piso: 10",
+          "apartments": {
+            "1001": {
+              "id": "1001",
+              "name": "Departamento 1001",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1002": {
+              "id": "1002",
+              "name": "Departamento 1002",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1003": {
+              "id": "1003",
+              "name": "Departamento 1003",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1004": {
+              "id": "1004",
+              "name": "Departamento 1004",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1005": {
+              "id": "1005",
+              "name": "Departamento 1005",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "11": {
+          "id": "11",
+          "name": "Piso: 11",
+          "apartments": {
+            "1101": {
+              "id": "1101",
+              "name": "Departamento 1101",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1102": {
+              "id": "1102",
+              "name": "Departamento 1102",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1103": {
+              "id": "1103",
+              "name": "Departamento 1103",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1104": {
+              "id": "1104",
+              "name": "Departamento 1104",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1105": {
+              "id": "1105",
+              "name": "Departamento 1105",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "12": {
+          "id": "12",
+          "name": "Piso: 12",
+          "apartments": {
+            "1201": {
+              "id": "1201",
+              "name": "Departamento 1201",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1202": {
+              "id": "1202",
+              "name": "Departamento 1202",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1203": {
+              "id": "1203",
+              "name": "Departamento 1203",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1204": {
+              "id": "1204",
+              "name": "Departamento 1204",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1205": {
+              "id": "1205",
+              "name": "Departamento 1205",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "13": {
+          "id": "13",
+          "name": "Piso: 13",
+          "apartments": {
+            "1301": {
+              "id": "1301",
+              "name": "Departamento 1301",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1302": {
+              "id": "1302",
+              "name": "Departamento 1302",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1303": {
+              "id": "1303",
+              "name": "Departamento 1303",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1304": {
+              "id": "1304",
+              "name": "Departamento 1304",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1305": {
+              "id": "1305",
+              "name": "Departamento 1305",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "14": {
+          "id": "14",
+          "name": "Piso: 14",
+          "apartments": {
+            "1401": {
+              "id": "1401",
+              "name": "Departamento 1401",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1402": {
+              "id": "1402",
+              "name": "Departamento 1402",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1403": {
+              "id": "1403",
+              "name": "Departamento 1403",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1404": {
+              "id": "1404",
+              "name": "Departamento 1404",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1405": {
+              "id": "1405",
+              "name": "Departamento 1405",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "15": {
+          "id": "15",
+          "name": "Piso: 15",
+          "apartments": {
+            "1501": {
+              "id": "1501",
+              "name": "Departamento 1501",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1502": {
+              "id": "1502",
+              "name": "Departamento 1502",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1503": {
+              "id": "1503",
+              "name": "Departamento 1503",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1504": {
+              "id": "1504",
+              "name": "Departamento 1504",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1505": {
+              "id": "1505",
+              "name": "Departamento 1505",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "16": {
+          "id": "16",
+          "name": "Piso: 16",
+          "apartments": {
+            "1601": {
+              "id": "1601",
+              "name": "Departamento 1601",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1602": {
+              "id": "1602",
+              "name": "Departamento 1602",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1603": {
+              "id": "1603",
+              "name": "Departamento 1603",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1604": {
+              "id": "1604",
+              "name": "Departamento 1604",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1605": {
+              "id": "1605",
+              "name": "Departamento 1605",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "17": {
+          "id": "17",
+          "name": "Piso: 17",
+          "apartments": {
+            "1701": {
+              "id": "1701",
+              "name": "Departamento 1701",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1702": {
+              "id": "1702",
+              "name": "Departamento 1702",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1703": {
+              "id": "1703",
+              "name": "Departamento 1703",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1704": {
+              "id": "1704",
+              "name": "Departamento 1704",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1705": {
+              "id": "1705",
+              "name": "Departamento 1705",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "18": {
+          "id": "18",
+          "name": "Piso: 18",
+          "apartments": {
+            "1801": {
+              "id": "1801",
+              "name": "Departamento 1801",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1802": {
+              "id": "1802",
+              "name": "Departamento 1802",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1803": {
+              "id": "1803",
+              "name": "Departamento 1803",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1804": {
+              "id": "1804",
+              "name": "Departamento 1804",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1805": {
+              "id": "1805",
+              "name": "Departamento 1805",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "19": {
+          "id": "19",
+          "name": "Piso: 19",
+          "apartments": {
+            "1901": {
+              "id": "1901",
+              "name": "Departamento 1901",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1902": {
+              "id": "1902",
+              "name": "Departamento 1902",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1903": {
+              "id": "1903",
+              "name": "Departamento 1903",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1904": {
+              "id": "1904",
+              "name": "Departamento 1904",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1905": {
+              "id": "1905",
+              "name": "Departamento 1905",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "20": {
+          "id": "20",
+          "name": "Piso: 20",
+          "apartments": {
+            "2001": {
+              "id": "2001",
+              "name": "Departamento 2001",
+              "type": "2 Habitaciones",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2002": {
+              "id": "2002",
+              "name": "Departamento 2002",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2003": {
+              "id": "2003",
+              "name": "Departamento 2003",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2004": {
+              "id": "2004",
+              "name": "Departamento 2004",
+              "type": "1 Habitación",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2005": {
+              "id": "2005",
+              "name": "Departamento 2005",
+              "type": "Estudio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        }
+      }
+    }
+  },
+  "en": {
+    "switchViewText": "Side View",
+    "viewFloorText": "View Floor",
+    "viewTypoText": "View Typologie",
+    "building": {
+      "floor": {
+        "1": {
+          "id": "1",
+          "name": "Floor: 1",
+          "apartments": {
+            "101": {
+              "id": "101",
+              "name": "Apartment 101",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "102": {
+              "id": "102",
+              "name": "Apartment 102",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "103": {
+              "id": "103",
+              "name": "Apartment 103",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "104": {
+              "id": "104",
+              "name": "Apartment 104",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "105": {
+              "id": "105",
+              "name": "Apartment 105",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "2": {
+          "id": "2",
+          "name": "Floor: 2",
+          "apartments": {
+            "201": {
+              "id": "201",
+              "name": "Apartment 201",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "202": {
+              "id": "202",
+              "name": "Apartment 202",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "203": {
+              "id": "203",
+              "name": "Apartment 203",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "204": {
+              "id": "204",
+              "name": "Apartment 204",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "205": {
+              "id": "205",
+              "name": "Apartment 205",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "3": {
+          "id": "3",
+          "name": "Floor: 3",
+          "apartments": {
+            "301": {
+              "id": "301",
+              "name": "Apartment 301",
+              "type": "Penthouse",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "302": {
+              "id": "302",
+              "name": "Apartment 302",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "303": {
+              "id": "303",
+              "name": "Apartment 303",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "304": {
+              "id": "304",
+              "name": "Apartment 304",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "305": {
+              "id": "305",
+              "name": "Apartment 305",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "4": {
+          "id": "4",
+          "name": "Floor: 4",
+          "apartments": {
+            "401": {
+              "id": "401",
+              "name": "Apartment 401",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "402": {
+              "id": "402",
+              "name": "Apartment 402",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "403": {
+              "id": "403",
+              "name": "Apartment 403",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "404": {
+              "id": "404",
+              "name": "Apartment 404",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "405": {
+              "id": "405",
+              "name": "Apartment 405",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "5": {
+          "id": "5",
+          "name": "Floor: 5",
+          "apartments": {
+            "501": {
+              "id": "501",
+              "name": "Apartment 501",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "502": {
+              "id": "502",
+              "name": "Apartment 502",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "503": {
+              "id": "503",
+              "name": "Apartment 503",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "504": {
+              "id": "504",
+              "name": "Apartment 504",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "505": {
+              "id": "505",
+              "name": "Apartment 505",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "6": {
+          "id": "6",
+          "name": "Floor: 6",
+          "apartments": {
+            "601": {
+              "id": "601",
+              "name": "Apartment 601",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "602": {
+              "id": "602",
+              "name": "Apartment 602",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "603": {
+              "id": "603",
+              "name": "Apartment 603",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "604": {
+              "id": "604",
+              "name": "Apartment 604",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "605": {
+              "id": "605",
+              "name": "Apartment 605",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "7": {
+          "id": "7",
+          "name": "Floor: 7",
+          "apartments": {
+            "701": {
+              "id": "701",
+              "name": "Apartment 701",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "702": {
+              "id": "702",
+              "name": "Apartment 702",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "703": {
+              "id": "703",
+              "name": "Apartment 703",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "704": {
+              "id": "704",
+              "name": "Apartment 704",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "705": {
+              "id": "705",
+              "name": "Apartment 705",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "8": {
+          "id": "8",
+          "name": "Floor: 8",
+          "apartments": {
+            "801": {
+              "id": "801",
+              "name": "Apartment 801",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "802": {
+              "id": "802",
+              "name": "Apartment 802",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "803": {
+              "id": "803",
+              "name": "Apartment 803",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "804": {
+              "id": "804",
+              "name": "Apartment 804",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "805": {
+              "id": "805",
+              "name": "Apartment 805",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "9": {
+          "id": "9",
+          "name": "Floor: 9",
+          "apartments": {
+            "901": {
+              "id": "901",
+              "name": "Apartment 901",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "902": {
+              "id": "902",
+              "name": "Apartment 902",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "903": {
+              "id": "903",
+              "name": "Apartment 903",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "904": {
+              "id": "904",
+              "name": "Apartment 904",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "905": {
+              "id": "905",
+              "name": "Apartment 905",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "10": {
+          "id": "10",
+          "name": "Floor: 10",
+          "apartments": {
+            "1001": {
+              "id": "1001",
+              "name": "Apartment 1001",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1002": {
+              "id": "1002",
+              "name": "Apartment 1002",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1003": {
+              "id": "1003",
+              "name": "Apartment 1003",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1004": {
+              "id": "1004",
+              "name": "Apartment 1004",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1005": {
+              "id": "1005",
+              "name": "Apartment 1005",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "11": {
+          "id": "11",
+          "name": "Floor: 11",
+          "apartments": {
+            "1101": {
+              "id": "1101",
+              "name": "Apartment 1101",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1102": {
+              "id": "1102",
+              "name": "Apartment 1102",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1103": {
+              "id": "1103",
+              "name": "Apartment 1103",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1104": {
+              "id": "1104",
+              "name": "Apartment 1104",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1105": {
+              "id": "1105",
+              "name": "Apartment 1105",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "12": {
+          "id": "12",
+          "name": "Floor: 12",
+          "apartments": {
+            "1201": {
+              "id": "1201",
+              "name": "Apartment 1201",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1202": {
+              "id": "1202",
+              "name": "Apartment 1202",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1203": {
+              "id": "1203",
+              "name": "Apartment 1203",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1204": {
+              "id": "1204",
+              "name": "Apartment 1204",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1205": {
+              "id": "1205",
+              "name": "Apartment 1205",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "13": {
+          "id": "13",
+          "name": "Floor: 13",
+          "apartments": {
+            "1301": {
+              "id": "1301",
+              "name": "Apartment 1301",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1302": {
+              "id": "1302",
+              "name": "Apartment 1302",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1303": {
+              "id": "1303",
+              "name": "Apartment 1303",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1304": {
+              "id": "1304",
+              "name": "Apartment 1304",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1305": {
+              "id": "1305",
+              "name": "Apartment 1305",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "14": {
+          "id": "14",
+          "name": "Floor: 14",
+          "apartments": {
+            "1401": {
+              "id": "1401",
+              "name": "Apartment 1401",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1402": {
+              "id": "1402",
+              "name": "Apartment 1402",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1403": {
+              "id": "1403",
+              "name": "Apartment 1403",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1404": {
+              "id": "1404",
+              "name": "Apartment 1404",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1405": {
+              "id": "1405",
+              "name": "Apartment 1405",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "15": {
+          "id": "15",
+          "name": "Floor: 15",
+          "apartments": {
+            "1501": {
+              "id": "1501",
+              "name": "Apartment 1501",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1502": {
+              "id": "1502",
+              "name": "Apartment 1502",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1503": {
+              "id": "1503",
+              "name": "Apartment 1503",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1504": {
+              "id": "1504",
+              "name": "Apartment 1504",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1505": {
+              "id": "1505",
+              "name": "Apartment 1505",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "16": {
+          "id": "16",
+          "name": "Floor: 16",
+          "apartments": {
+            "1601": {
+              "id": "1601",
+              "name": "Apartment 1601",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1602": {
+              "id": "1602",
+              "name": "Apartment 1602",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1603": {
+              "id": "1603",
+              "name": "Apartment 1603",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1604": {
+              "id": "1604",
+              "name": "Apartment 1604",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1605": {
+              "id": "1605",
+              "name": "Apartment 1605",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "17": {
+          "id": "17",
+          "name": "Floor: 17",
+          "apartments": {
+            "1701": {
+              "id": "1701",
+              "name": "Apartment 1701",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1702": {
+              "id": "1702",
+              "name": "Apartment 1702",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1703": {
+              "id": "1703",
+              "name": "Apartment 1703",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1704": {
+              "id": "1704",
+              "name": "Apartment 1704",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1705": {
+              "id": "1705",
+              "name": "Apartment 1705",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "18": {
+          "id": "18",
+          "name": "Floor: 18",
+          "apartments": {
+            "1801": {
+              "id": "1801",
+              "name": "Apartment 1801",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1802": {
+              "id": "1802",
+              "name": "Apartment 1802",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1803": {
+              "id": "1803",
+              "name": "Apartment 1803",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1804": {
+              "id": "1804",
+              "name": "Apartment 1804",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1805": {
+              "id": "1805",
+              "name": "Apartment 1805",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "19": {
+          "id": "19",
+          "name": "Floor: 19",
+          "apartments": {
+            "1901": {
+              "id": "1901",
+              "name": "Apartment 1901",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1902": {
+              "id": "1902",
+              "name": "Apartment 1902",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1903": {
+              "id": "1903",
+              "name": "Apartment 1903",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1904": {
+              "id": "1904",
+              "name": "Apartment 1904",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "1905": {
+              "id": "1905",
+              "name": "Apartment 1905",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        },
+        "20": {
+          "id": "20",
+          "name": "Floor: 20",
+          "apartments": {
+            "2001": {
+              "id": "2001",
+              "name": "Apartment 2001",
+              "type": "2 Bedrooms",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2002": {
+              "id": "2002",
+              "name": "Apartment 2002",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2003": {
+              "id": "2003",
+              "name": "Apartment 2003",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2004": {
+              "id": "2004",
+              "name": "Apartment 2004",
+              "type": "1 Bedroom",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            },
+            "2005": {
+              "id": "2005",
+              "name": "Apartment 2005",
+              "type": "Studio",
+              "apartment_path": "/models/apartments/modelo_depa6.glb"
+            }
+          }
+        }
+      }
+    }
+  }
+}

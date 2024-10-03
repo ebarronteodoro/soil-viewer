@@ -13,7 +13,8 @@ function TypoPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
   const [zoom, setZoom] = useState(0.65)
   const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
-  const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] = useState(false)
+  const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] =
+    useState(false)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
 
   const minZoom = 0.5
@@ -21,7 +22,7 @@ function TypoPage ({ activeModel, isLoaded }) {
   const zoomStep = 0.05
 
   useEffect(() => {
-    const handleWheel = (e) => {
+    const handleWheel = e => {
       e.preventDefault()
       if (e.deltaY < 0) {
         zoomIn()
@@ -35,10 +36,10 @@ function TypoPage ({ activeModel, isLoaded }) {
     }
   }, [])
 
-  const rotateLeft = () => setRotation((prev) => prev + Math.PI / 8)
-  const rotateRight = () => setRotation((prev) => prev - Math.PI / 8)
-  const zoomIn = () => setZoom((prev) => Math.min(prev + zoomStep, maxZoom))
-  const zoomOut = () => setZoom((prev) => Math.max(prev - zoomStep, minZoom))
+  const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
+  const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
+  const zoomIn = () => setZoom(prev => Math.min(prev + zoomStep, maxZoom))
+  const zoomOut = () => setZoom(prev => Math.max(prev - zoomStep, minZoom))
   const navigate = useNavigate()
 
   const returnHome = () => {
@@ -58,7 +59,8 @@ function TypoPage ({ activeModel, isLoaded }) {
 
   const toggleView = () => {
     const currentRotation = stateView[0]
-    const newRotation = currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
+    const newRotation =
+      currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
     setStateView([newRotation, 0, 0])
   }
 
@@ -75,35 +77,74 @@ function TypoPage ({ activeModel, isLoaded }) {
             reverseAnimation={isReverseAnimationTriggered}
             environmentPath='/models/hdri/TypoB.jpg'
             object={activeModel.scene}
+            animations={activeModel.animations}
           />
           <CameraController />
         </Suspense>
       </Canvas>
       {isLoaded && (
-        <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'flex', gap: '15px' }}>
-          <AnimatedButton onClick={returnHome}><ReturnIcon width='30px' height='30px' /></AnimatedButton>
+        <div
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '20px',
+            display: 'flex',
+            gap: '15px'
+          }}
+        >
+          <AnimatedButton onClick={returnHome}>
+            <ReturnIcon width='30px' height='30px' />
+          </AnimatedButton>
           <button onClick={triggerAnimation}>Vista 3d</button>
           {isAnimationTriggered && (
             <>
               <button onClick={toggleView}>Toggle View</button>
-              <button onClick={triggerReverseAnimation}>Reverse Animation</button>
+              <button onClick={triggerReverseAnimation}>
+                Reverse Animation
+              </button>
             </>
           )}
         </div>
       )}
       {isLoaded && (
         <div className='menubar'>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
+          <AnimatedButton
+            style={{ display: 'flex', border: 'none', background: 'none' }}
+            onClick={rotateLeft}
+          >
             <GlobalRotateIcon width='30px' height='30px' />
           </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomOut}>
+          <AnimatedButton
+            style={{
+              display: 'flex',
+              border: 'none',
+              background: 'none',
+              color: 'white'
+            }}
+            onClick={zoomOut}
+          >
             <ZoomOutIcon width='30px' height='30px' />
           </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomIn}>
+          <AnimatedButton
+            style={{
+              display: 'flex',
+              border: 'none',
+              background: 'none',
+              color: 'white'
+            }}
+            onClick={zoomIn}
+          >
             <ZoomInIcon width='30px' height='30px' />
           </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateRight}>
-            <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
+          <AnimatedButton
+            style={{ display: 'flex', border: 'none', background: 'none' }}
+            onClick={rotateRight}
+          >
+            <GlobalRotateIcon
+              width='30px'
+              height='30px'
+              style={{ transform: 'scaleX(-1)' }}
+            />
           </AnimatedButton>
         </div>
       )}
