@@ -7,6 +7,7 @@ import ZoomInIcon from './icons/ZoomInIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import { useNavigate } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
+import * as THREE from 'three'
 import ReturnIcon from './icons/ReturnIcon'
 
 function TypoPage ({ activeModel, isLoaded }) {
@@ -66,7 +67,7 @@ function TypoPage ({ activeModel, isLoaded }) {
 
   return (
     <div>
-      <Canvas>
+      <Canvas fog={new THREE.Fog(0xcccccc, 5, 50)}>
         <ambientLight intensity={7} />
         <Suspense fallback={null}>
           <Model

@@ -45,6 +45,7 @@ function App () {
                   (++progressRef.current / modelPaths.length) * 100
                 )
                 setLoadingProgress(totalProgress)
+                totalProgress === 100 && setIsRouteModelLoaded(true)
 
                 gltf.scene.traverse(child => {
                   if (child.isMesh) {

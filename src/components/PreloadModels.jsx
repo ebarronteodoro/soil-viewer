@@ -38,7 +38,7 @@ function PreloadModels ({
       {showLoader && (
         <div className={`loader2 ${fadeOutLoader ? 'fade-out' : ''}`}>
           <div className='vista360'>
-            <View360 scene='/models/hdri/Preload.png' />
+            {/* <View360 scene='/models/hdri/Preload.png' /> */}
           </div>
           <img
             className='soil-logo'

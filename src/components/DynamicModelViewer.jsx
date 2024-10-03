@@ -16,8 +16,13 @@ function DynamicModelViewer ({
 }) {
   const { modelId } = useParams()
 
+  console.log(models);
+  console.log(isButtonEnabled && models && Object.keys(models).length > 0);
+  console.log(isLoaded);
+  
+
   useEffect(() => {
-    if (isButtonEnabled && models && Object.keys(models).length > 0) {
+    if (isButtonEnabled && Object.keys(models).length > 0) {
       setIsRouteModelLoaded(true)
     }
   }, [isButtonEnabled])
