@@ -49,10 +49,7 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
     if (intersects.length > 0) {
       const intersectedObject = intersects[0].object
 
-      if (
-        intersectedObject.name !== 'paredes-mesh001' &&
-        intersectedObject.name !== 'paredes-mesh001_1'
-      ) {
+      if (intersectedObject.name.startsWith('tipo')) {
         if (selectedObject) {
           selectedObject.material.color.set('white')
           selectedObject.material.opacity = 1
