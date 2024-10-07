@@ -95,7 +95,7 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
         </group>
       )}
 
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.5} />
 
       <directionalLight
         color='#fade85'

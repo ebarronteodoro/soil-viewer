@@ -144,10 +144,12 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
       piso = index + 2
     }
     setSelectedFloor(piso)
-    if (piso === 9) setButtonRoute('/t903')
-    else if (piso === 18) setButtonRoute('/piso')
-    else if (piso === 19) setButtonRoute('/t1901')
-    else if (piso === 20) setButtonRoute('/t1905')
+    if (piso === 1) setButtonRoute('/piso1')
+    else if (piso === 6 || piso === 3 || piso === 4 || piso === 5 || piso === 7 || piso === 8) setButtonRoute('/piso2')
+    else if (piso === 9 || piso === 10 || piso === 11) setButtonRoute('/piso3')
+    else if (piso === 12) setButtonRoute('/piso4')
+    else if (piso === 19) setButtonRoute('/piso7')
+    else if (piso === 20) setButtonRoute('/piso7')
     else if (piso === 21) setButtonRoute('/terraza')
     else setButtonRoute(null)
   }

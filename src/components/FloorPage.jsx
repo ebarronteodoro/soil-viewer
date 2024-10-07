@@ -8,8 +8,9 @@ import { useNavigate } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
 import FloorModel from './FloorModel'
 import ReturnIcon from './icons/ReturnIcon'
+import modelPaths from '../data/modelPaths'
 
-function FloorPage ({ activeModel, isLoaded }) {
+function FloorPage({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
   const [zoom, setZoom] = useState(0.34)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
@@ -43,6 +44,23 @@ function FloorPage ({ activeModel, isLoaded }) {
 
   const returnHome = () => {
     navigate('/')
+  }
+
+  const viewTypology = () => {
+    if (selectedObjectName) {
+      const baseTypology = selectedObjectName
+        .replace('-parent', '')
+        .replace('-aprent', '')
+        .replace('tipo-', 't-')
+
+      console.log(baseTypology);
+
+      if (modelPaths[baseTypology]) {
+        navigate(`/${baseTypology}`)
+      } else {
+        console.log(`No se encontró una ruta para ${selectedObjectName}`)
+      }
+    }
   }
 
   return (
@@ -116,12 +134,16 @@ function FloorPage ({ activeModel, isLoaded }) {
           </AnimatedButton>
         </div>
       )}
+
       {isLoaded && (
         <aside
           className={`typo-selector ${selectedObjectName !== '' && 'active'}`}
         >
           <h2>Tipología:</h2>
           <span>{selectedObjectName}</span>
+          <button className='view-typo' onClick={viewTypology}>
+            Ver Tipología
+          </button>
         </aside>
       )}
     </div>

@@ -16,16 +16,16 @@ function DynamicModelViewer ({
 }) {
   const { modelId } = useParams()
 
-  console.log(models);
-  console.log(isButtonEnabled && models && Object.keys(models).length > 0);
-  console.log(isLoaded);
-  
-
   useEffect(() => {
     if (isButtonEnabled && Object.keys(models).length > 0) {
       setIsRouteModelLoaded(true)
     }
-  }, [isButtonEnabled])
+  }, [isButtonEnabled, models, setIsRouteModelLoaded])
+
+  const floorModels = useMemo(
+    () => new Set(['piso1', 'piso2', 'piso3', 'piso4', 'piso7', 'terraza']),
+    []
+  )
 
   const activeModel = useMemo(() => {
     return models[modelId] || models.edificio
@@ -34,8 +34,6 @@ function DynamicModelViewer ({
   if (!activeModel) {
     return <div>Cargando...</div>
   }
-
-  console.log(activeModel)
 
   return (
     <Suspense fallback={<div>Cargando...</div>}>
@@ -47,7 +45,7 @@ function DynamicModelViewer ({
           setIsOpened={setIsOpened}
           instructionStep={instructionStep}
         />
-      ) : activeModel === models.piso ? (
+      ) : floorModels.has(modelId) ? (
         <FloorPage activeModel={activeModel} isLoaded={isLoaded} />
       ) : (
         <TypoPage activeModel={activeModel} isLoaded={isLoaded} />

@@ -3,11 +3,14 @@
     <style>
       svg {
         stroke: #000;
+        fill: #fff;
+        border-radius: 8px;
       }
 
       @media (prefers-color-scheme: dark) {
         svg {
           stroke: #fff;
+          fill: #000;
         }
       }
     </style>

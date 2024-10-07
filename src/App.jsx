@@ -9,6 +9,7 @@ import PreloadModels from './components/PreloadModels'
 import InstructionsModal from './components/InstructionsModal'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import NotFound from './components/NotFound'
+import modelPaths from './data/modelPaths'
 
 const DynamicModelViewer = lazy(() => import('./components/DynamicModelViewer'))
 
@@ -23,63 +24,55 @@ function App () {
   const progressRef = useRef(0)
   const isModalClosed = window.localStorage.getItem('InstructionsModalClosed')
 
-  const modelPaths = [
-    { name: 't903', path: '/models/draco_models/903.glb' },
-    { name: 't1901', path: '/models/draco_models/1901.glb' },
-    { name: 't1905', path: '/models/draco_models/1905.glb' },
-    { name: 'terraza', path: '/models/draco_models/TERRAZA.glb' },
-    { name: 'edificio', path: '/models/draco_models/ediificio2.glb' },
-    { name: 'piso', path: '/models/draco_models/Floor.glb' }
-  ]
-
   useEffect(() => {
     const loadAllModels = async () => {
       const loader = new GLTFLoader()
-      const modelPromises = modelPaths.map(
-        modelInfo =>
+      const modelPromises = Object.keys(modelPaths).map(
+        modelName =>
           new Promise(resolve => {
             loader.load(
-              modelInfo.path,
+              modelPaths[modelName],
               gltf => {
                 const totalProgress = Math.round(
-                  (++progressRef.current / modelPaths.length) * 100
+                  (++progressRef.current / Object.keys(modelPaths).length) * 100
                 )
                 setLoadingProgress(totalProgress)
                 totalProgress === 100 && setIsRouteModelLoaded(true)
-
+  
                 gltf.scene.traverse(child => {
                   if (child.isMesh) {
                     child.material.metalness =
-                      modelInfo.name === 'edificio' ? 0.5 : 0.6
+                      modelName === 'edificio' ? 0.5 : 0.6
                     child.material.roughness =
-                      modelInfo.name === 'edificio' ? 0.3 : 0.2
+                      modelName === 'edificio' ? 0.3 : 0.2
                   }
                 })
-
-                resolve({ name: modelInfo.name, gltf })
+  
+                resolve({ name: modelName, gltf })
               },
               undefined,
               error => {
-                console.error(`Error al cargar ${modelInfo.name}:`, error)
-                resolve({ name: modelInfo.name, gltf: null })
+                console.error(`Error al cargar ${modelName}:`, error)
+                resolve({ name: modelName, gltf: null })
               }
             )
           })
       )
-
+  
       const loadedModels = await Promise.all(modelPromises)
       const newModels = loadedModels.reduce((acc, { name, gltf }) => {
         acc[name] = gltf
         return acc
       }, {})
-
+  
       setModels(newModels)
       setIsButtonEnabled(true)
     }
-
+  
     loadAllModels()
     console.log(models)
   }, [])
+  
 
   return (
     <Router>
@@ -153,7 +146,8 @@ function ModelViewerWrapper ({
 }) {
   const { modelId } = useParams()
 
-  const modelExists = modelPaths.some(model => model.name === modelId)
+  // Verificamos si el `modelId` existe en las claves del objeto `modelPaths`
+  const modelExists = Object.keys(modelPaths).includes(modelId)
 
   useEffect(() => {
     setIs404(!modelExists)
@@ -173,5 +167,6 @@ function ModelViewerWrapper ({
     <NotFound />
   )
 }
+
 
 export default App

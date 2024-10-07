@@ -114,7 +114,7 @@ function Model ({
         shadow-camera-near={0.5}
       />
 
-      {/* <Environment files={environmentPath} background blur={0} /> */}
+      <Environment files={environmentPath} blur={0} />
     </>
   )
 }

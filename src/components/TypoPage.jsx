@@ -44,7 +44,7 @@ function TypoPage ({ activeModel, isLoaded }) {
   const navigate = useNavigate()
 
   const returnHome = () => {
-    navigate('/')
+    navigate(-1)
   }
 
   const triggerAnimation = () => {
@@ -151,7 +151,7 @@ function TypoPage ({ activeModel, isLoaded }) {
       )}
       {isLoaded && (
         <div className='typo-img'>
-          <img src='/typologies images/TIPO-2-B.jpg' alt='Tipología 2-B' />
+          <img src='/typologies images/TIPO-2.jpg' alt='Tipología 2' />
         </div>
       )}
     </div>
