@@ -87,12 +87,12 @@ function Model ({
         </group>
       )}
 
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.8} />
 
       <directionalLight
         color='#fade85'
         position={[-3, 40, 5]}
-        intensity={0.5}
+        intensity={2.5}
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -116,7 +116,7 @@ function Model ({
         shadow-camera-near={0.5}
       />
 
-      <Environment files={environmentPath} blur={0} />
+      <Environment files={environmentPath} background blur={0} />
     </>
   )
 }
