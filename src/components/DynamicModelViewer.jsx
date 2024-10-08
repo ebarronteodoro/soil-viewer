@@ -31,6 +31,16 @@ function DynamicModelViewer ({
     return models[modelId] || models.edificio
   }, [models, modelId])
 
+  // Limpia el canvas al desmontar el componente para evitar múltiples renderizaciones
+  useEffect(() => {
+    return () => {
+      setIsOpened(false) // Limpia cualquier estado relacionado con el canvas o el modelo 3D
+    }
+  }, [setIsOpened])
+
+  // Crear un key dinámico basado en el modelo activo para forzar el reset del canvas
+  const canvasKey = useMemo(() => `${modelId}-${Date.now()}`, [modelId])
+
   if (!activeModel) {
     return <div>Cargando...</div>
   }
@@ -39,6 +49,7 @@ function DynamicModelViewer ({
     <Suspense fallback={<div>Cargando...</div>}>
       {activeModel === models.edificio ? (
         <HomePage
+          key={canvasKey} // Forzamos un nuevo render del canvas al cambiar la ruta
           models={models.edificio}
           isLoaded={isLoaded}
           isOpened={isOpened}
@@ -46,9 +57,18 @@ function DynamicModelViewer ({
           instructionStep={instructionStep}
         />
       ) : floorModels.has(modelId) ? (
-        <FloorPage activeModel={activeModel} isLoaded={isLoaded} />
+        <FloorPage
+          key={canvasKey} // Forzamos un nuevo render del canvas al cambiar la ruta
+          activeModel={activeModel}
+          isLoaded={isLoaded}
+        />
       ) : (
-        <TypoPage activeModel={activeModel} isLoaded={isLoaded} />
+        <TypoPage
+          key={canvasKey} // Forzamos un nuevo render del canvas al cambiar la ruta
+          activeModel={activeModel}
+          isLoaded={isLoaded}
+          activeTypology={modelId}
+        />
       )}
     </Suspense>
   )

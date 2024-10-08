@@ -1,49 +1,75 @@
 import { useFrame } from '@react-three/fiber'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { useLocation } from 'react-router-dom'
 import { EffectComposer } from '@react-three/postprocessing'
 import { Sky } from '@react-three/drei'
 
-const Floors = ({ floorPositions, activeMeshIndex, handleClick, renderFloors }) => {
+const Floors = ({
+  floorPositions,
+  activeMeshIndex,
+  handleClick,
+  renderFloors
+}) => {
   return (
     <>
-      {renderFloors && floorPositions.map((floor, index) => (
-        <mesh
-          key={index}
-          position={floor.position}
-          onClick={e => {
-            e.stopPropagation()
-            handleClick(index)
-          }}
-          castShadow
-          receiveShadow
-        >
-          <boxGeometry args={floor.args} />
-          <meshStandardMaterial
-            color={activeMeshIndex === index ? '#ACACAC' : '#ffffff'}
-            transparent
-            opacity={activeMeshIndex === index ? 0.5 : 0}
-          />
-        </mesh>
-      ))}
+      {renderFloors &&
+        floorPositions.map((floor, index) => (
+          <mesh
+            key={index}
+            position={floor.position}
+            onClick={e => {
+              e.stopPropagation()
+              handleClick(index)
+            }}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={floor.args} />
+            <meshStandardMaterial
+              color={activeMeshIndex === index ? '#ACACAC' : '#ffffff'}
+              transparent
+              opacity={activeMeshIndex === index ? 0.5 : 0}
+            />
+          </mesh>
+        ))}
     </>
   )
 }
 
-const Lighting = () => {
-  const rectLightRef = React.useRef()
+const Lighting = ({ cleanUpBeforeNavigate }) => {
+  const ambientLightRef = useRef()
+  const directionalLightRef = useRef()
 
   useEffect(() => {
-    if (rectLightRef.current) {
-      rectLightRef.current.lookAt(0, 0, 0)
+    return () => {
+      if (ambientLightRef.current) {
+        ambientLightRef.current.dispose()
+      }
+      if (directionalLightRef.current) {
+        directionalLightRef.current.dispose()
+      }
     }
   }, [])
 
+  useEffect(() => {
+    if (cleanUpBeforeNavigate) {
+      cleanUpBeforeNavigate(() => {
+        if (ambientLightRef.current) {
+          ambientLightRef.current.dispose()
+        }
+        if (directionalLightRef.current) {
+          directionalLightRef.current.dispose()
+        }
+      })
+    }
+  }, [cleanUpBeforeNavigate])
+
   return (
     <>
-      <ambientLight intensity={1.5} />
+      <ambientLight ref={ambientLightRef} intensity={1.5} />
       <directionalLight
+        ref={directionalLightRef}
         position={[-50, 120, 80]}
         intensity={2.8}
       />
@@ -56,13 +82,15 @@ const BuildingModel = ({
   targetScale,
   activeMeshIndex,
   handleClick,
-  object
+  object,
+  cleanUpBeforeNavigate // Pasamos la función de limpieza
 }) => {
   const [currentRotation, setCurrentRotation] = useState(targetRotation)
   const [currentScale, setCurrentScale] = useState(targetScale)
   const [renderFloors, setRenderFloors] = useState(true)
-
   const location = useLocation()
+  const objectRef = useRef(object) // Referencia al objeto para evitar recrearlo
+  const initialized = useRef(false) // Para controlar la inicialización
 
   const floorPositions = [
     { position: [0.95, 4, 1], args: [15.5, 6, 37.5] },
@@ -88,48 +116,77 @@ const BuildingModel = ({
   ]
 
   useFrame(() => {
-    if (object) {
-      setCurrentRotation(THREE.MathUtils.lerp(currentRotation, targetRotation, 0.1))
-      object.rotation.y = currentRotation
+    if (objectRef.current && initialized.current) {
+      setCurrentRotation(
+        THREE.MathUtils.lerp(currentRotation, targetRotation, 0.1)
+      )
+      objectRef.current.rotation.y = currentRotation
 
       setCurrentScale(THREE.MathUtils.lerp(currentScale, targetScale, 0.1))
-      object.scale.set(currentScale, currentScale, currentScale)
+      objectRef.current.scale.set(currentScale, currentScale, currentScale)
     }
   })
 
+  // Controlar si se deben renderizar los pisos según la ruta actual
   useEffect(() => {
     setRenderFloors(location.pathname === '/')
   }, [location.pathname])
 
+  // Desactivar el mesh activo cuando los pisos no se deben renderizar
   useEffect(() => {
     if (!renderFloors) {
       handleClick(null)
     }
   }, [renderFloors, handleClick])
 
-  return object
-    ? (
-      <>
-        <primitive
-          object={object}
-          position={[0, -7.8, 0]}
-          scale={[1, 1, 1]}
-          receiveShadow
-        >
-          <Floors
-            floorPositions={floorPositions}
-            activeMeshIndex={activeMeshIndex}
-            handleClick={handleClick}
-            renderFloors={renderFloors}
-          />
-          <Lighting />
-        </primitive>
-        <Sky />
+  // Solo inicializar el objeto una vez
+  useEffect(() => {
+    if (!initialized.current) {
+      objectRef.current = object
+      initialized.current = true
+    }
+  }, [object])
 
-        <EffectComposer />
-      </>
-      )
-    : null
+  // Limpieza de objetos dentro del `primitive` antes de navegar
+  useEffect(() => {
+    if (cleanUpBeforeNavigate) {
+      cleanUpBeforeNavigate(() => {
+        if (objectRef.current) {
+          objectRef.current.traverse(child => {
+            if (child.isMesh) {
+              child.geometry.dispose()
+              if (Array.isArray(child.material)) {
+                child.material.forEach(material => material.dispose())
+              } else {
+                child.material.dispose()
+              }
+            }
+          })
+        }
+      })
+    }
+  }, [cleanUpBeforeNavigate])
+
+  return objectRef.current ? (
+    <>
+      <primitive
+        object={objectRef.current}
+        position={[0, -7.8, 0]}
+        scale={[1, 1, 1]}
+        receiveShadow
+      >
+        <Floors
+          floorPositions={floorPositions}
+          activeMeshIndex={activeMeshIndex}
+          handleClick={handleClick}
+          renderFloors={renderFloors}
+        />
+      </primitive>
+      <Lighting cleanUpBeforeNavigate={cleanUpBeforeNavigate} />
+      <Sky />
+      <EffectComposer />
+    </>
+  ) : null
 }
 
 export default BuildingModel

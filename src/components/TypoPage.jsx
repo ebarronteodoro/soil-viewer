@@ -14,18 +14,36 @@ import Hide3dIcon from './icons/Hide3dIcon'
 import CameraUpIcon from './icons/CameraUpIcon'
 import CameraDownIcon from './icons/CameraDownIcon'
 
-function TypoPage ({ activeModel, isLoaded }) {
+function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   const [rotation, setRotation] = useState(0)
   const [zoom, setZoom] = useState(0.65)
   const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
   const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] =
     useState(false)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
-  const [isToggleActive, setIsToggleActive] = useState(false) // Estado del toggle
+  const [isToggleActive, setIsToggleActive] = useState(false)
+  const [isImageOpen, setIsImageOpen] = useState(false) // Estado para el modal de imagen
 
   const minZoom = 0.5
   const maxZoom = 0.75
   const zoomStep = 0.05
+
+  const getTypologyImage = typology => {
+    const typologyImages = {
+      't-1': '/typologies images/TIPO-1.jpg',
+      't-2': '/typologies images/TIPO-2.jpg',
+      't-3': '/typologies images/TIPO-3.jpg',
+      't-4': '/typologies images/TIPO-4.jpg',
+      't-5': '/typologies images/TIPO-5.jpg',
+      't-6': '/typologies images/TIPO-6.jpg',
+      't-7': '/typologies images/TIPO-7.jpg',
+      't-8': '/typologies images/TIPO-8.jpg',
+      't-19': '/typologies images/TIPO-19.jpg',
+      't-23': '/typologies images/TIPO-23.jpg'
+    }
+
+    return typologyImages[typology] || '/typologies images/default.jpg'
+  }
 
   useEffect(() => {
     const handleWheel = e => {
@@ -74,6 +92,14 @@ function TypoPage ({ activeModel, isLoaded }) {
       currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
     setStateView([newRotation, 0, 0])
     setIsToggleActive(prev => !prev) // Cambia el estado del toggle
+  }
+
+  const openImageModal = () => {
+    setIsImageOpen(true)
+  }
+
+  const closeImageModal = () => {
+    setIsImageOpen(false)
   }
 
   return (
@@ -171,8 +197,43 @@ function TypoPage ({ activeModel, isLoaded }) {
         </div>
       )}
       {isLoaded && (
-        <div className='typo-img'>
-          <img src='/typologies images/TIPO-2.jpg' alt='Tipología 2' />
+        <div className='typo-img' onClick={openImageModal}>
+          <img
+            src={getTypologyImage(activeTypology)}
+            alt={`Tipología ${activeTypology}`}
+          />
+        </div>
+      )}
+
+      {isImageOpen && (
+        <div className='modal-overlay'>
+          <div className='overlay' onClick={closeImageModal}></div>
+          <button
+            onClick={closeImageModal}
+            style={{
+              position: 'absolute',
+              top: '1rem',
+              right: '1rem',
+              background: 'transparent',
+              border: 'none',
+              color: '#fff',
+              fontSize: '30px',
+              cursor: 'pointer'
+            }}
+          >
+            &times;
+          </button>
+          <div style={{ position: 'relative' }}>
+            <img
+              src={getTypologyImage(activeTypology)}
+              alt={`Tipología ${activeTypology}`}
+              style={{
+                maxWidth: '80dvw',
+                maxHeight: '80dvh',
+                borderRadius: '8px'
+              }}
+            />
+          </div>
         </div>
       )}
     </div>
