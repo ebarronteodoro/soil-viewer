@@ -9,6 +9,10 @@ import { useNavigate } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
 import * as THREE from 'three'
 import ReturnIcon from './icons/ReturnIcon'
+import View3dIcon from './icons/View3dIcon'
+import Hide3dIcon from './icons/Hide3dIcon'
+import CameraUpIcon from './icons/CameraUpIcon'
+import CameraDownIcon from './icons/CameraDownIcon'
 
 function TypoPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
@@ -17,6 +21,7 @@ function TypoPage ({ activeModel, isLoaded }) {
   const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] =
     useState(false)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
+  const [isToggleActive, setIsToggleActive] = useState(false) // Estado del toggle
 
   const minZoom = 0.5
   const maxZoom = 0.75
@@ -50,6 +55,11 @@ function TypoPage ({ activeModel, isLoaded }) {
   const triggerAnimation = () => {
     setIsAnimationTriggered(true)
     setIsReverseAnimationTriggered(false)
+    setTimeout(() => {
+      toggleView()
+      rotateRight()
+      rotateRight()
+    }, 500)
   }
 
   const triggerReverseAnimation = () => {
@@ -63,6 +73,7 @@ function TypoPage ({ activeModel, isLoaded }) {
     const newRotation =
       currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
     setStateView([newRotation, 0, 0])
+    setIsToggleActive(prev => !prev) // Cambia el estado del toggle
   }
 
   return (
@@ -96,13 +107,23 @@ function TypoPage ({ activeModel, isLoaded }) {
           <AnimatedButton onClick={returnHome}>
             <ReturnIcon width='30px' height='30px' />
           </AnimatedButton>
-          <button onClick={triggerAnimation}>Vista 3d</button>
+          {!isAnimationTriggered && (
+            <AnimatedButton onClick={triggerAnimation}>
+              <View3dIcon width='30px' height='30px' />
+            </AnimatedButton>
+          )}
           {isAnimationTriggered && (
             <>
-              <button onClick={toggleView}>Toggle View</button>
-              <button onClick={triggerReverseAnimation}>
-                Reverse Animation
-              </button>
+              <AnimatedButton onClick={toggleView}>
+                {isToggleActive ? (
+                  <CameraUpIcon width='30px' height='30px' />
+                ) : (
+                  <CameraDownIcon width='30px' height='30px' />
+                )}
+              </AnimatedButton>
+              <AnimatedButton onClick={triggerReverseAnimation}>
+                <Hide3dIcon width='30px' height='30px' />
+              </AnimatedButton>
             </>
           )}
         </div>

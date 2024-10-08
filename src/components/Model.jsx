@@ -35,10 +35,12 @@ function Model ({
         actionRef.current.setEffectiveTimeScale(1) // Normal playback
       }
 
-      // Si reverseAnimation es true, reproducirla en reversa
+      // Si reverseAnimation es true, reproducirla en reversa suavemente
       if (reverseAnimation) {
+        // Setear el tiempo de la animación al final
         actionRef.current.reset().play()
-        actionRef.current.setEffectiveTimeScale(-1) // Reverso
+        actionRef.current.time = actionRef.current.getClip().duration // Iniciar desde el final
+        actionRef.current.setEffectiveTimeScale(-1) // Reverso progresivo
         actionRef.current.setEffectiveWeight(1)
       }
 
