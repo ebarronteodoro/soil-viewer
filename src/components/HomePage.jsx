@@ -253,19 +253,19 @@ function HomePage ({
             }`}
           >
             <AnimatedButton
-              onClick={() => setIsOpened(true)}
+              onMouseDown={() => setIsOpened(true)}
               className={instructionStep === 5 ? 'on' : ''}
             >
               <IconChecklist width='30px' height='30px' />
             </AnimatedButton>
             <AnimatedButton
-              onClick={rotateLeft}
+              onMouseDown={rotateLeft}
               className={instructionStep === 1 ? 'on' : ''}
             >
               <GlobalRotateIcon width='30px' height='30px' />
             </AnimatedButton>
             <AnimatedButton
-              onClick={rotateRight}
+              onMouseDown={rotateRight}
               className={instructionStep === 1 ? 'on' : ''}
             >
               <GlobalRotateIcon
@@ -275,13 +275,13 @@ function HomePage ({
               />
             </AnimatedButton>
             <AnimatedButton
-              onClick={zoomOut}
+              onMouseDown={zoomOut}
               className={instructionStep === 2 ? 'on' : ''}
             >
               <ZoomOutIcon width='30px' height='30px' />
             </AnimatedButton>
             <AnimatedButton
-              onClick={zoomIn}
+              onMouseDown={zoomIn}
               className={instructionStep === 2 ? 'on' : ''}
             >
               <ZoomInIcon width='30px' height='30px' />

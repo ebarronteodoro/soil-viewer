@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import EyeIcon from './icons/EyeIcon'
-// import View360 from './View360'
 
 function PreloadModels ({
   loadingProgress,
@@ -31,6 +30,31 @@ function PreloadModels ({
       setStatusMessage('¡Dale click al botón de abajo!')
     }
   }, [loadingProgress, isRouteModelLoaded])
+
+  // Desactivar comportamiento de scroll y zoom
+  useEffect(() => {
+    const preventDefault = (event) => {
+      event.preventDefault()
+    }
+
+    // Prevenir zoom con "Ctrl + Scroll" o "Cmd + Scroll"
+    const preventZoom = (event) => {
+      if (event.ctrlKey || event.metaKey) {
+        event.preventDefault()
+      }
+    }
+
+    // Deshabilitar eventos de scroll y zoom
+    window.addEventListener('wheel', preventDefault, { passive: false })
+    window.addEventListener('touchmove', preventDefault, { passive: false })
+    window.addEventListener('keydown', preventZoom)
+
+    return () => {
+      window.removeEventListener('wheel', preventDefault)
+      window.removeEventListener('touchmove', preventDefault)
+      window.removeEventListener('keydown', preventZoom)
+    }
+  }, [])
 
   return (
     <>
