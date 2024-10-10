@@ -9,7 +9,7 @@ import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
 import IconChecklist from './icons/IconChecklist'
-import { Environment } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 
 const CameraController = () => {
   const { camera } = useThree()
@@ -24,7 +24,13 @@ const CameraController = () => {
   return null
 }
 
-function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep }) {
+function HomePage ({
+  models,
+  isLoaded,
+  isOpened,
+  setIsOpened,
+  instructionStep
+}) {
   const [rotation, setRotation] = useState(Math.PI / 1.5)
   const [zoom, setZoom] = useState(0.16)
   const [activeModel, setActiveModel] = useState(null)
@@ -42,12 +48,12 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
   const location = useLocation()
 
   const minZoom = 0.13
-  const maxZoom = 0.30
+  const maxZoom = 0.3
   const zoomStep = 0.05
 
   useEffect(() => {
     if (autoRotate) {
-      const interval = setInterval(() => setRotation((prev) => prev + 0.002), 16)
+      const interval = setInterval(() => setRotation(prev => prev + 0.002), 16)
       return () => clearInterval(interval)
     }
   }, [autoRotate])
@@ -68,30 +74,30 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
   }
 
   const rotateLeft = () => {
-    setRotation((prev) => prev + Math.PI / 12)
+    setRotation(prev => prev + Math.PI / 12)
     stopAutoRotation()
     restartAutoRotation()
   }
 
   const rotateRight = () => {
-    setRotation((prev) => prev - Math.PI / 12)
+    setRotation(prev => prev - Math.PI / 12)
     stopAutoRotation()
     restartAutoRotation()
   }
 
   const zoomIn = () => {
-    setZoom((prev) => Math.min(prev + zoomStep, maxZoom))
+    setZoom(prev => Math.min(prev + zoomStep, maxZoom))
     stopAutoRotation()
     restartAutoRotation()
   }
 
   const zoomOut = () => {
-    setZoom((prev) => Math.max(prev - zoomStep, minZoom))
+    setZoom(prev => Math.max(prev - zoomStep, minZoom))
     stopAutoRotation()
     restartAutoRotation()
   }
 
-  const handleMouseDown = (event) => {
+  const handleMouseDown = event => {
     setMouseDown(true)
     setStartX(event.clientX || event.touches[0].clientX)
     stopAutoRotation()
@@ -102,20 +108,22 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
     restartAutoRotation()
   }
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = event => {
     if (!mouseDown) return
     const deltaX = (event.clientX || event.touches[0].clientX) - startX
-    setRotation((prev) => prev + deltaX * 0.001)
+    setRotation(prev => prev + deltaX * 0.001)
     setStartX(event.clientX || event.touches[0].clientX)
   }
 
-  const handleWheel = (event) => {
+  const handleWheel = event => {
     const direction = event.deltaY < 0 ? 1 : -1
-    setZoom((prev) => Math.max(minZoom, Math.min(prev + direction * zoomStep, maxZoom)))
+    setZoom(prev =>
+      Math.max(minZoom, Math.min(prev + direction * zoomStep, maxZoom))
+    )
     stopAutoRotation()
   }
 
-  const handleTouchStart = (event) => {
+  const handleTouchStart = event => {
     const touch = event.touches[0]
     setMouseDown(true)
     setStartX(touch.clientX)
@@ -127,15 +135,15 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
     restartAutoRotation()
   }
 
-  const handleTouchMove = (event) => {
+  const handleTouchMove = event => {
     if (!mouseDown) return
     const touch = event.touches[0]
     const deltaX = touch.clientX - startX
-    setRotation((prev) => prev + deltaX * 0.002)
+    setRotation(prev => prev + deltaX * 0.002)
     setStartX(touch.clientX)
   }
 
-  const handleClick = (index) => {
+  const handleClick = index => {
     setActiveMeshIndex(index)
     let piso
     if (index === 0) {
@@ -145,7 +153,15 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
     }
     setSelectedFloor(piso)
     if (piso === 1) setButtonRoute('/piso1')
-    else if (piso === 6 || piso === 3 || piso === 4 || piso === 5 || piso === 7 || piso === 8) setButtonRoute('/piso2')
+    else if (
+      piso === 6 ||
+      piso === 3 ||
+      piso === 4 ||
+      piso === 5 ||
+      piso === 7 ||
+      piso === 8
+    )
+      setButtonRoute('/piso2')
     else if (piso === 9 || piso === 10 || piso === 11) setButtonRoute('/piso3')
     else if (piso === 12) setButtonRoute('/piso4')
     else if (piso === 19) setButtonRoute('/piso7')
@@ -154,14 +170,14 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
     else setButtonRoute(null)
   }
 
-  const handleCopy = (e) => {
+  const handleCopy = e => {
     navigator.clipboard.writeText(e.target.innerText)
     setCopied(true)
     setTimeout(() => setCopied(false), 3000)
   }
 
   useEffect(() => {
-    const preventDefault = (event) => event.preventDefault()
+    const preventDefault = event => event.preventDefault()
     window.addEventListener('wheel', preventDefault, { passive: false })
     isLoaded && setActiveModel(models)
     isLoaded &&
@@ -173,8 +189,10 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
   }, [isLoaded, models])
 
   useEffect(() => {
-    const preventDefaultTouch = (event) => event.preventDefault()
-    window.addEventListener('touchmove', preventDefaultTouch, { passive: false })
+    const preventDefaultTouch = event => event.preventDefault()
+    window.addEventListener('touchmove', preventDefaultTouch, {
+      passive: false
+    })
     return () => window.removeEventListener('touchmove', preventDefaultTouch)
   }, [])
 
@@ -223,9 +241,17 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
             <span onClick={handleCopy}>(+51) 982 172 656</span>
           </div>
 
-          {copied && <div className='copy-notification'>Número copiado correctamente: (+51) 982 172 656</div>}
+          {copied && (
+            <div className='copy-notification'>
+              NÃºmero copiado correctamente: (+51) 982 172 656
+            </div>
+          )}
 
-          <div className={`menubar2 ${applyTransition ? 'show' : ''} ${!isOpened ? 'hideinstructions' : 'showinstructions'}`}>
+          <div
+            className={`menubar2 ${applyTransition ? 'show' : ''} ${
+              !isOpened ? 'hideinstructions' : 'showinstructions'
+            }`}
+          >
             <AnimatedButton
               onClick={() => setIsOpened(true)}
               className={instructionStep === 5 ? 'on' : ''}
@@ -242,7 +268,11 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
               onClick={rotateRight}
               className={instructionStep === 1 ? 'on' : ''}
             >
-              <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
+              <GlobalRotateIcon
+                width='30px'
+                height='30px'
+                style={{ transform: 'scaleX(-1)' }}
+              />
             </AnimatedButton>
             <AnimatedButton
               onClick={zoomOut}
@@ -256,7 +286,11 @@ function HomePage ({ models, isLoaded, isOpened, setIsOpened, instructionStep })
             >
               <ZoomInIcon width='30px' height='30px' />
             </AnimatedButton>
-            <NavigateButton route={buttonRoute} floor={selectedFloor} clearSelection={() => handleClick(null)} />
+            <NavigateButton
+              route={buttonRoute}
+              floor={selectedFloor}
+              clearSelection={() => handleClick(null)}
+            />
           </div>
         </>
       )}

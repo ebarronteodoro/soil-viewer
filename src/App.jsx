@@ -38,7 +38,7 @@ function App () {
                 )
                 setLoadingProgress(totalProgress)
                 totalProgress === 100 && setIsRouteModelLoaded(true)
-  
+
                 gltf.scene.traverse(child => {
                   if (child.isMesh) {
                     child.material.metalness =
@@ -47,7 +47,7 @@ function App () {
                       modelName === 'edificio' ? 0.3 : 0.2
                   }
                 })
-  
+
                 resolve({ name: modelName, gltf })
               },
               undefined,
@@ -58,21 +58,20 @@ function App () {
             )
           })
       )
-  
+
       const loadedModels = await Promise.all(modelPromises)
       const newModels = loadedModels.reduce((acc, { name, gltf }) => {
         acc[name] = gltf
         return acc
       }, {})
-  
+
       setModels(newModels)
       setIsButtonEnabled(true)
     }
-  
+
     loadAllModels()
     console.log(models)
   }, [])
-  
 
   return (
     <Router>
@@ -146,7 +145,6 @@ function ModelViewerWrapper ({
 }) {
   const { modelId } = useParams()
 
-  // Verificamos si el `modelId` existe en las claves del objeto `modelPaths`
   const modelExists = Object.keys(modelPaths).includes(modelId)
 
   useEffect(() => {
@@ -167,6 +165,5 @@ function ModelViewerWrapper ({
     <NotFound />
   )
 }
-
 
 export default App

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { useLocation } from 'react-router-dom'
 import { EffectComposer } from '@react-three/postprocessing'
-import { Sky } from '@react-three/drei'
+import { Environment, Sky } from '@react-three/drei'
 
 const Floors = ({
   floorPositions,
@@ -171,7 +171,7 @@ const BuildingModel = ({
     <>
       <primitive
         object={objectRef.current}
-        position={[0, -7.8, 0]}
+        position={[0, -9.8, 0]}
         scale={[1, 1, 1]}
         receiveShadow
       >
@@ -181,9 +181,11 @@ const BuildingModel = ({
           handleClick={handleClick}
           renderFloors={renderFloors}
         />
+        {/* <Environment files='/models/hdri/TypoB.jpg' background blur={0} /> */}
       </primitive>
-      <Lighting cleanUpBeforeNavigate={cleanUpBeforeNavigate} />
       <Sky />
+      <Lighting cleanUpBeforeNavigate={cleanUpBeforeNavigate} />
+
       <EffectComposer />
     </>
   ) : null

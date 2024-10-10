@@ -17,7 +17,7 @@ function CameraController () {
   const returnSpeed = 0.05
 
   useEffect(() => {
-    const handleMouseDown = (event) => {
+    const handleMouseDown = event => {
       setIsDragging(true)
       setStartX(event.clientX)
       setStartY(event.clientY)
@@ -29,7 +29,7 @@ function CameraController () {
       setCurrentPosition({ x: 0, y: 0 })
     }
 
-    const handleMouseMove = (event) => {
+    const handleMouseMove = event => {
       if (isDragging) {
         const deltaX = event.clientX - startX
         const deltaY = startY - event.clientY
@@ -51,7 +51,7 @@ function CameraController () {
     }
 
     // Manejador para eventos de touch
-    const handleTouchStart = (event) => {
+    const handleTouchStart = event => {
       setIsDragging(true)
       setStartX(event.touches[0].clientX)
       setStartY(event.touches[0].clientY)
@@ -63,7 +63,7 @@ function CameraController () {
       setCurrentPosition({ x: 0, y: 0 })
     }
 
-    const handleTouchMove = (event) => {
+    const handleTouchMove = event => {
       if (isDragging) {
         // Prevenir el desplazamiento del navegador
         event.preventDefault()

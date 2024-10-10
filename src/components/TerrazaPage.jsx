@@ -14,7 +14,7 @@ import Hide3dIcon from './icons/Hide3dIcon'
 import CameraUpIcon from './icons/CameraUpIcon'
 import CameraDownIcon from './icons/CameraDownIcon'
 
-function TypoPage ({ activeModel, isLoaded, activeTypology }) {
+function TerrazaPage ({ activeModel, isLoaded, activeTypology }) {
   const [rotation, setRotation] = useState(0)
   const [zoom, setZoom] = useState(0.65)
   const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
@@ -91,7 +91,7 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
     const newRotation =
       currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
     setStateView([newRotation, 0, 0])
-    setIsToggleActive(prev => !prev) // Cambia el estado del toggle
+    setIsToggleActive(prev => !prev)
   }
 
   const openImageModal = () => {
@@ -242,4 +242,4 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   )
 }
 
-export default TypoPage
+export default TerrazaPage
