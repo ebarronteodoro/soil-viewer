@@ -1,10 +1,16 @@
 .navigate-button {
-  border: none;
-  background-color: #4c4c4c;
+  border: 1px #fff solid;
+  background-color: #8A8A8A80;
   color: white;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 50px;
   transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  gap: 4px;
+  padding: 4px 20px;
 }
 
 .navigate-button:hover {

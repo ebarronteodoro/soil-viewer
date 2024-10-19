@@ -45,6 +45,8 @@ function App () {
                       modelName === 'edificio' ? 0.5 : 0.6
                     child.material.roughness =
                       modelName === 'edificio' ? 0.3 : 0.2
+                    child.castShadow = true
+                    child.receiveShadow = true
                   }
                 })
 

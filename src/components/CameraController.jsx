@@ -50,7 +50,6 @@ function CameraController () {
       }
     }
 
-    // Manejador para eventos de touch
     const handleTouchStart = event => {
       setIsDragging(true)
       setStartX(event.touches[0].clientX)
@@ -65,7 +64,6 @@ function CameraController () {
 
     const handleTouchMove = event => {
       if (isDragging) {
-        // Prevenir el desplazamiento del navegador
         event.preventDefault()
 
         const deltaX = event.touches[0].clientX - startX
@@ -87,17 +85,14 @@ function CameraController () {
       }
     }
 
-    // Agregar eventos de mouse
     window.addEventListener('mousedown', handleMouseDown)
     window.addEventListener('mouseup', handleMouseUp)
     window.addEventListener('mousemove', handleMouseMove)
 
-    // Agregar eventos de touch y deshabilitar el comportamiento de desplazamiento del navegador
     window.addEventListener('touchstart', handleTouchStart, { passive: false })
     window.addEventListener('touchend', handleTouchEnd, { passive: false })
     window.addEventListener('touchmove', handleTouchMove, { passive: false })
 
-    // Limpiar los eventos al desmontar el componente
     return () => {
       window.removeEventListener('mousedown', handleMouseDown)
       window.removeEventListener('mouseup', handleMouseUp)

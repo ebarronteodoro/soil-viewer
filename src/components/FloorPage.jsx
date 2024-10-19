@@ -10,15 +10,15 @@ import FloorModel from './FloorModel'
 import ReturnIcon from './icons/ReturnIcon'
 import modelPaths from '../data/modelPaths'
 
-function FloorPage({ activeModel, isLoaded }) {
+function FloorPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(0.34)
+  const [zoom, setZoom] = useState(0.15)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
   const [selectedObjectName, setSelectedObjectName] = useState('')
 
-  const minZoom = 0.3
+  const minZoom = 0.10
   const maxZoom = 0.5
-  const zoomStep = 0.025
+  const zoomStep = 0.05
 
   useEffect(() => {
     const handleWheel = e => {
@@ -53,7 +53,7 @@ function FloorPage({ activeModel, isLoaded }) {
         .replace('-aprent', '')
         .replace('tipo-', 't-')
 
-      console.log(baseTypology);
+      console.log(baseTypology)
 
       if (modelPaths[baseTypology]) {
         navigate(`/${baseTypology}`)
@@ -65,7 +65,7 @@ function FloorPage({ activeModel, isLoaded }) {
 
   return (
     <div>
-      <Canvas shadows>
+      <Canvas camera={{ fov: 15, position: [0, 0, 10] }} shadows>
         <ambientLight intensity={5} />
         <Suspense fallback={null}>
           <FloorModel
@@ -88,7 +88,9 @@ function FloorPage({ activeModel, isLoaded }) {
             display: 'flex'
           }}
         >
-          <AnimatedButton onClick={returnHome}><ReturnIcon width='30px' height='30px' /></AnimatedButton>
+          <AnimatedButton onClick={returnHome}>
+            <ReturnIcon width='30px' height='30px' />
+          </AnimatedButton>
         </div>
       )}
 

@@ -37,22 +37,13 @@ function PreloadModels ({
       event.preventDefault()
     }
 
-    // Prevenir zoom con "Ctrl + Scroll" o "Cmd + Scroll"
-    const preventZoom = (event) => {
-      if (event.ctrlKey || event.metaKey) {
-        event.preventDefault()
-      }
-    }
-
     // Deshabilitar eventos de scroll y zoom
     window.addEventListener('wheel', preventDefault, { passive: false })
     window.addEventListener('touchmove', preventDefault, { passive: false })
-    window.addEventListener('keydown', preventZoom)
 
     return () => {
       window.removeEventListener('wheel', preventDefault)
       window.removeEventListener('touchmove', preventDefault)
-      window.removeEventListener('keydown', preventZoom)
     }
   }, [])
 
@@ -99,7 +90,7 @@ function PreloadModels ({
             <picture>
               <img src='/images/sdc-test.png' alt='sdc-logo' />
             </picture>
-            <h2>A SystemDigital Creation’s product</h2>
+            <h2>A System Digital Creation’s product</h2>
           </div>
         </div>
       )}

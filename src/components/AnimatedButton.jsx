@@ -18,6 +18,7 @@ const AnimatedButton = ({ onMouseDown, children, className = '', ...props }) => 
 
   return (
     <button
+      type='button'
       onMouseDown={handleMouseDown}
       className={`animatedbutton ${className} ${isClicked ? 'clicked' : ''}`}
       {...props}

@@ -1,194 +1,162 @@
-import { useFrame } from '@react-three/fiber'
-import React, { useState, useEffect, useRef } from 'react'
-import * as THREE from 'three'
-import { useLocation } from 'react-router-dom'
-import { EffectComposer } from '@react-three/postprocessing'
-import { Environment, Sky } from '@react-three/drei'
+import React, { useEffect } from 'react'
+import { useGLTF } from '@react-three/drei'
 
-const Floors = ({
-  floorPositions,
-  activeMeshIndex,
-  handleClick,
-  renderFloors
-}) => {
+const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
   return (
     <>
-      {renderFloors &&
-        floorPositions.map((floor, index) => (
+      {floorPositions.map((floor, index) => {
+        // Calcular la posición 'y' en función de las alturas de los pisos anteriores
+        const yOffset =
+          1 + // Comienza desde y = 1.3
+          floorPositions
+            .slice(0, index)
+            .reduce((acc, currentFloor) => acc + currentFloor.args[1], 0)
+
+        return (
           <mesh
             key={index}
-            position={floor.position}
-            onClick={e => {
+            position={[floor.position[0], yOffset, floor.position[2]]} // La posición en el eje 'y' se calcula automáticamente
+            rotation={floor.rotation} // Aplicar la rotación de cada piso
+            onClick={(e) => {
               e.stopPropagation()
               handleClick(index)
             }}
-            castShadow
-            receiveShadow
           >
             <boxGeometry args={floor.args} />
             <meshStandardMaterial
-              color={activeMeshIndex === index ? '#ACACAC' : '#ffffff'}
+              color={activeMeshIndex === index ? '#033f35' : '#ffffff'}
               transparent
               opacity={activeMeshIndex === index ? 0.5 : 0}
             />
           </mesh>
-        ))}
+        )
+      })}
     </>
   )
 }
 
-const Lighting = ({ cleanUpBeforeNavigate }) => {
-  const ambientLightRef = useRef()
-  const directionalLightRef = useRef()
+const BuildingModel = (props) => {
+  const { scene } = useGLTF('/models/EDIFICIO/todooo.glb')
 
   useEffect(() => {
-    return () => {
-      if (ambientLightRef.current) {
-        ambientLightRef.current.dispose()
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true
+        child.receiveShadow = true
       }
-      if (directionalLightRef.current) {
-        directionalLightRef.current.dispose()
-      }
-    }
-  }, [])
+    })
+  }, [scene])
 
-  useEffect(() => {
-    if (cleanUpBeforeNavigate) {
-      cleanUpBeforeNavigate(() => {
-        if (ambientLightRef.current) {
-          ambientLightRef.current.dispose()
-        }
-        if (directionalLightRef.current) {
-          directionalLightRef.current.dispose()
-        }
-      })
-    }
-  }, [cleanUpBeforeNavigate])
+  // Lista de pisos con sus propiedades
+  const floorPositions = [
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 2.5 * 0.6, 30 * 0.6], // Reducido el tamaño en eje Y y Z
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Primer piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Segundo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Tercer piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Cuarto piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Quinto piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Sexto piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Séptimo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Octavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Noveno piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Décimo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Onceavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Doceavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Treceavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Catorceavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Quinceavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Dieciseisavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Diecisieteavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Dieciochoavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Diecinueveavo piso
+    {
+      position: [-4.2, 0, -1.2],
+      args: [14 * 0.6, 1.5 * 0.6, 30 * 0.6],
+      rotation: [0, Math.PI / -8.5, 0],
+    }, // Veinteavo piso
+  ];
 
   return (
     <>
-      <ambientLight ref={ambientLightRef} intensity={1.5} />
-      <directionalLight
-        ref={directionalLightRef}
-        position={[-50, 120, 80]}
-        intensity={2.8}
-      />
+      <primitive object={scene} {...props} scale={[0.2, 0.2, 0.2]} />
+      <Floors floorPositions={floorPositions} {...props} />
     </>
   )
-}
-
-const BuildingModel = ({
-  targetRotation,
-  targetScale,
-  activeMeshIndex,
-  handleClick,
-  object,
-  cleanUpBeforeNavigate // Pasamos la función de limpieza
-}) => {
-  const [currentRotation, setCurrentRotation] = useState(targetRotation)
-  const [currentScale, setCurrentScale] = useState(targetScale)
-  const [renderFloors, setRenderFloors] = useState(true)
-  const location = useLocation()
-  const objectRef = useRef(object) // Referencia al objeto para evitar recrearlo
-  const initialized = useRef(false) // Para controlar la inicialización
-
-  const floorPositions = [
-    { position: [0.95, 4, 1], args: [15.5, 6, 37.5] },
-    { position: [0.95, 8.6, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 11.5, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 14.4, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 17.3, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 20.2, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 22.8, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 25.5, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 28.5, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 31.4, 1], args: [15.5, 2.9, 37.5] },
-    { position: [0.95, 34.5, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 37.4, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 40.3, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 43.2, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 46.1, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 49, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 51.9, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 54.8, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 57.7, -0.7], args: [15.5, 2.9, 34.2] },
-    { position: [0.95, 60.6, -0.7], args: [15.5, 2.9, 34.2] }
-  ]
-
-  useFrame(() => {
-    if (objectRef.current && initialized.current) {
-      setCurrentRotation(
-        THREE.MathUtils.lerp(currentRotation, targetRotation, 0.1)
-      )
-      objectRef.current.rotation.y = currentRotation
-
-      setCurrentScale(THREE.MathUtils.lerp(currentScale, targetScale, 0.1))
-      objectRef.current.scale.set(currentScale, currentScale, currentScale)
-    }
-  })
-
-  // Controlar si se deben renderizar los pisos según la ruta actual
-  useEffect(() => {
-    setRenderFloors(location.pathname === '/')
-  }, [location.pathname])
-
-  // Desactivar el mesh activo cuando los pisos no se deben renderizar
-  useEffect(() => {
-    if (!renderFloors) {
-      handleClick(null)
-    }
-  }, [renderFloors, handleClick])
-
-  // Solo inicializar el objeto una vez
-  useEffect(() => {
-    if (!initialized.current) {
-      objectRef.current = object
-      initialized.current = true
-    }
-  }, [object])
-
-  // Limpieza de objetos dentro del `primitive` antes de navegar
-  useEffect(() => {
-    if (cleanUpBeforeNavigate) {
-      cleanUpBeforeNavigate(() => {
-        if (objectRef.current) {
-          objectRef.current.traverse(child => {
-            if (child.isMesh) {
-              child.geometry.dispose()
-              if (Array.isArray(child.material)) {
-                child.material.forEach(material => material.dispose())
-              } else {
-                child.material.dispose()
-              }
-            }
-          })
-        }
-      })
-    }
-  }, [cleanUpBeforeNavigate])
-
-  return objectRef.current ? (
-    <>
-      <primitive
-        object={objectRef.current}
-        position={[0, -9.8, 0]}
-        scale={[1, 1, 1]}
-        receiveShadow
-      >
-        <Floors
-          floorPositions={floorPositions}
-          activeMeshIndex={activeMeshIndex}
-          handleClick={handleClick}
-          renderFloors={renderFloors}
-        />
-        {/* <Environment files='/models/hdri/TypoB.jpg' background blur={0} /> */}
-      </primitive>
-      <Sky />
-      <Lighting cleanUpBeforeNavigate={cleanUpBeforeNavigate} />
-
-      <EffectComposer />
-    </>
-  ) : null
 }
 
 export default BuildingModel
