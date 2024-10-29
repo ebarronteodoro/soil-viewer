@@ -316,29 +316,17 @@ function HomePage ({
 
   const handleClick = index => {
     setActiveMeshIndex(index)
-    let piso
-    if (index === 0) {
-      piso = 1
-    } else {
-      piso = index + 2
-    }
+  
+    const piso = index === 0 ? 1 : index + 2
     setSelectedFloor(piso)
-    if (piso === 1) setButtonRoute('/piso1')
-    else if (
-      piso === 6 ||
-      piso === 3 ||
-      piso === 4 ||
-      piso === 5 ||
-      piso === 7 ||
-      piso === 8
-    )
-      setButtonRoute('/piso2')
-    else if (piso === 9 || piso === 10 || piso === 11) setButtonRoute('/piso3')
-    else if (piso === 12) setButtonRoute('/piso4')
-    else if (piso === 19) setButtonRoute('/piso7')
-    else if (piso === 20) setButtonRoute('/piso7')
-    else if (piso === 21) setButtonRoute('/terraza')
-    else setButtonRoute(null)
+  
+    if (piso >= 1 && piso <= 20) {
+      setButtonRoute(`/planta_${piso}`)
+    } else if (piso === 21) {
+      setButtonRoute('/terraza')
+    } else {
+      setButtonRoute(null)
+    }
   }
 
   const handleCopy = e => {
@@ -384,7 +372,11 @@ function HomePage ({
           )}
         </Suspense>
       </Canvas> */}
-      <Scene ref={sceneRef} activeMeshIndex={activeMeshIndex} handleClick={handleClick} />
+      <Scene
+        ref={sceneRef}
+        activeMeshIndex={activeMeshIndex}
+        handleClick={handleClick}
+      />
 
       {showContent && (
         <>

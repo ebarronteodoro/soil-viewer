@@ -5,9 +5,7 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
   return (
     <>
       {floorPositions.map((floor, index) => {
-        // Calcular la posición 'y' en función de las alturas de los pisos anteriores
         const yOffset =
-          1 + // Comienza desde y = 1.3
           floorPositions
             .slice(0, index)
             .reduce((acc, currentFloor) => acc + currentFloor.args[1], 0)
@@ -47,11 +45,10 @@ const BuildingModel = (props) => {
     })
   }, [scene])
 
-  // Lista de pisos con sus propiedades
   const floorPositions = [
     {
       position: [-4.2, 0, -1.2],
-      args: [14 * 0.6, 2.5 * 0.6, 30 * 0.6], // Reducido el tamaño en eje Y y Z
+      args: [14 * 0.6, 2.5 * 0.6, 30 * 0.6],
       rotation: [0, Math.PI / -8.5, 0],
     }, // Primer piso
     {

@@ -1,5 +1,7 @@
 import { Suspense, lazy, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
+import modelPaths from '../data/modelPaths'
+import TerrazaPage from './TerrazaPage'
 
 const HomePage = lazy(() => import('./HomePage'))
 const TypoPage = lazy(() => import('./TypoPage'))
@@ -22,10 +24,13 @@ function DynamicModelViewer ({
     }
   }, [isButtonEnabled, models, setIsRouteModelLoaded])
 
-  const floorModels = useMemo(
-    () => new Set(['piso1', 'piso2', 'piso3', 'piso4', 'piso7', 'terraza']),
-    []
-  )
+  const floorModels = useMemo(() => {
+    return new Set(
+      Object.keys(modelPaths).filter(
+        key => key.startsWith('planta_')
+      )
+    )
+  }, [])
 
   const activeModel = useMemo(() => {
     return models[modelId] || models.edificio
@@ -59,6 +64,13 @@ function DynamicModelViewer ({
           key={canvasKey}
           activeModel={activeModel}
           isLoaded={isLoaded}
+        />
+      ) : modelId === 'terraza' ? (
+        <TerrazaPage
+          key={canvasKey}
+          activeModel={activeModel}
+          isLoaded={isLoaded}
+          activeTypology={modelId}
         />
       ) : (
         <TypoPage
