@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
-function FloorModel({ targetRotation, targetScale, stateView, object, setSelectedObjectName }) {
+function FloorModel({ targetRotation, targetScale, stateView, object, setSelectedObjectName, resetSelection }) {
   const meshRef = useRef()
   const { gl, camera } = useThree()
   const raycaster = useRef(new THREE.Raycaster())
@@ -48,6 +48,7 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
 
     if (intersects.length > 0) {
       const intersectedObject = intersects[0].object
+      console.log('Objeto seleccionado:', intersectedObject.name)
 
       if (intersectedObject.name.startsWith('tipo')) {
         if (selectedObject) {
@@ -61,7 +62,6 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
 
         setSelectedObject(intersectedObject)
         setSelectedObjectName(intersectedObject.name)
-        console.log('Objeto seleccionado:', intersectedObject.name)
       }
     } else {
       if (selectedObject) {
@@ -72,6 +72,16 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
       }
     }
   }
+
+  // Efecto para resetear la selección cuando `resetSelection` es `true`
+  useEffect(() => {
+    if (resetSelection && selectedObject) {
+      selectedObject.material.color.set('white')
+      selectedObject.material.opacity = 1
+      setSelectedObject(null)
+      setSelectedObjectName('')
+    }
+  }, [resetSelection, selectedObject, setSelectedObjectName])
 
   useEffect(() => {
     gl.domElement.addEventListener('click', handleClick)

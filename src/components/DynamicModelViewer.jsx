@@ -26,9 +26,7 @@ function DynamicModelViewer ({
 
   const floorModels = useMemo(() => {
     return new Set(
-      Object.keys(modelPaths).filter(
-        key => key.startsWith('planta_')
-      )
+      Object.keys(modelPaths).filter(key => key.startsWith('planta_'))
     )
   }, [])
 
@@ -44,43 +42,31 @@ function DynamicModelViewer ({
 
   const canvasKey = useMemo(() => `${modelId}-${Date.now()}`, [modelId])
 
-  if (!activeModel) {
-    return <div>Cargando...</div>
-  }
-
-  return (
-    <Suspense fallback={<div>Cargando...</div>}>
-      {activeModel === models.edificio ? (
-        <HomePage
-          key={canvasKey}
-          models={models.edificio}
-          isLoaded={isLoaded}
-          isOpened={isOpened}
-          setIsOpened={setIsOpened}
-          instructionStep={instructionStep}
-        />
-      ) : floorModels.has(modelId) ? (
-        <FloorPage
-          key={canvasKey}
-          activeModel={activeModel}
-          isLoaded={isLoaded}
-        />
-      ) : modelId === 'terraza' ? (
-        <TerrazaPage
-          key={canvasKey}
-          activeModel={activeModel}
-          isLoaded={isLoaded}
-          activeTypology={modelId}
-        />
-      ) : (
-        <TypoPage
-          key={canvasKey}
-          activeModel={activeModel}
-          isLoaded={isLoaded}
-          activeTypology={modelId}
-        />
-      )}
-    </Suspense>
+  return activeModel === models.edificio ? (
+    <HomePage
+      key={canvasKey}
+      models={models.edificio}
+      isLoaded={isLoaded}
+      isOpened={isOpened}
+      setIsOpened={setIsOpened}
+      instructionStep={instructionStep}
+    />
+  ) : floorModels.has(modelId) ? (
+    <FloorPage key={canvasKey} activeModel={activeModel} isLoaded={isLoaded} />
+  ) : modelId === 'terraza' ? (
+    <TerrazaPage
+      key={canvasKey}
+      activeModel={activeModel}
+      isLoaded={isLoaded}
+      activeTypology={modelId}
+    />
+  ) : (
+    <TypoPage
+      key={canvasKey}
+      activeModel={activeModel}
+      isLoaded={isLoaded}
+      activeTypology={modelId}
+    />
   )
 }
 

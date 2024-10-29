@@ -13,8 +13,8 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
         return (
           <mesh
             key={index}
-            position={[floor.position[0], yOffset, floor.position[2]]} // La posición en el eje 'y' se calcula automáticamente
-            rotation={floor.rotation} // Aplicar la rotación de cada piso
+            position={[floor.position[0], yOffset, floor.position[2]]}
+            rotation={floor.rotation}
             onClick={(e) => {
               e.stopPropagation()
               handleClick(index)
@@ -34,7 +34,7 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
 }
 
 const BuildingModel = (props) => {
-  const { scene } = useGLTF('/models/EDIFICIO/todooo.glb')
+  const { scene } = useGLTF('/models/PISOS/prueba total 1- centrao.glb')
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -150,7 +150,7 @@ const BuildingModel = (props) => {
 
   return (
     <>
-      <primitive object={scene} {...props} scale={[0.2, 0.2, 0.2]} />
+      <primitive object={scene} {...props} scale={[0.2, 0.2, 0.2]} position={[0.15, 4.9, 0]} />
       <Floors floorPositions={floorPositions} {...props} />
     </>
   )

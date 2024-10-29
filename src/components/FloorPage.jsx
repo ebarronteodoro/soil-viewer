@@ -15,6 +15,7 @@ function FloorPage ({ activeModel, isLoaded }) {
   const [zoom, setZoom] = useState(0.15)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
   const [selectedObjectName, setSelectedObjectName] = useState('')
+  const [resetSelection, setResetSelection] = useState(false) // Añadir estado para resetear selección
 
   const minZoom = 0.10
   const maxZoom = 0.5
@@ -43,7 +44,9 @@ function FloorPage ({ activeModel, isLoaded }) {
   const navigate = useNavigate()
 
   const returnHome = () => {
-    navigate('/')
+    setTimeout(() => {
+      navigate('/')
+    }, 1)
   }
 
   const viewTypology = () => {
@@ -56,11 +59,18 @@ function FloorPage ({ activeModel, isLoaded }) {
       console.log(baseTypology)
 
       if (modelPaths[baseTypology]) {
-        navigate(`/${baseTypology}`)
+        setTimeout(() => {
+          navigate(`/${baseTypology}`)
+        }, 1)
       } else {
         console.log(`No se encontró una ruta para ${selectedObjectName}`)
       }
     }
+
+    // Activar el reset de selección
+    setResetSelection(true)
+    // Desactivar el reset después de un breve tiempo
+    setTimeout(() => setResetSelection(false), 100)
   }
 
   return (
@@ -74,6 +84,7 @@ function FloorPage ({ activeModel, isLoaded }) {
             stateView={stateView}
             object={activeModel.scene}
             setSelectedObjectName={setSelectedObjectName}
+            resetSelection={resetSelection} // Pasar el estado de resetSelection
           />
           <CameraController />
         </Suspense>

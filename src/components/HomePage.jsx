@@ -1,52 +1,28 @@
 import React, {
-  useState,
   useEffect,
-  Suspense,
   useRef,
   forwardRef,
-  useImperativeHandle
+  useImperativeHandle,
 } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useLocation } from 'react-router-dom'
+import { Canvas } from '@react-three/fiber'
 import * as THREE from 'three'
 import BuildingModel from './BuildingModel'
-import NavigateButton from './NavigateButton'
-import AnimatedButton from './AnimatedButton'
-import GlobalRotateIcon from './icons/GlobalRotateIcon'
-import ZoomOutIcon from './icons/ZoomOutIcon'
-import ZoomInIcon from './icons/ZoomInIcon'
-import IconChecklist from './icons/IconChecklist'
-import { Environment, useGLTF } from '@react-three/drei'
-
-// const FloorModel = props => {
-//   const { scene } = useGLTF('/models/EDIFICIO/todooo.glb')
-
-//   useEffect(() => {
-//     scene.traverse(child => {
-//       if (child.isMesh) {
-//         child.castShadow = true
-//         child.receiveShadow = true
-//       }
-//     })
-//   }, [scene])
-
-//   return <primitive object={scene} {...props} scale={[0.2, 0.2, 0.2]} />
-// }
+import { Environment } from '@react-three/drei'
 
 const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
   const cameraRef = useRef()
-  const zoomDistance = useRef(30)
+  const zoomDistance = useRef(1.5) // Ajusta la distancia inicial del zoom
   const angleRef = useRef(Math.PI / 2)
   const targetAngleRef = useRef(Math.PI / 2)
   const targetZoomDistance = useRef(zoomDistance.current)
+  const cameraHeight = useRef(5.5) // Asegura que la altura inicial sea 5.5
   const isAnimating = useRef(false)
   const isDragging = useRef(false)
   const previousMouseX = useRef(0)
   const previousMouseY = useRef(0)
-  const pinchStartDistance = useRef(0)
-
-  const cameraHeight = useRef(15)
-  const zoomSpeed = 0.1
+  const zoomSpeed = 0.05 // Controla la velocidad de zoom
+  const rotationSpeed = 0.0025 // Ajusta la velocidad de rotación
+  const verticalSpeed = 0.005 // Controla la velocidad vertical
 
   useImperativeHandle(ref, () => ({
     rotateCameraLeft: () => {
@@ -56,14 +32,14 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       updateTargetAngle(-0.2)
     },
     zoomIn: () => {
-      animateZoom(-2)
+      animateZoom(-0.25)
     },
     zoomOut: () => {
-      animateZoom(2)
-    }
+      animateZoom(0.25)
+    },
   }))
 
-  const updateTargetAngle = deltaAngle => {
+  const updateTargetAngle = (deltaAngle) => {
     targetAngleRef.current += deltaAngle
     animateCameraRotation()
   }
@@ -77,7 +53,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, 5, 0)
+      cameraRef.current.lookAt(0, 5.5, 0) // Enfoque ajustado en y=5.5
 
       if (Math.abs(targetAngleRef.current - angleRef.current) > 0.01) {
         requestAnimationFrame(animate)
@@ -92,11 +68,11 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     }
   }
 
-  const animateZoom = delta => {
+  const animateZoom = (delta) => {
     targetZoomDistance.current = THREE.MathUtils.clamp(
       targetZoomDistance.current + delta,
-      15,
-      50
+      0.5,
+      3
     )
 
     const zoomAnimate = () => {
@@ -107,7 +83,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, 5, 0)
+      cameraRef.current.lookAt(0, 5.5, 0) // Asegura el mismo enfoque
 
       if (Math.abs(targetZoomDistance.current - zoomDistance.current) > 0.1) {
         requestAnimationFrame(zoomAnimate)
@@ -117,13 +93,13 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     requestAnimationFrame(zoomAnimate)
   }
 
-  const handleMouseDown = event => {
+  const handleMouseDown = (event) => {
     isDragging.current = true
     previousMouseX.current = event.clientX
     previousMouseY.current = event.clientY
   }
 
-  const handleMouseMove = event => {
+  const handleMouseMove = (event) => {
     if (!isDragging.current) return
 
     const deltaX = event.clientX - previousMouseX.current
@@ -132,82 +108,28 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     previousMouseX.current = event.clientX
     previousMouseY.current = event.clientY
 
-    const rotationSpeed = 0.005
     updateTargetAngle(-deltaX * rotationSpeed)
 
-    const verticalSpeed = 0.1
     cameraHeight.current = THREE.MathUtils.clamp(
       cameraHeight.current + deltaY * verticalSpeed,
       5,
-      35
+      7
     )
 
     const x = zoomDistance.current * Math.sin(angleRef.current)
     const z = zoomDistance.current * Math.cos(angleRef.current)
     cameraRef.current.position.set(x, cameraHeight.current, z)
-    cameraRef.current.lookAt(0, 5, 0)
+    cameraRef.current.lookAt(0, 5.5, 0) // Enfoca en la misma altura
   }
 
   const handleMouseUp = () => {
     isDragging.current = false
   }
 
-  const handleWheel = event => {
+  const handleWheel = (event) => {
     event.preventDefault()
     const delta = event.deltaY > 0 ? 2 : -2
     animateZoom(delta)
-  }
-
-  const getTouchDistance = touches => {
-    const dx = touches[0].clientX - touches[1].clientX
-    const dy = touches[0].clientY - touches[1].clientY
-    return Math.sqrt(dx * dx + dy * dy)
-  }
-
-  const handleTouchStart = event => {
-    event.preventDefault()
-    if (event.touches.length === 1) {
-      isDragging.current = true
-      previousMouseX.current = event.touches[0].clientX
-      previousMouseY.current = event.touches[0].clientY
-    } else if (event.touches.length === 2) {
-      pinchStartDistance.current = getTouchDistance(event.touches)
-    }
-  }
-
-  const handleTouchMove = event => {
-    event.preventDefault()
-    if (event.touches.length === 1 && isDragging.current) {
-      const deltaX = event.touches[0].clientX - previousMouseX.current
-      const deltaY = event.touches[0].clientY - previousMouseY.current
-
-      previousMouseX.current = event.touches[0].clientX
-      previousMouseY.current = event.touches[0].clientY
-
-      const rotationSpeed = 0.005
-      updateTargetAngle(-deltaX * rotationSpeed)
-
-      const verticalSpeed = 0.1
-      cameraHeight.current = THREE.MathUtils.clamp(
-        cameraHeight.current + deltaY * verticalSpeed,
-        5,
-        35
-      )
-
-      const x = zoomDistance.current * Math.sin(angleRef.current)
-      const z = zoomDistance.current * Math.cos(angleRef.current)
-      cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, 5, 0)
-    } else if (event.touches.length === 2) {
-      const currentDistance = getTouchDistance(event.touches)
-      const delta = pinchStartDistance.current - currentDistance
-      animateZoom(delta * 0.02)
-      pinchStartDistance.current = currentDistance
-    }
-  }
-
-  const handleTouchEnd = () => {
-    isDragging.current = false
   }
 
   useEffect(() => {
@@ -217,10 +139,9 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       camera.position.set(x, cameraHeight.current, z)
-      camera.lookAt(0, 5, 0)
+      camera.lookAt(0, 5.5, 0) // Ajusta el punto de enfoque
     }
 
-    // Deshabilitar gestos de navegador en toda la página excepto el canvas
     document.body.style.touchAction = 'none'
 
     window.addEventListener('mousedown', handleMouseDown)
@@ -228,20 +149,12 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     window.addEventListener('mouseup', handleMouseUp)
     window.addEventListener('wheel', handleWheel, { passive: false })
 
-    window.addEventListener('touchstart', handleTouchStart, { passive: false })
-    window.addEventListener('touchmove', handleTouchMove, { passive: false })
-    window.addEventListener('touchend', handleTouchEnd)
-
     return () => {
-      document.body.style.touchAction = '' // Restaurar el comportamiento por defecto al desmontar
+      document.body.style.touchAction = ''
       window.removeEventListener('mousedown', handleMouseDown)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
       window.removeEventListener('wheel', handleWheel)
-
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchmove', handleTouchMove)
-      window.removeEventListener('touchend', handleTouchEnd)
     }
   }, [])
 
@@ -253,8 +166,8 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         cameraRef.current = camera
         const x = zoomDistance.current * Math.sin(angleRef.current)
         const z = zoomDistance.current * Math.cos(angleRef.current)
-        camera.position.set(x, cameraHeight.current, z)
-        camera.lookAt(0, 5, 0)
+        camera.position.set(x, 5.5, z) // Inicia en 5.5 de altura
+        camera.lookAt(0, 5.5, 0) // Enfoca en la misma altura
       }}
     >
       <directionalLight
@@ -275,199 +188,9 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         background
         backgroundIntensity={0.2}
       />
-      {/* <FloorModel position={[3, 0, 4]} /> */}
-      <BuildingModel
-        activeMeshIndex={activeMeshIndex}
-        handleClick={handleClick}
-      />
+      <BuildingModel activeMeshIndex={activeMeshIndex} handleClick={handleClick} />
     </Canvas>
   )
 })
 
-function HomePage ({
-  models,
-  isLoaded,
-  isOpened,
-  setIsOpened,
-  instructionStep
-}) {
-  const [rotation, setRotation] = useState(Math.PI / 1.5)
-  const [zoom, setZoom] = useState(0.16)
-  const [activeModel, setActiveModel] = useState(null)
-  const [mouseDown, setMouseDown] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [autoRotate, setAutoRotate] = useState(true)
-  const [interactionTimeout, setInteractionTimeout] = useState(null)
-  const [activeMeshIndex, setActiveMeshIndex] = useState(null)
-  const [buttonRoute, setButtonRoute] = useState(null)
-  const [selectedFloor, setSelectedFloor] = useState(null)
-  const [copied, setCopied] = useState(false)
-  const [showContent, setShowContent] = useState(false)
-  const [applyTransition, setApplyTransition] = useState(false)
-  const [departamentos, setDepartamentos] = useState([])
-  const sceneRef = useRef()
-
-  useEffect(() => {
-    fetch('/src/data/building.json')
-      .then(response => response.json())
-      .then(data => setDepartamentos(data))
-      .catch(error => console.error('Error al cargar los datos:', error))
-  }, [])
-
-  const handleClick = index => {
-    setActiveMeshIndex(index)
-  
-    const piso = index === 0 ? 1 : index + 2
-    setSelectedFloor(piso)
-  
-    if (piso >= 1 && piso <= 20) {
-      setButtonRoute(`/planta_${piso}`)
-    } else if (piso === 21) {
-      setButtonRoute('/terraza')
-    } else {
-      setButtonRoute(null)
-    }
-  }
-
-  const handleCopy = e => {
-    navigator.clipboard.writeText(e.target.innerText)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 3000)
-  }
-
-  useEffect(() => {
-    const preventDefault = event => event.preventDefault()
-    window.addEventListener('wheel', preventDefault, { passive: false })
-    isLoaded && setActiveModel(models)
-    isLoaded &&
-      setTimeout(() => {
-        setShowContent(true)
-        setTimeout(() => setApplyTransition(true), 500)
-      }, 1000)
-    return () => window.removeEventListener('wheel', preventDefault)
-  }, [isLoaded, models])
-
-  useEffect(() => {
-    const preventDefaultTouch = event => event.preventDefault()
-    window.addEventListener('touchmove', preventDefaultTouch, {
-      passive: false
-    })
-    return () => window.removeEventListener('touchmove', preventDefaultTouch)
-  }, [])
-
-  return (
-    <div className='viewport-container'>
-      {/* <Canvas shadows>
-        <Suspense fallback={null}>
-          {activeModel && (
-            <BuildingModel
-              targetRotation={rotation}
-              targetScale={zoom}
-              activeMeshIndex={activeMeshIndex}
-              handleClick={handleClick}
-              object={activeModel.scene}
-              castShadow
-              receiveShadow
-            />
-          )}
-        </Suspense>
-      </Canvas> */}
-      <Scene
-        ref={sceneRef}
-        activeMeshIndex={activeMeshIndex}
-        handleClick={handleClick}
-      />
-
-      {showContent && (
-        <>
-          <div className={`soil-info ${applyTransition ? 'show' : ''}`}>
-            <img src='/images/soil_logo.png' alt='Soil-logo' />
-            <h1>Soil Pueblo Libre</h1>
-            <a href='#'>ventas.soil@verdant.pe</a>
-            <span onClick={handleCopy}>(+51) 982 172 656</span>
-          </div>
-
-          {copied && (
-            <div className='copy-notification'>
-              Número copiado correctamente: (+51) 982 172 656
-            </div>
-          )}
-
-          <div
-            className={`menubar2 ${applyTransition ? 'show' : ''} ${
-              !isOpened ? 'hideinstructions' : 'showinstructions'
-            }`}
-          >
-            <AnimatedButton
-              onClick={() => setIsOpened(true)}
-              className={instructionStep === 5 ? 'on' : ''}
-            >
-              <IconChecklist width='30px' height='30px' />
-            </AnimatedButton>
-            <AnimatedButton
-              onMouseDown={() => sceneRef.current.rotateCameraRight()}
-              onTouchStart={() => sceneRef.current.rotateCameraRight()}
-              className={instructionStep === 1 ? 'on' : ''}
-            >
-              <GlobalRotateIcon width='30px' height='30px' />
-            </AnimatedButton>
-            <AnimatedButton
-              onMouseDown={() => sceneRef.current.rotateCameraLeft()}
-              onTouchStart={() => sceneRef.current.rotateCameraLeft()}
-              className={instructionStep === 1 ? 'on' : ''}
-            >
-              <GlobalRotateIcon
-                width='30px'
-                height='30px'
-                style={{ transform: 'scaleX(-1)' }}
-              />
-            </AnimatedButton>
-            <AnimatedButton
-              onMouseDown={() => sceneRef.current.zoomOut()}
-              onTouchStart={() => sceneRef.current.zoomOut()}
-              className={instructionStep === 2 ? 'on' : ''}
-            >
-              <ZoomOutIcon width='30px' height='30px' />
-            </AnimatedButton>
-            <AnimatedButton
-              onMouseDown={() => sceneRef.current.zoomIn()}
-              onTouchStart={() => sceneRef.current.zoomIn()}
-              className={instructionStep === 2 ? 'on' : ''}
-            >
-              <ZoomInIcon width='30px' height='30px' />
-            </AnimatedButton>
-          </div>
-
-          <div className={`floors-info ${selectedFloor && 'active'}`}>
-            <span className='floor-name'>
-              {selectedFloor === 1
-                ? 'Planta 1 y 2'
-                : selectedFloor === 21
-                ? 'Terraza'
-                : `Planta ${selectedFloor}`}
-            </span>
-            <div className='floor-details'>
-              <span className='floor-capacity'>
-                Departamentos:{' '}
-                {departamentos[`planta${selectedFloor}`]
-                  ? departamentos[`planta${selectedFloor}`].length
-                  : 0}
-              </span>
-
-              <span className='available-apartments'>
-                Departamentos Disponibles:
-              </span>
-            </div>
-            <NavigateButton
-              route={buttonRoute}
-              floor={selectedFloor}
-              clearSelection={() => handleClick(null)}
-            />
-          </div>
-        </>
-      )}
-    </div>
-  )
-}
-
-export default HomePage
+export default Scene
