@@ -3,7 +3,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Environment } from '@react-three/drei'
 
-function LobbyModels ({
+function LobbyModels({
   targetRotation,
   targetScale,
   stateView,
@@ -13,7 +13,7 @@ function LobbyModels ({
   resetSelection
 }) {
   const meshesRef = useRef([]) // Array de referencias para múltiples modelos
-  const { gl, camera } = useThree()
+  const { gl, camera, size } = useThree()
   const raycaster = useRef(new THREE.Raycaster())
   const mouse = useRef(new THREE.Vector2())
   const [selectedObject, setSelectedObject] = useState(null)
@@ -67,8 +67,9 @@ function LobbyModels ({
 
   const handleClick = event => {
     const { clientX, clientY } = event
-    const { width, height } = gl.domElement
+    const { width, height } = size // Utilizar `size` para obtener dimensiones correctas
 
+    // Convertir posición del ratón a coordenadas de dispositivo normalizadas (NDC)
     mouse.current.x = (clientX / width) * 2 - 1
     mouse.current.y = -(clientY / height) * 2 + 1
 
@@ -126,7 +127,7 @@ function LobbyModels ({
       gl.domElement.removeEventListener('click', handleClick)
       gl.domElement.removeEventListener('touchstart', handleClick)
     }
-  }, [gl, selectedObject, currentFloor])
+  }, [gl, selectedObject, currentFloor, size]) // Agregar `size` a las dependencias
 
   return (
     <>

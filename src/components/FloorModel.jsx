@@ -4,7 +4,7 @@ import * as THREE from 'three'
 
 function FloorModel({ targetRotation, targetScale, stateView, object, setSelectedObjectName, resetSelection }) {
   const meshRef = useRef()
-  const { gl, camera } = useThree()
+  const { gl, camera, size } = useThree()
   const raycaster = useRef(new THREE.Raycaster())
   const mouse = useRef(new THREE.Vector2())
   const [selectedObject, setSelectedObject] = useState(null)
@@ -38,8 +38,9 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
 
   const handleClick = (event) => {
     const { clientX, clientY } = event
-    const { width, height } = gl.domElement
+    const { width, height } = size
 
+    // Convert mouse position to normalized device coordinates (NDC)
     mouse.current.x = (clientX / width) * 2 - 1
     mouse.current.y = -(clientY / height) * 2 + 1
 
@@ -89,7 +90,7 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
       gl.domElement.removeEventListener('click', handleClick)
       gl.domElement.removeEventListener('touchstart', handleClick)
     }
-  }, [gl, selectedObject])
+  }, [gl, selectedObject, size])  // Add size as dependency to handle resize
 
   return (
     <>
