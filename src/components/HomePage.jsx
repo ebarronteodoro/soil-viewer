@@ -238,8 +238,10 @@ function HomePage ({
     const piso = index === 0 ? 1 : index + 2
     setSelectedFloor(piso)
 
-    if (piso >= 1 && piso <= 20) {
+    if (piso >= 3 && piso <= 20) {
       setButtonRoute(`/planta_${piso}`)
+    } else if (piso === 1 || piso === 2) {
+      setButtonRoute('/lobby')
     } else if (piso === 21) {
       setButtonRoute('/terraza')
     } else {

@@ -1,1239 +1,1239 @@
 {
-  "planta1": [
+  "lobby": [
     {
       "numero": 101,
       "tipologia": 9,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "55.95 m2",
-      "areaTechada": "40.59 m2",
-      "areaLibre": "15.36 m2"
+      "areaTotal": "55.95 m²",
+      "areaTechada": "40.59 m²",
+      "areaLibre": "15.36 m²"
     },
     {
       "numero": 102,
       "tipologia": 10,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "68.44 m2",
-      "areaTechada": "55.35 m2",
-      "areaLibre": "13.09 m2"
+      "areaTotal": "68.44 m²",
+      "areaTechada": "55.35 m²",
+      "areaLibre": "13.09 m²"
     },
     {
       "numero": 103,
       "tipologia": 11,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "66.15 m2",
-      "areaTechada": "53.18 m2",
-      "areaLibre": "12.97 m2"
+      "areaTotal": "66.15 m²",
+      "areaTechada": "53.18 m²",
+      "areaLibre": "12.97 m²"
     },
     {
       "numero": 104,
       "tipologia": 12,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "54.42 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "15.03 m2"
+      "areaTotal": "54.42 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "15.03 m²"
     }
   ],
-  "planta2": [
+  "planta_2": [
     {
       "numero": 201,
       "tipologia": 13,
       "habitaciones": 1,
       "banos": 2,
-      "areaTotal": "53 m2",
-      "areaTechada": "53 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53 m²",
+      "areaTechada": "53 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 202,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.71 m2",
-      "areaTechada": "36.71 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.71 m²",
+      "areaTechada": "36.71 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 203,
       "tipologia": 6,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 204,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 205,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta3": [
+  "planta_3": [
     {
       "numero": 301,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 302,
-      "tipologia": "2-D",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "62.14 m2",
-      "areaTechada": "62.14 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "62.14 m²",
+      "areaTechada": "62.14 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 303,
-      "tipologia": "3-D",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "72.55 m2",
-      "areaTechada": "72.55 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "72.55 m²",
+      "areaTechada": "72.55 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 304,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 305,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.71 m2",
-      "areaTechada": "36.71 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.71 m²",
+      "areaTechada": "36.71 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 306,
       "tipologia": 6,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 307,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 308,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta4": [
+  "planta_4": [
     {
       "numero": 401,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 402,
-      "tipologia": "2-B",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.84 m2",
-      "areaTechada": "59.84 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.84 m²",
+      "areaTechada": "59.84 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 403,
       "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "71.7 m2",
-      "areaTechada": "71.7 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "71.7 m²",
+      "areaTechada": "71.7 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 404,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 405,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.71 m2",
-      "areaTechada": "36.71 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.71 m²",
+      "areaTechada": "36.71 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 406,
       "tipologia": 6,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 407,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 408,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta5": [
+  "planta_5": [
     {
       "numero": 501,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 502,
       "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.39 m2",
-      "areaTechada": "61.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.39 m²",
+      "areaTechada": "61.39 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 503,
-      "tipologia": "3-B",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "70.15 m2",
-      "areaTechada": "70.15 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.15 m²",
+      "areaTechada": "70.15 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 504,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 505,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.71 m2",
-      "areaTechada": "36.71 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.71 m²",
+      "areaTechada": "36.71 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 506,
       "tipologia": 6,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 507,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.18 m2",
-      "areaTechada": "53.18 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.18 m²",
+      "areaTechada": "53.18 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 508,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta6": [
+  "planta_6": [
     {
       "numero": 601,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 602,
-      "tipologia": "2-D",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "62.14 m2",
-      "areaTechada": "62.14 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "62.14 m²",
+      "areaTechada": "62.14 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 603,
-      "tipologia": "3-D",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "72.55 m2",
-      "areaTechada": "72.55 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "72.55 m²",
+      "areaTechada": "72.55 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 604,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 605,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.71 m2",
-      "areaTechada": "36.71 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.71 m²",
+      "areaTechada": "36.71 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 606,
       "tipologia": 6,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 607,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 608,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta7": [
+  "planta_7": [
     {
       "numero": 701,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 702,
-      "tipologia": "2-D",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "62.14 m2",
-      "areaTechada": "62.14 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "62.14 m²",
+      "areaTechada": "62.14 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 703,
-      "tipologia": "3-D",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "72.55 m2",
-      "areaTechada": "72.55 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "72.55 m²",
+      "areaTechada": "72.55 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 704,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 705,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.71 m2",
-      "areaTechada": "36.71 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.71 m²",
+      "areaTechada": "36.71 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 706,
       "tipologia": 6,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 707,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "55 m2",
-      "areaTechada": "55 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "55 m²",
+      "areaTechada": "55 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 708,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta8": [
+  "planta_8": [
     {
       "numero": 801,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 802,
       "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.39 m2",
-      "areaTechada": "61.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.39 m²",
+      "areaTechada": "61.39 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 803,
-      "tipologia": "3-B",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "70.15 m2",
-      "areaTechada": "70.15 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.15 m²",
+      "areaTechada": "70.15 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 804,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 805,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.02 m2",
-      "areaTechada": "37.02 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.02 m²",
+      "areaTechada": "37.02 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 806,
       "tipologia": 14,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "53.65 m2",
-      "areaTechada": "35.41 m2",
-      "areaLibre": "18.24 m2"
+      "areaTotal": "53.65 m²",
+      "areaTechada": "35.41 m²",
+      "areaLibre": "18.24 m²"
     },
     {
       "numero": 807,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "55 m2",
-      "areaTechada": "55 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "55 m²",
+      "areaTechada": "55 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 808,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta9": [
+  "planta_9": [
     {
       "numero": 901,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 902,
-      "tipologia": "2-B",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.84 m2",
-      "areaTechada": "59.84 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.84 m²",
+      "areaTechada": "59.84 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 903,
       "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "71.7 m2",
-      "areaTechada": "71.7 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "71.7 m²",
+      "areaTechada": "71.7 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 904,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 905,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.71 m2",
-      "areaTechada": "36.71 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.71 m²",
+      "areaTechada": "36.71 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 906,
       "tipologia": 15,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "35.06 m2",
-      "areaTechada": "35.06 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "35.06 m²",
+      "areaTechada": "35.06 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 907,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 908,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta10": [
+  "planta_10": [
     {
       "numero": 1001,
       "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.8 m2",
-      "areaTechada": "57.8 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.8 m²",
+      "areaTechada": "57.8 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1002,
       "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.39 m2",
-      "areaTechada": "61.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.39 m²",
+      "areaTechada": "61.39 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1003,
-      "tipologia": "3-B",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "70.15 m2",
-      "areaTechada": "70.15 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.15 m²",
+      "areaTechada": "70.15 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1004,
       "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "38.2 m2",
-      "areaTechada": "38.2 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "38.2 m²",
+      "areaTechada": "38.2 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1005,
       "tipologia": 5,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "36.66 m2",
-      "areaTechada": "36.66 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "36.66 m²",
+      "areaTechada": "36.66 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1006,
       "tipologia": 15,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "35.06 m2",
-      "areaTechada": "35.06 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "35.06 m²",
+      "areaTechada": "35.06 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1007,
       "tipologia": 7,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "53.49 m2",
-      "areaTechada": "53.49 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "53.49 m²",
+      "areaTechada": "53.49 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1008,
       "tipologia": 8,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "39.39 m2",
-      "areaTechada": "39.39 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "39.39 m²",
+      "areaTechada": "39.39 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta11": [
+  "planta_11": [
     {
       "numero": 1101,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1102,
-      "tipologia": "2-A",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.04 m2",
-      "areaTechada": "61.04 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.04 m²",
+      "areaTechada": "61.04 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1103,
-      "tipologia": "3-A",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "71.25 m2",
-      "areaTechada": "71.25 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "71.25 m²",
+      "areaTechada": "71.25 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1104,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1105,
       "tipologia": 16,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "74.26 m2",
-      "areaTechada": "74.26 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "74.26 m²",
+      "areaTechada": "74.26 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1106,
       "tipologia": 20,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "99. 63m2",
-      "areaTechada": "77 m2",
-      "areaLibre": "22.63 m2"
+      "areaTotal": "99. 63m²",
+      "areaTechada": "77 m²",
+      "areaLibre": "22.63 m²"
     }
   ],
-  "planta12": [
+  "planta_12": [
     {
       "numero": 1201,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1202,
-      "tipologia": "2-C",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.61 m2",
-      "areaTechada": "59.61 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.61 m²",
+      "areaTechada": "59.61 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1203,
-      "tipologia": "3-A",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "71.25 m2",
-      "areaTechada": "71.25 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "71.25 m²",
+      "areaTechada": "71.25 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1204,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1205,
       "tipologia": 16,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "74.26 m2",
-      "areaTechada": "74.26 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "74.26 m²",
+      "areaTechada": "74.26 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1206,
       "tipologia": 21,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "77 m2",
-      "areaTechada": "77 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "77 m²",
+      "areaTechada": "77 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta13": [
+  "planta_13": [
     {
       "numero": 1301,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1302,
-      "tipologia": "2-A",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.04 m2",
-      "areaTechada": "61.04 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.04 m²",
+      "areaTechada": "61.04 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1303,
-      "tipologia": "3-C",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "69.7 m2",
-      "areaTechada": "69.7 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "69.7 m²",
+      "areaTechada": "69.7 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1304,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1305,
       "tipologia": 17,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "74.26 m2",
-      "areaTechada": "72.04 m2",
-      "areaLibre": "2.22 m2"
+      "areaTotal": "74.26 m²",
+      "areaTechada": "72.04 m²",
+      "areaLibre": "2.22 m²"
     },
     {
       "numero": 1306,
-      "tipologia": "21-A",
+      "tipologia": 21,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "77 m2",
-      "areaTechada": "74.77 m2",
-      "areaLibre": "2.23 m2"
+      "areaTotal": "77 m²",
+      "areaTechada": "74.77 m²",
+      "areaLibre": "2.23 m²"
     }
   ],
-  "planta14": [
+  "planta_14": [
     {
       "numero": 1401,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1402,
-      "tipologia": "2-C",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.61 m2",
-      "areaTechada": "59.61 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.61 m²",
+      "areaTechada": "59.61 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1403,
-      "tipologia": "3-A",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "71.25 m2",
-      "areaTechada": "71.25 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "71.25 m²",
+      "areaTechada": "71.25 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1404,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1405,
       "tipologia": 18,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "64.98 m2",
-      "areaTechada": "59.68 m2",
-      "areaLibre": "5.3 m2"
+      "areaTotal": "64.98 m²",
+      "areaTechada": "59.68 m²",
+      "areaLibre": "5.3 m²"
     },
     {
       "numero": 1406,
       "tipologia": 22,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "75.86 m2",
-      "areaTechada": "70.56 m2",
-      "areaLibre": "5.3 m2"
+      "areaTotal": "75.86 m²",
+      "areaTechada": "70.56 m²",
+      "areaLibre": "5.3 m²"
     }
   ],
-  "planta15": [
+  "planta_15": [
     {
       "numero": 1501,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1502,
-      "tipologia": "2-A",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.04 m2",
-      "areaTechada": "61.04 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.04 m²",
+      "areaTechada": "61.04 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1503,
-      "tipologia": "3-A",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "71.25 m2",
-      "areaTechada": "71.25 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "71.25 m²",
+      "areaTechada": "71.25 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1504,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1505,
       "tipologia": 19,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.68 m2",
-      "areaTechada": "59.68 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.68 m²",
+      "areaTechada": "59.68 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1506,
       "tipologia": 23,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "70.56 m2",
-      "areaTechada": "70.56 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.56 m²",
+      "areaTechada": "70.56 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta16": [
+  "planta_16": [
     {
       "numero": 1601,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1602,
-      "tipologia": "2-E",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.78 m2",
-      "areaTechada": "61.78 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.78 m²",
+      "areaTechada": "61.78 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1603,
-      "tipologia": "3-E",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "72.1 m2",
-      "areaTechada": "72.1 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "72.1 m²",
+      "areaTechada": "72.1 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1604,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1605,
       "tipologia": 19,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.68 m2",
-      "areaTechada": "59.68 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.68 m²",
+      "areaTechada": "59.68 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1606,
       "tipologia": 23,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "70.56 m2",
-      "areaTechada": "70.56 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.56 m²",
+      "areaTechada": "70.56 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta17": [
+  "planta_17": [
     {
       "numero": 1701,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1702,
-      "tipologia": "2-E",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.78 m2",
-      "areaTechada": "61.78 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.78 m²",
+      "areaTechada": "61.78 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1703,
-      "tipologia": "3-E",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "72.1 m2",
-      "areaTechada": "72.1 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "72.1 m²",
+      "areaTechada": "72.1 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1704,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1705,
       "tipologia": 19,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.68 m2",
-      "areaTechada": "59.68 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.68 m²",
+      "areaTechada": "59.68 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1706,
       "tipologia": 23,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "70.56 m2",
-      "areaTechada": "70.56 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.56 m²",
+      "areaTechada": "70.56 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta18": [
+  "planta_18": [
     {
       "numero": 1801,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1802,
-      "tipologia": "2-A",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "61.04 m2",
-      "areaTechada": "61.04 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "61.04 m²",
+      "areaTechada": "61.04 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1803,
-      "tipologia": "3-C",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "69.7 m2",
-      "areaTechada": "69.7 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "69.7 m²",
+      "areaTechada": "69.7 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1804,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1805,
       "tipologia": 19,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.68 m2",
-      "areaTechada": "59.68 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.68 m²",
+      "areaTechada": "59.68 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1806,
       "tipologia": 23,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "70.56 m2",
-      "areaTechada": "70.56 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.56 m²",
+      "areaTechada": "70.56 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta19": [
+  "planta_19": [
     {
       "numero": 1901,
-      "tipologia": "1-A",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "57.33 m2",
-      "areaTechada": "57.33 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "57.33 m²",
+      "areaTechada": "57.33 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1902,
-      "tipologia": "2-C",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.61 m2",
-      "areaTechada": "59.61 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.61 m²",
+      "areaTechada": "59.61 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1903,
-      "tipologia": "3-A",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "71.25 m2",
-      "areaTechada": "71.25 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "71.25 m²",
+      "areaTechada": "71.25 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1904,
-      "tipologia": "4-A",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.95 m2",
-      "areaTechada": "37.95 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.95 m²",
+      "areaTechada": "37.95 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1905,
       "tipologia": 19,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.68 m2",
-      "areaTechada": "59.68 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.68 m²",
+      "areaTechada": "59.68 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 1906,
       "tipologia": 23,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "70.56 m2",
-      "areaTechada": "70.56 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.56 m²",
+      "areaTechada": "70.56 m²",
+      "areaLibre": "0 m²"
     }
   ],
-  "planta20": [
+  "planta_20": [
     {
       "numero": 2001,
-      "tipologia": "1-B",
+      "tipologia": 1,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "56.87 m2",
-      "areaTechada": "56.87 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "56.87 m²",
+      "areaTechada": "56.87 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 2002,
-      "tipologia": "2-F",
+      "tipologia": 2,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "60.67 m2",
-      "areaTechada": "60.67 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "60.67 m²",
+      "areaTechada": "60.67 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 2003,
-      "tipologia": "3-F",
+      "tipologia": 3,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "70.78 m2",
-      "areaTechada": "70.78 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.78 m²",
+      "areaTechada": "70.78 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 2004,
-      "tipologia": "4-B",
+      "tipologia": 4,
       "habitaciones": 1,
       "banos": 1,
-      "areaTotal": "37.69 m2",
-      "areaTechada": "37.69 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "37.69 m²",
+      "areaTechada": "37.69 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 2005,
-      "tipologia": "19-A",
+      "tipologia": 19,
       "habitaciones": 2,
       "banos": 2,
-      "areaTotal": "59.36 m2",
-      "areaTechada": "59.36 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "59.36 m²",
+      "areaTechada": "59.36 m²",
+      "areaLibre": "0 m²"
     },
     {
       "numero": 2006,
-      "tipologia": "23-A",
+      "tipologia": 23,
       "habitaciones": 3,
       "banos": 2,
-      "areaTotal": "70.23 m2",
-      "areaTechada": "70.23 m2",
-      "areaLibre": "0 m2"
+      "areaTotal": "70.23 m²",
+      "areaTechada": "70.23 m²",
+      "areaLibre": "0 m²"
     }
   ]
 }

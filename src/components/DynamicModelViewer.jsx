@@ -73,7 +73,7 @@ function DynamicModelViewer({
       ) : modelId === 'lobby' ? (
         <LobbyPage
           key={canvasKey}
-          activeModels={activeModels} // Pasamos ambos modelos a LobbyPage
+          activeModels={activeModels}
           isLoaded={isLoaded}
         />
       ) : floorModels.has(modelId) ? (

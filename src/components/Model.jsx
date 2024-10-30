@@ -86,7 +86,7 @@ function Model ({
           />
         </group>
       )}
-      <Environment files={'/models/hdri/TypoB.jpg'} background blur={0} />
+      <Environment files='/models/hdri/typologie.hdr' blur={0} />
     </>
   )
 }

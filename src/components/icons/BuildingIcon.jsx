@@ -1,4 +1,4 @@
-const EyeIcon = props => {
+const BuildingIcon = props => {
   return (
     <svg
       fill='none'
@@ -15,4 +15,4 @@ const EyeIcon = props => {
   )
 }
 
-export default EyeIcon
+export default BuildingIcon

@@ -3,23 +3,31 @@ import { Canvas } from '@react-three/fiber'
 import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
 import FloorModel from './FloorModel'
 import ReturnIcon from './icons/ReturnIcon'
 import modelPaths from '../data/modelPaths'
+import typologiesData from '../data/building.json'
 import FloorCameraController from './FloorCameraController'
 import { Environment } from '@react-three/drei'
+import FocusIcon from './icons/FocusIcon'
 
 function FloorPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(0.15)
+  const [zoom, setZoom] = useState(0.2)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
   const [selectedObjectName, setSelectedObjectName] = useState('')
+  const [selectedTypologyData, setSelectedTypologyData] = useState(null)
   const [resetSelection, setResetSelection] = useState(false)
 
-  const minZoom = 0.1
-  const maxZoom = 0.5
+  const [resetPosition, setResetPosition] = useState(false)
+  const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 })
+
+  const { modelId } = useParams()
+
+  const minZoom = 0.15
+  const maxZoom = 0.7
   const zoomStep = 0.05
 
   useEffect(() => {
@@ -39,15 +47,37 @@ function FloorPage ({ activeModel, isLoaded }) {
 
   const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
   const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
-  const zoomIn = () => setZoom(prev => Math.min(prev + zoomStep, maxZoom))
-  const zoomOut = () => setZoom(prev => Math.max(prev - zoomStep, minZoom))
+
+  const zoomIn = () => {
+    setZoom(prev => {
+      const newZoom = Math.min(prev + zoomStep, maxZoom)
+      centerCamera()
+      return newZoom
+    })
+  }
+
+  const zoomOut = () => {
+    setZoom(prev => {
+      const newZoom = Math.max(prev - zoomStep, minZoom)
+      centerCamera()
+      return newZoom
+    })
+  }
 
   const navigate = useNavigate()
-
   const returnHome = () => {
     setTimeout(() => {
       navigate('/')
     }, 1)
+  }
+
+  const centerCamera = () => {
+    setCurrentPosition({ x: 0, y: 0 })
+  }
+
+  const handleResetPosition = () => {
+    setResetPosition(true)
+    setTimeout(() => setResetPosition(false), 100)
   }
 
   const viewTypology = () => {
@@ -56,8 +86,6 @@ function FloorPage ({ activeModel, isLoaded }) {
         .replace('-parent', '')
         .replace('-aprent', '')
         .replace('tipo-', 't-')
-
-      console.log(baseTypology)
 
       if (modelPaths[baseTypology]) {
         setTimeout(() => {
@@ -72,11 +100,24 @@ function FloorPage ({ activeModel, isLoaded }) {
     setTimeout(() => setResetSelection(false), 100)
   }
 
+  useEffect(() => {
+    if (selectedObjectName) {
+      const typologyId = parseInt(selectedObjectName.replace('tipo-', ''))
+      const floorData = typologiesData[modelId] // Obtener datos del piso actual
+
+      if (floorData) {
+        const typologyData = floorData.find(t => t.tipologia === typologyId)
+        setSelectedTypologyData(typologyData || null) // Guardar datos de la tipología seleccionada
+      }
+    } else {
+      setSelectedTypologyData(null) // Limpiar si no hay selección
+    }
+  }, [selectedObjectName, modelId])
+
   // Obtener la ruta de la imagen de la tipología seleccionada
   const getImagePath = () => {
     if (!selectedObjectName) return null
 
-    // Extraer el número de la tipología y construir la ruta de imagen
     const typologyNumber = selectedObjectName
       .replace('tipo-', '')
       .replace('-parent', '')
@@ -105,7 +146,7 @@ function FloorPage ({ activeModel, isLoaded }) {
             resetSelection={resetSelection}
           />
           <Environment files='/models/hdri/TypoB.jpg' />
-          <FloorCameraController />
+          <FloorCameraController zoom={zoom} resetPosition={resetPosition} />
         </Suspense>
       </Canvas>
 
@@ -113,14 +154,16 @@ function FloorPage ({ activeModel, isLoaded }) {
         <div
           style={{
             position: 'absolute',
-            bottom: '1rem',
+            top: '1rem',
             left: '2rem',
             display: 'flex'
           }}
+          className='left-section'
         >
-          <AnimatedButton onClick={returnHome}>
+          <button onClick={returnHome}>
             <ReturnIcon width='30px' height='30px' />
-          </AnimatedButton>
+          </button>
+          <span>{`${modelId.replace('planta_', 'PLANTA ')}`}</span>
         </div>
       )}
 
@@ -164,7 +207,17 @@ function FloorPage ({ activeModel, isLoaded }) {
               style={{ transform: 'scaleX(-1)' }}
             />
           </AnimatedButton>
+          <AnimatedButton
+            style={{ display: 'flex', border: 'none', background: 'none' }}
+            onClick={handleResetPosition}
+          >
+            <FocusIcon width='30px' height='30px' />
+          </AnimatedButton>
         </div>
+      )}
+
+      {isLoaded && (
+        <span className='hook_content'>¡ELIGE TU TIPOLOGÍA PREFERIDA!</span>
       )}
 
       {isLoaded && (
@@ -181,6 +234,15 @@ function FloorPage ({ activeModel, isLoaded }) {
           )}
           <h2>Tipología:</h2>
           <span>{selectedObjectName}</span>
+          {isLoaded && selectedTypologyData && (
+            <>
+              <h3>Detalles de Tipología</h3>
+              <p>N°: {selectedTypologyData.numero}</p>
+              <p>Área: {selectedTypologyData.areaTotal}</p>
+              <p>Habitaciones: {selectedTypologyData.habitaciones}</p>
+              <p>Baños: {selectedTypologyData.banos}</p>
+            </>
+          )}
           <button className='view-typo' onClick={viewTypology}>
             Ver Tipología
           </button>

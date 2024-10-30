@@ -9,6 +9,8 @@ const modelPaths = {
   't-6': '/models/DEPARTAMENTOS/TIPO-6.glb',
   't-7': '/models/DEPARTAMENTOS/TIPO-7.glb',
   't-8': '/models/DEPARTAMENTOS/TIPO-8.glb',
+  't-21': '/models/DEPARTAMENTOS/TIPO-16.glb',
+  't-16': '/models/DEPARTAMENTOS/TIPO-21.glb',
   't-19': '/models/DEPARTAMENTOS/TIPO-19.glb',
   't-23': '/models/DEPARTAMENTOS/TIPO-23.glb',
   lobby: '/models/PISOS/planta-1.glb',

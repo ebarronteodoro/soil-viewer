@@ -73,7 +73,6 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
     }
   }
 
-  // Efecto para resetear la selección cuando `resetSelection` es `true`
   useEffect(() => {
     if (resetSelection && selectedObject) {
       selectedObject.material.color.set('white')
