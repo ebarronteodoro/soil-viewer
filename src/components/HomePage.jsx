@@ -193,7 +193,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         shadow-camera-bottom={-50}
       />
       <Environment
-        files='/models/hdri/city_sky.hdr'
+        files='/models/hdri/sky-4.hdr'
         background
         backgroundIntensity={0.2}
       />

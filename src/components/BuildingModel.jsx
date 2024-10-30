@@ -54,97 +54,97 @@ const BuildingModel = (props) => {
     },
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Segundo piso
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Tercer piso
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Cuarto piso
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Quinto piso
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Sexto piso
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Séptimo piso
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Octavo piso
     {
       position: [0.038, 1, -0.015],
-      args: [.152, 0.0276525, .375],
+      args: [.152, 0.029, .375],
       rotation: [0, 0, 0],
     }, // Noveno piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Décimo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Onceavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Doceavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Treceavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Catorceavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Quinceavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Dieciseisavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Diecisieteavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Dieciochoavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.152, 0.0276525, .35],
+      args: [.152, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Diecinueveavo piso
     {
       position: [0.038, 1, -0.034],
-      args: [.16, 0.0276525, .35],
+      args: [.16, 0.029, .35],
       rotation: [0, 0, 0],
     }, // Veinteavo piso
   ];
