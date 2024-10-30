@@ -88,14 +88,14 @@ function FloorPage ({ activeModel, isLoaded }) {
   return (
     <div>
       <Canvas camera={{ fov: 15, position: [0, 0, 10] }} shadows>
-        <ambientLight intensity={1.5} />
-        <directionalLight
-          color='#fade85'
-          position={[60, 30, 160]}
-          intensity={2}
-          castShadow
-        />
         <Suspense fallback={null}>
+          <ambientLight intensity={1.5} />
+          <directionalLight
+            color='#fade85'
+            position={[60, 30, 160]}
+            intensity={2}
+            castShadow
+          />
           <FloorModel
             targetRotation={rotation}
             targetScale={zoom}

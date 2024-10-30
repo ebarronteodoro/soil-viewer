@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import modelPaths from '../data/modelPaths';
 import TerrazaPage from './TerrazaPage';
 import LobbyPage from './LobbyPage';
@@ -18,12 +18,20 @@ function DynamicModelViewer({
   instructionStep
 }) {
   const { modelId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isButtonEnabled && Object.keys(models).length > 0) {
       setIsRouteModelLoaded(true);
     }
   }, [isButtonEnabled, models, setIsRouteModelLoaded]);
+
+  // Redirigir automáticamente a "lobby" si el modelId es "planta_2"
+  useEffect(() => {
+    if (modelId === 'planta_2') {
+      navigate('/lobby');
+    }
+  }, [modelId, navigate]);
 
   const floorModels = useMemo(() => {
     return new Set(
@@ -36,12 +44,8 @@ function DynamicModelViewer({
   }, [models, modelId]);
 
   const activeModels = useMemo(() => {
-    // Si es planta_1, incluir ambos modelos, planta_1 y planta_2
-    return modelId === 'planta_1' ? [models.planta_1, models.planta_2] : [activeModel];
+    return modelId === 'lobby' ? [models.lobby, models.planta_2] : [activeModel];
   }, [modelId, models]);
-  
-  console.log(models);
-  
 
   useEffect(() => {
     return () => {
@@ -66,7 +70,7 @@ function DynamicModelViewer({
           setIsOpened={setIsOpened}
           instructionStep={instructionStep}
         />
-      ) : modelId === 'planta_1' ? ( // Condición específica para planta_1
+      ) : modelId === 'lobby' ? (
         <LobbyPage
           key={canvasKey}
           activeModels={activeModels} // Pasamos ambos modelos a LobbyPage

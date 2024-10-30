@@ -86,26 +86,7 @@ function Model ({
           />
         </group>
       )}
-
-      <ambientLight intensity={0.8} />
-
-      <directionalLight
-        color='#fade85'
-        position={[10, 40, 20]}
-        intensity={2}
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-camera-far={50}
-        shadow-camera-near={2}
-        shadow-camera-left={-10}
-        shadow-camera-right={10}
-        shadow-camera-top={10}
-        shadow-camera-bottom={-10}
-        shadow-radius={3}
-      />
-
-      <Environment files={environmentPath} background blur={0} />
+      <Environment files={'/models/hdri/TypoB.jpg'} background blur={0} />
     </>
   )
 }

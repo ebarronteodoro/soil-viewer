@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+import { Environment } from '@react-three/drei'
 
 function LobbyModels ({
   targetRotation,
@@ -140,6 +141,7 @@ function LobbyModels ({
             />
           </group>
         ))}
+      <Environment files='/models/hdri/TypoB.jpg' />
     </>
   )
 }

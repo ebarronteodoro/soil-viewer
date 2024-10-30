@@ -9,7 +9,6 @@ import modelPaths from '../data/modelPaths'
 import FloorCameraController from './FloorCameraController'
 import LobbyModels from './LobbyModels'
 import ReturnIcon from './icons/ReturnIcon'
-import { Environment, OrbitControls } from '@react-three/drei'
 
 function LobbyPage ({ activeModels, isLoaded }) {
   const [rotation, setRotation] = useState(0)
@@ -74,20 +73,30 @@ function LobbyPage ({ activeModels, isLoaded }) {
     setResetSelection(true)
   }
 
+  const getImagePath = () => {
+    if (!selectedObjectName) return null
+
+    const typologyNumber = selectedObjectName
+      .replace('tipo-', '')
+      .replace('-parent', '')
+    const imagePath = `/typologies images/TIPO-${typologyNumber}.jpg`
+
+    return imagePath
+  }
+
   return (
     <div>
       <Canvas camera={{ fov: 15, position: [0, 0, 10] }} shadows>
-        <ambientLight intensity={1.5} />
-
-        {/* Luz direccional desde atrás hacia adelante y arriba hacia abajo */}
-        <directionalLight
-          color='#fade85'
-          position={[60, 30, 160]}
-          intensity={2}
-          castShadow
-        />
-
         <Suspense fallback={null}>
+          <ambientLight intensity={1.5} />
+
+          <directionalLight
+            color='#fade85'
+            position={[60, 30, 180]}
+            intensity={2}
+            castShadow
+          />
+
           <LobbyModels
             targetRotation={rotation}
             targetScale={zoom}
@@ -96,9 +105,6 @@ function LobbyPage ({ activeModels, isLoaded }) {
             currentFloor={currentFloor}
             setSelectedObjectName={setSelectedObjectName}
             resetSelection={resetSelection}
-          />
-          <Environment
-            files='/models/hdri/TypoB.jpg'
           />
           <FloorCameraController />
         </Suspense>
@@ -166,6 +172,14 @@ function LobbyPage ({ activeModels, isLoaded }) {
         <aside
           className={`typo-selector ${selectedObjectName !== '' && 'active'}`}
         >
+          {selectedObjectName && (
+            <div className='typology-image'>
+              <img
+                src={getImagePath()}
+                alt={`Tipología ${selectedObjectName}`}
+              />
+            </div>
+          )}
           <h3>Piso Actual: {currentFloor === 0 ? 'Planta 1' : 'Planta 2'}</h3>
           <h2>Tipología:</h2>
           <span>{selectedObjectName}</span>
