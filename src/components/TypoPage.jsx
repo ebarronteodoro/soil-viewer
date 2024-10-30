@@ -15,6 +15,7 @@ import Hide3dIcon from './icons/Hide3dIcon'
 import CameraUpIcon from './icons/CameraUpIcon'
 import CameraDownIcon from './icons/CameraDownIcon'
 import { Environment } from '@react-three/drei'
+import FocusIcon from './icons/FocusIcon'
 
 function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   const [rotation, setRotation] = useState(0)
@@ -190,7 +191,7 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
             </>
           )}
           <AnimatedButton onClick={triggerResetPosition}>
-            <ReturnIcon width='30px' height='30px' />
+            <FocusIcon width='30px' height='30px' />
           </AnimatedButton>
           <AnimatedButton onClick={backIndex}>
             <BuildingIcon width='30px' height='30px' />

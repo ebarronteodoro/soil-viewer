@@ -26,7 +26,6 @@ function DynamicModelViewer({
     }
   }, [isButtonEnabled, models, setIsRouteModelLoaded]);
 
-  // Redirigir automáticamente a "lobby" si el modelId es "planta_2"
   useEffect(() => {
     if (modelId === 'planta_2') {
       navigate('/lobby');
@@ -52,6 +51,19 @@ function DynamicModelViewer({
       setIsOpened(false);
     };
   }, [setIsOpened]);
+
+  useEffect(() => {
+    
+    if (modelId && modelId.startsWith('t-')) {
+      document.body.style.backgroundImage = "url('/models/hdri/typo.jpg')";
+    } else {
+      document.body.style.backgroundImage = 'none';
+    }
+
+    return () => {
+      document.body.style.backgroundImage = 'none';
+    };
+  }, [modelId]);
 
   const canvasKey = useMemo(() => `${modelId}-${Date.now()}`, [modelId]);
 

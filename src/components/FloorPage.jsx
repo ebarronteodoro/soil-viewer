@@ -12,6 +12,7 @@ import typologiesData from '../data/building.json'
 import FloorCameraController from './FloorCameraController'
 import { Environment } from '@react-three/drei'
 import FocusIcon from './icons/FocusIcon'
+import EyeIcon from './icons/EyeIcon'
 
 function FloorPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
@@ -232,19 +233,18 @@ function FloorPage ({ activeModel, isLoaded }) {
               />
             </picture>
           )}
-          <h2>Tipología:</h2>
-          <span>{selectedObjectName}</span>
           {isLoaded && selectedTypologyData && (
             <>
-              <h3>Detalles de Tipología</h3>
               <p>N°: {selectedTypologyData.numero}</p>
-              <p>Área: {selectedTypologyData.areaTotal}</p>
               <p>Habitaciones: {selectedTypologyData.habitaciones}</p>
               <p>Baños: {selectedTypologyData.banos}</p>
+              <p>Área Total: {selectedTypologyData.areaTotal}</p>
+              <p>Área Techada: {selectedTypologyData.areaTechada}</p>
+              <p>Área Libre: {selectedTypologyData.areaLibre}</p>
             </>
           )}
           <button className='view-typo' onClick={viewTypology}>
-            Ver Tipología
+            Ver Departamento <EyeIcon width="20px" height="20px" />
           </button>
         </aside>
       )}

@@ -142,7 +142,7 @@ canvas {
 body {
   background: #3b3a39;
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
-  background-image: url('/models/hdri/typo.jpg');
+  /* background-image: url('/models/hdri/typo.jpg'); */
   background-position: center;
   background-size: cover;
   width: 100vw;
@@ -243,6 +243,11 @@ body {
 
   &.hideinstructions::after {
     display: none;
+  }
+}
+@media (max-width: 1400px){
+  .menubar2{
+    gap: 40px;
   }
 }
 
@@ -440,6 +445,7 @@ body {
 
 .soil-info {
   position: fixed;
+  backdrop-filter: blur(10px);
   top: 0;
   left: 0;
   display: flex;
