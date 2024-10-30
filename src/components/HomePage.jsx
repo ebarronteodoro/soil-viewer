@@ -307,14 +307,14 @@ function HomePage ({
               onClick={() => setIsOpened(true)}
               className={instructionStep === 5 ? 'on' : ''}
             >
-              <IconChecklist width='30px' height='30px' />
+              <IconChecklist width='45px' height='45px' />
             </AnimatedButton>
             <AnimatedButton
               onMouseDown={() => sceneRef.current.rotateCameraRight()}
               onTouchStart={() => sceneRef.current.rotateCameraRight()}
               className={instructionStep === 1 ? 'on' : ''}
             >
-              <GlobalRotateIcon width='30px' height='30px' />
+              <GlobalRotateIcon width='45px' height='45px' />
             </AnimatedButton>
             <AnimatedButton
               onMouseDown={() => sceneRef.current.rotateCameraLeft()}
@@ -322,8 +322,8 @@ function HomePage ({
               className={instructionStep === 1 ? 'on' : ''}
             >
               <GlobalRotateIcon
-                width='30px'
-                height='30px'
+                width='45px'
+                height='45px'
                 style={{ transform: 'scaleX(-1)' }}
               />
             </AnimatedButton>
@@ -332,14 +332,14 @@ function HomePage ({
               onTouchStart={() => sceneRef.current.zoomOut()}
               className={instructionStep === 2 ? 'on' : ''}
             >
-              <ZoomOutIcon width='30px' height='30px' />
+              <ZoomOutIcon width='45px' height='45px' />
             </AnimatedButton>
             <AnimatedButton
               onMouseDown={() => sceneRef.current.zoomIn()}
               onTouchStart={() => sceneRef.current.zoomIn()}
               className={instructionStep === 2 ? 'on' : ''}
             >
-              <ZoomInIcon width='30px' height='30px' />
+              <ZoomInIcon width='45px' height='45px' />
             </AnimatedButton>
           </div>
 
