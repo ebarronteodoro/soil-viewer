@@ -105,6 +105,10 @@ function TypoPage({ activeModel, isLoaded, activeTypology }) {
     setTimeout(() => setResetPosition(false), 500)
   }
 
+  const backIndex = () => {
+    navigate('/')
+  }
+
   const openImageModal = () => {
     setIsImageOpen(true)
   }
@@ -168,6 +172,8 @@ function TypoPage({ activeModel, isLoaded, activeTypology }) {
           )}
           <AnimatedButton onClick={triggerResetPosition}>
             <ReturnIcon width='30px' height='30px' />
+          </AnimatedButton>
+          <AnimatedButton onClick={backIndex}>
             <BuildingIcon width='30px' height='30px' />
           </AnimatedButton>
         </div>
