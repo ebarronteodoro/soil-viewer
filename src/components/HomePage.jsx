@@ -62,7 +62,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, 5.5, 0) // Enfoque ajustado en y=5.5
+      cameraRef.current.lookAt(0, 5, 0) // Enfoque ajustado en y=5.5
 
       if (Math.abs(targetAngleRef.current - angleRef.current) > 0.01) {
         requestAnimationFrame(animate)
@@ -80,8 +80,8 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
   const animateZoom = (delta) => {
     targetZoomDistance.current = THREE.MathUtils.clamp(
       targetZoomDistance.current + delta,
-      1,
-      3
+      0.5,
+      2
     )
 
     const zoomAnimate = () => {
@@ -92,7 +92,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, 5.5, 0) // Asegura el mismo enfoque
+      cameraRef.current.lookAt(0, 5, 0) // Asegura el mismo enfoque
 
       if (Math.abs(targetZoomDistance.current - zoomDistance.current) > 0.1) {
         requestAnimationFrame(zoomAnimate)
@@ -128,7 +128,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     const x = zoomDistance.current * Math.sin(angleRef.current)
     const z = zoomDistance.current * Math.cos(angleRef.current)
     cameraRef.current.position.set(x, cameraHeight.current, z)
-    cameraRef.current.lookAt(0, 5.5, 0) // Enfoca en la misma altura
+    cameraRef.current.lookAt(0, 5, 0) // Enfoca en la misma altura
   }
 
   const handleMouseUp = () => {
@@ -148,7 +148,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       camera.position.set(x, cameraHeight.current, z)
-      camera.lookAt(0, 5.5, 0) // Ajusta el punto de enfoque
+      camera.lookAt(0, 5, 0) // Ajusta el punto de enfoque
     }
 
     document.body.style.touchAction = 'none'
@@ -175,8 +175,8 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         cameraRef.current = camera
         const x = zoomDistance.current * Math.sin(angleRef.current)
         const z = zoomDistance.current * Math.cos(angleRef.current)
-        camera.position.set(x, 5.5, z) // Inicia en 5.5 de altura
-        camera.lookAt(0, 5.5, 0) // Enfoca en la misma altura
+        camera.position.set(x, 5, z) // Inicia en 5.5 de altura
+        camera.lookAt(0, 5, 0) // Enfoca en la misma altura
       }}
     >
       <directionalLight
