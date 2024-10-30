@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import CameraController from './CameraController'
 import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
@@ -9,15 +8,17 @@ import AnimatedButton from './AnimatedButton'
 import FloorModel from './FloorModel'
 import ReturnIcon from './icons/ReturnIcon'
 import modelPaths from '../data/modelPaths'
+import FloorCameraController from './FloorCameraController'
+import { Environment } from '@react-three/drei'
 
 function FloorPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
   const [zoom, setZoom] = useState(0.15)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
   const [selectedObjectName, setSelectedObjectName] = useState('')
-  const [resetSelection, setResetSelection] = useState(false) // Añadir estado para resetear selección
+  const [resetSelection, setResetSelection] = useState(false)
 
-  const minZoom = 0.10
+  const minZoom = 0.1
   const maxZoom = 0.5
   const zoomStep = 0.05
 
@@ -67,16 +68,33 @@ function FloorPage ({ activeModel, isLoaded }) {
       }
     }
 
-    // Activar el reset de selección
     setResetSelection(true)
-    // Desactivar el reset después de un breve tiempo
     setTimeout(() => setResetSelection(false), 100)
+  }
+
+  // Obtener la ruta de la imagen de la tipología seleccionada
+  const getImagePath = () => {
+    if (!selectedObjectName) return null
+
+    // Extraer el número de la tipología y construir la ruta de imagen
+    const typologyNumber = selectedObjectName
+      .replace('tipo-', '')
+      .replace('-parent', '')
+    const imagePath = `/typologies images/TIPO-${typologyNumber}.jpg`
+
+    return imagePath
   }
 
   return (
     <div>
       <Canvas camera={{ fov: 15, position: [0, 0, 10] }} shadows>
-        <ambientLight intensity={5} />
+        <ambientLight intensity={1.5} />
+        <directionalLight
+          color='#fade85'
+          position={[60, 30, 160]}
+          intensity={2}
+          castShadow
+        />
         <Suspense fallback={null}>
           <FloorModel
             targetRotation={rotation}
@@ -84,9 +102,10 @@ function FloorPage ({ activeModel, isLoaded }) {
             stateView={stateView}
             object={activeModel.scene}
             setSelectedObjectName={setSelectedObjectName}
-            resetSelection={resetSelection} // Pasar el estado de resetSelection
+            resetSelection={resetSelection}
           />
-          <CameraController />
+          <Environment files='/models/hdri/TypoB.jpg' />
+          <FloorCameraController />
         </Suspense>
       </Canvas>
 
@@ -152,6 +171,14 @@ function FloorPage ({ activeModel, isLoaded }) {
         <aside
           className={`typo-selector ${selectedObjectName !== '' && 'active'}`}
         >
+          {selectedObjectName && (
+            <picture className='typology-image'>
+              <img
+                src={getImagePath()}
+                alt={`Tipología ${selectedObjectName}`}
+              />
+            </picture>
+          )}
           <h2>Tipología:</h2>
           <span>{selectedObjectName}</span>
           <button className='view-typo' onClick={viewTypology}>

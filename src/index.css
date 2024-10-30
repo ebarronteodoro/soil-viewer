@@ -142,6 +142,9 @@ canvas {
 body {
   background: #3b3a39;
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  background-image: url('/models/hdri/typo.jpg');
+  background-position: center;
+  background-size: cover;
   width: 100vw;
   height: 100dvh;
 }
@@ -422,7 +425,6 @@ body {
   font-size: 1.15rem;
   font-weight: 600;
   margin-left: 8px;
-  
 }
 
 .soil-logo {
@@ -457,7 +459,6 @@ body {
     font-size: 1.2em;
     color: #fff;
     user-select: none;
-    
   }
 
   & a {
@@ -467,7 +468,6 @@ body {
     text-decoration: none;
     width: fit-content;
     user-select: none;
-    
   }
 
   & span {
@@ -565,14 +565,12 @@ body {
 }
 
 .loading-text {
-  
   font-variant: small-caps;
   font-size: 25px;
   position: relative;
   color: white;
 
   & span {
-    
     position: absolute;
     bottom: 0;
     margin-left: 3px;
@@ -664,7 +662,7 @@ body {
     & p {
       font-size: 1.1em;
       color: #ffffff;
-      
+
       margin-top: 1em;
       line-height: 1.2;
     }
@@ -740,8 +738,8 @@ body {
 .typo-selector {
   position: absolute;
   right: 2rem;
-  top: 50%;
-  padding: 0.7em 1.2em;
+  top: 2rem;
+  padding: 0.7em;
   border-radius: 16px;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
@@ -755,6 +753,21 @@ body {
 
   &.active {
     height: auto;
+  }
+
+  & .typology-image {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    height: auto;
+
+    & img {
+      width: 100%;
+      height: auto;
+    }
   }
 }
 

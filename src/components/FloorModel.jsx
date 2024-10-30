@@ -10,7 +10,7 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
   const [selectedObject, setSelectedObject] = useState(null)
 
   useEffect(() => {
-    gl.toneMappingExposure = 0.6
+    gl.toneMappingExposure = 1
   }, [gl])
 
   useFrame(() => {
@@ -56,9 +56,9 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
           selectedObject.material.opacity = 1
         }
 
-        intersectedObject.material.color.set('#9bff46')
+        intersectedObject.material.color.set('#c3ff91')
         intersectedObject.material.transparent = true
-        intersectedObject.material.opacity = 0.5
+        intersectedObject.material.opacity = 0.8
 
         setSelectedObject(intersectedObject)
         setSelectedObjectName(intersectedObject.name)
@@ -104,35 +104,6 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
           />
         </group>
       )}
-
-      <ambientLight intensity={0.5} />
-
-      <directionalLight
-        color='#fade85'
-        position={[-3, 40, 5]}
-        intensity={0.5}
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-camera-far={50}
-        shadow-camera-near={2}
-        shadow-camera-left={-10}
-        shadow-camera-right={10}
-        shadow-camera-top={10}
-        shadow-camera-bottom={-10}
-        shadow-radius={3}
-      />
-
-      <pointLight
-        color='#808080'
-        position={[0, 0, 0]}
-        intensity={0.4}
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-camera-far={20}
-        shadow-camera-near={0.5}
-      />
     </>
   )
 }

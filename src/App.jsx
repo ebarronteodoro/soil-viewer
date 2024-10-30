@@ -42,9 +42,9 @@ function App () {
                 gltf.scene.traverse(child => {
                   if (child.isMesh) {
                     child.material.metalness =
-                      modelName === 'edificio' ? 0.5 : 0.6
+                      modelName === 'edificio' ? 0.5 : 0.7
                     child.material.roughness =
-                      modelName === 'edificio' ? 0.3 : 0.2
+                      modelName === 'edificio' ? 0.3 : 0.3
                     child.castShadow = true
                     child.receiveShadow = true
                   }

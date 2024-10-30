@@ -34,7 +34,7 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
 }
 
 const BuildingModel = (props) => {
-  const { scene } = useGLTF('/models/PISOS/prueba total 1- centrao.glb')
+  const { scene } = useGLTF('/models/EDIFICIO/prueba total 1- centrao.glb')
 
   useEffect(() => {
     scene.traverse((child) => {

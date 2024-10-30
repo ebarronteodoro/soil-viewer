@@ -14,21 +14,21 @@ import Hide3dIcon from './icons/Hide3dIcon'
 import CameraUpIcon from './icons/CameraUpIcon'
 import CameraDownIcon from './icons/CameraDownIcon'
 
-function TypoPage ({ activeModel, isLoaded, activeTypology }) {
+function TypoPage({ activeModel, isLoaded, activeTypology }) {
   const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(0.65)
+  const [zoom, setZoom] = useState(0.85)
   const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
-  const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] =
-    useState(false)
+  const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] = useState(false)
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
   const [isToggleActive, setIsToggleActive] = useState(false)
-  const [isImageOpen, setIsImageOpen] = useState(false) // Estado para el modal de imagen
+  const [isImageOpen, setIsImageOpen] = useState(false)
+  const [resetPosition, setResetPosition] = useState(false)
 
-  const minZoom = 0.5
-  const maxZoom = 0.75
+  const minZoom = 0.6
+  const maxZoom = 1.5
   const zoomStep = 0.05
 
-  const getTypologyImage = typology => {
+  const getTypologyImage = (typology) => {
     const typologyImages = {
       't-1': '/typologies images/TIPO-1.jpg',
       't-2': '/typologies images/TIPO-2.jpg',
@@ -46,7 +46,7 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   }
 
   useEffect(() => {
-    const handleWheel = e => {
+    const handleWheel = (e) => {
       e.preventDefault()
       if (e.deltaY < 0) {
         zoomIn()
@@ -60,10 +60,10 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
     }
   }, [])
 
-  const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
-  const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
-  const zoomIn = () => setZoom(prev => Math.min(prev + zoomStep, maxZoom))
-  const zoomOut = () => setZoom(prev => Math.max(prev - zoomStep, minZoom))
+  const rotateLeft = () => setRotation((prev) => prev + Math.PI / 8)
+  const rotateRight = () => setRotation((prev) => prev - Math.PI / 8)
+  const zoomIn = () => setZoom((prev) => Math.min(prev + zoomStep, maxZoom))
+  const zoomOut = () => setZoom((prev) => Math.max(prev - zoomStep, minZoom))
   const navigate = useNavigate()
 
   const returnHome = () => {
@@ -73,25 +73,35 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   const triggerAnimation = () => {
     setIsAnimationTriggered(true)
     setIsReverseAnimationTriggered(false)
+    setResetPosition(true) // Centrar la cámara al activar la animación
     setTimeout(() => {
+      setResetPosition(false)
       toggleView()
       rotateRight()
       rotateRight()
     }, 500)
   }
 
+  const triggerResetPosition = () => {
+    setResetPosition(true)
+    setTimeout(() => setResetPosition(false), 500)
+  }
+
   const triggerReverseAnimation = () => {
     setIsReverseAnimationTriggered(true)
     setIsAnimationTriggered(false)
     setStateView([Math.PI / 2, 0, 0])
+    setResetPosition(true) // Centrar la cámara al desactivar la animación
+    setTimeout(() => setResetPosition(false), 500)
   }
 
   const toggleView = () => {
     const currentRotation = stateView[0]
-    const newRotation =
-      currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
+    const newRotation = currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
     setStateView([newRotation, 0, 0])
-    setIsToggleActive(prev => !prev) // Cambia el estado del toggle
+    setIsToggleActive((prev) => !prev)
+    setResetPosition(true) // Centrar la cámara al cambiar el toggle view
+    setTimeout(() => setResetPosition(false), 500)
   }
 
   const openImageModal = () => {
@@ -104,8 +114,7 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
 
   return (
     <div>
-      <Canvas fog={new THREE.Fog(0xcccccc, 5, 50)}>
-        <ambientLight intensity={7} />
+      <Canvas fog={new THREE.Fog(0xcccccc, 5, 50)} shadows>
         <Suspense fallback={null}>
           <Model
             targetRotation={rotation}
@@ -117,7 +126,11 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
             object={activeModel.scene}
             animations={activeModel.animations}
           />
-          <CameraController />
+          <CameraController
+            zoom={zoom}
+            resetPosition={resetPosition}
+            isAnimationTriggered={isAnimationTriggered}
+          />
         </Suspense>
       </Canvas>
       {isLoaded && (
@@ -141,19 +154,20 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
           {isAnimationTriggered && (
             <>
               <AnimatedButton onClick={toggleView}>
-                {isToggleActive
-                  ? (
-                    <CameraUpIcon width='30px' height='30px' />
-                    )
-                  : (
-                    <CameraDownIcon width='30px' height='30px' />
-                    )}
+                {isToggleActive ? (
+                  <CameraUpIcon width='30px' height='30px' />
+                ) : (
+                  <CameraDownIcon width='30px' height='30px' />
+                )}
               </AnimatedButton>
               <AnimatedButton onClick={triggerReverseAnimation}>
                 <Hide3dIcon width='30px' height='30px' />
               </AnimatedButton>
             </>
           )}
+          <AnimatedButton onClick={triggerResetPosition}>
+            <ReturnIcon width='30px' height='30px' />
+          </AnimatedButton>
         </div>
       )}
       {isLoaded && (
@@ -190,20 +204,13 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
             style={{ display: 'flex', border: 'none', background: 'none' }}
             onClick={rotateRight}
           >
-            <GlobalRotateIcon
-              width='30px'
-              height='30px'
-              style={{ transform: 'scaleX(-1)' }}
-            />
+            <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
           </AnimatedButton>
         </div>
       )}
       {isLoaded && (
         <div className='typo-img' onClick={openImageModal}>
-          <img
-            src={getTypologyImage(activeTypology)}
-            alt={`Tipología ${activeTypology}`}
-          />
+          <img src={getTypologyImage(activeTypology)} alt={`Tipología ${activeTypology}`} />
         </div>
       )}
 

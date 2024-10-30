@@ -1,6 +1,6 @@
 // Archivo: modelPaths.js
 const modelPaths = {
-  edificio: '/models/PISOS/prueba total 1.glb',
+  edificio: '/models/EDIFICIO/prueba total 1- centrao.glb',
   't-1': '/models/DEPARTAMENTOS/TIPO-1.glb',
   't-2': '/models/DEPARTAMENTOS/TIPO-2.glb',
   't-3': '/models/DEPARTAMENTOS/TIPO-3.glb',
@@ -12,6 +12,7 @@ const modelPaths = {
   't-19': '/models/DEPARTAMENTOS/TIPO-19.glb',
   't-23': '/models/DEPARTAMENTOS/TIPO-23.glb',
   planta_1: '/models/PISOS/planta-1.glb',
+  planta_2: '/models/PISOS/planta-2.glb',
   planta_3: '/models/PISOS/planta-3.glb',
   planta_4: '/models/PISOS/planta-3.glb',
   planta_5: '/models/PISOS/planta-3.glb',

@@ -1,13 +1,14 @@
-import { Suspense, lazy, useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
-import modelPaths from '../data/modelPaths'
-import TerrazaPage from './TerrazaPage'
+import { Suspense, lazy, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import modelPaths from '../data/modelPaths';
+import TerrazaPage from './TerrazaPage';
+import LobbyPage from './LobbyPage';
 
-const HomePage = lazy(() => import('./HomePage'))
-const TypoPage = lazy(() => import('./TypoPage'))
-const FloorPage = lazy(() => import('./FloorPage'))
+const HomePage = lazy(() => import('./HomePage'));
+const TypoPage = lazy(() => import('./TypoPage'));
+const FloorPage = lazy(() => import('./FloorPage'));
 
-function DynamicModelViewer ({
+function DynamicModelViewer({
   models,
   isLoaded,
   isOpened,
@@ -16,36 +17,42 @@ function DynamicModelViewer ({
   isButtonEnabled,
   instructionStep
 }) {
-  const { modelId } = useParams()
+  const { modelId } = useParams();
 
   useEffect(() => {
     if (isButtonEnabled && Object.keys(models).length > 0) {
-      setIsRouteModelLoaded(true)
+      setIsRouteModelLoaded(true);
     }
-  }, [isButtonEnabled, models, setIsRouteModelLoaded])
+  }, [isButtonEnabled, models, setIsRouteModelLoaded]);
 
   const floorModels = useMemo(() => {
     return new Set(
-      Object.keys(modelPaths).filter(
-        key => key.startsWith('planta_')
-      )
-    )
-  }, [])
+      Object.keys(modelPaths).filter(key => key.startsWith('planta_'))
+    );
+  }, []);
 
   const activeModel = useMemo(() => {
-    return models[modelId] || models.edificio
-  }, [models, modelId])
+    return models[modelId] || models.edificio;
+  }, [models, modelId]);
+
+  const activeModels = useMemo(() => {
+    // Si es planta_1, incluir ambos modelos, planta_1 y planta_2
+    return modelId === 'planta_1' ? [models.planta_1, models.planta_2] : [activeModel];
+  }, [modelId, models]);
+  
+  console.log(models);
+  
 
   useEffect(() => {
     return () => {
-      setIsOpened(false)
-    }
-  }, [setIsOpened])
+      setIsOpened(false);
+    };
+  }, [setIsOpened]);
 
-  const canvasKey = useMemo(() => `${modelId}-${Date.now()}`, [modelId])
+  const canvasKey = useMemo(() => `${modelId}-${Date.now()}`, [modelId]);
 
   if (!activeModel) {
-    return <div>Cargando...</div>
+    return <div>Cargando...</div>;
   }
 
   return (
@@ -58,6 +65,12 @@ function DynamicModelViewer ({
           isOpened={isOpened}
           setIsOpened={setIsOpened}
           instructionStep={instructionStep}
+        />
+      ) : modelId === 'planta_1' ? ( // Condición específica para planta_1
+        <LobbyPage
+          key={canvasKey}
+          activeModels={activeModels} // Pasamos ambos modelos a LobbyPage
+          isLoaded={isLoaded}
         />
       ) : floorModels.has(modelId) ? (
         <FloorPage
@@ -81,7 +94,7 @@ function DynamicModelViewer ({
         />
       )}
     </Suspense>
-  )
+  );
 }
 
-export default DynamicModelViewer
+export default DynamicModelViewer;

@@ -91,8 +91,8 @@ function Model ({
 
       <directionalLight
         color='#fade85'
-        position={[-3, 40, 5]}
-        intensity={2.5}
+        position={[10, 40, 20]}
+        intensity={2}
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -103,17 +103,6 @@ function Model ({
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
         shadow-radius={3}
-      />
-
-      <pointLight
-        color='#808080'
-        position={[0, 0, 0]}
-        intensity={0.4}
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-camera-far={20}
-        shadow-camera-near={0.5}
       />
 
       <Environment files={environmentPath} background blur={0} />
