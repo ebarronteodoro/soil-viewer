@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import AnimatedButton from './AnimatedButton'
 import * as THREE from 'three'
 import ReturnIcon from './icons/ReturnIcon'
+import BuildingIcon from './icons/BuildingIcon'
 import View3dIcon from './icons/View3dIcon'
 import Hide3dIcon from './icons/Hide3dIcon'
 import CameraUpIcon from './icons/CameraUpIcon'
@@ -167,6 +168,7 @@ function TypoPage({ activeModel, isLoaded, activeTypology }) {
           )}
           <AnimatedButton onClick={triggerResetPosition}>
             <ReturnIcon width='30px' height='30px' />
+            <BuildingIcon width='30px' height='30px' />
           </AnimatedButton>
         </div>
       )}

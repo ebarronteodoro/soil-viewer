@@ -57,9 +57,6 @@ function LobbyPage ({ activeModels, isLoaded }) {
         .replace('tipo-', 't-')
         .replace('-parent', '')
 
-      console.log(modelPaths)
-      console.log(baseTypology)
-
       if (modelPaths[baseTypology]) {
         setTimeout(() => navigate(`/${baseTypology}`), 1)
       }
