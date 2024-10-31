@@ -148,7 +148,7 @@ function ModelViewerWrapper ({
   const { modelId } = useParams()
 
   const modelExists = Object.keys(modelPaths).includes(modelId)
-
+  
   useEffect(() => {
     setIs404(!modelExists)
   }, [modelExists, setIs404])

@@ -6,10 +6,10 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
     <>
       {floorPositions.map((floor, index) => {
         const yOffset = index === 0 
-          ? 4.925
+          ? 3.025
           : floorPositions
               .slice(1, index + 1)
-              .reduce((acc, currentFloor) => acc + currentFloor.args[1], 4.96);
+              .reduce((acc, currentFloor) => acc + currentFloor.args[1], 3.06);
 
         return (
           <mesh
@@ -151,7 +151,7 @@ const BuildingModel = (props) => {
 
   return (
     <>
-      <primitive object={scene} {...props} scale={[0.1, 0.1, 0.1]} position={[0.06, 4.9, 0]} />
+      <primitive object={scene} {...props} scale={[0.1, 0.1, 0.1]} position={[0.06, 3, 0]} />
       <Floors floorPositions={floorPositions} {...props} />
     </>
   );

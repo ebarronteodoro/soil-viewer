@@ -20,35 +20,38 @@ import { Environment, useGLTF } from '@react-three/drei'
 
 const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
   const cameraRef = useRef()
-  const zoomDistance = useRef(1.5) // Ajusta la distancia inicial del zoom
+  const zoomDistance = useRef(0.85)
   const angleRef = useRef(Math.PI / 2)
   const targetAngleRef = useRef(Math.PI / 2)
   const targetZoomDistance = useRef(zoomDistance.current)
-  const cameraHeight = useRef(5.5) // Asegura que la altura inicial sea 5.5
+  const cameraHeight = useRef(3.7)
   const isAnimating = useRef(false)
   const isDragging = useRef(false)
   const previousMouseX = useRef(0)
   const previousMouseY = useRef(0)
-  const zoomSpeed = 0.05 // Controla la velocidad de zoom
-  const rotationSpeed = 0.0025 // Ajusta la velocidad de rotación
-  const verticalSpeed = 0.005 // Controla la velocidad vertical
+  const zoomSpeed = 0.03 // Controla la velocidad de zoom, más suave
+  const rotationSpeed = 0.0015 // Ajusta la velocidad de rotación, más lenta
+  const baseVerticalSpeed = 0.0003 // Reducido para suavizar el arrastre
+
+  const maxYLimitBase = 4.1 // Límite base ajustable del eje Y
+  const minYLimit = 3.2 // Límite mínimo en el eje Y
 
   useImperativeHandle(ref, () => ({
     rotateCameraLeft: () => {
-      updateTargetAngle(0.2)
+      updateTargetAngle(0.15)
     },
     rotateCameraRight: () => {
-      updateTargetAngle(-0.2)
+      updateTargetAngle(-0.15)
     },
     zoomIn: () => {
-      animateZoom(-0.25)
+      animateZoom(-0.2)
     },
     zoomOut: () => {
-      animateZoom(0.25)
-    },
+      animateZoom(0.2)
+    }
   }))
 
-  const updateTargetAngle = (deltaAngle) => {
+  const updateTargetAngle = deltaAngle => {
     targetAngleRef.current += deltaAngle
     animateCameraRotation()
   }
@@ -62,7 +65,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, 5, 0) // Enfoque ajustado en y=5.5
+      cameraRef.current.lookAt(0, cameraHeight.current, 0)
 
       if (Math.abs(targetAngleRef.current - angleRef.current) > 0.01) {
         requestAnimationFrame(animate)
@@ -77,11 +80,11 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     }
   }
 
-  const animateZoom = (delta) => {
+  const animateZoom = delta => {
     targetZoomDistance.current = THREE.MathUtils.clamp(
       targetZoomDistance.current + delta,
       0.5,
-      2
+      1
     )
 
     const zoomAnimate = () => {
@@ -91,10 +94,16 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const x = zoomDistance.current * Math.sin(angleRef.current)
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
-      cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, 5, 0) // Asegura el mismo enfoque
+      let maxYLimit =
+        zoomDistance.current >= 0.9
+          ? 3.8
+          : zoomDistance.current < 0.6
+          ? maxYLimitBase * 0.9
+          : maxYLimitBase * (2 - zoomDistance.current)
 
-      if (Math.abs(targetZoomDistance.current - zoomDistance.current) > 0.1) {
+      cameraRef.current.position.set(x, cameraHeight.current, z)
+
+      if (Math.abs(targetZoomDistance.current - zoomDistance.current) > 0.05) {
         requestAnimationFrame(zoomAnimate)
       }
     }
@@ -102,13 +111,13 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     requestAnimationFrame(zoomAnimate)
   }
 
-  const handleMouseDown = (event) => {
+  const handleMouseDown = event => {
     isDragging.current = true
     previousMouseX.current = event.clientX
     previousMouseY.current = event.clientY
   }
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = event => {
     if (!isDragging.current) return
 
     const deltaX = event.clientX - previousMouseX.current
@@ -119,23 +128,32 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
 
     updateTargetAngle(-deltaX * rotationSpeed)
 
+    const verticalSpeed = baseVerticalSpeed * (2 - zoomDistance.current)
+
+    let maxYLimit =
+      zoomDistance.current >= 0.9
+        ? 3.8
+        : zoomDistance.current < 0.6
+        ? maxYLimitBase * 0.9
+        : maxYLimitBase * (2 - zoomDistance.current)
+
     cameraHeight.current = THREE.MathUtils.clamp(
       cameraHeight.current + deltaY * verticalSpeed,
-      5,
-      6
+      minYLimit,
+      maxYLimit
     )
 
     const x = zoomDistance.current * Math.sin(angleRef.current)
     const z = zoomDistance.current * Math.cos(angleRef.current)
+
     cameraRef.current.position.set(x, cameraHeight.current, z)
-    cameraRef.current.lookAt(0, 5, 0) // Enfoca en la misma altura
   }
 
   const handleMouseUp = () => {
     isDragging.current = false
   }
 
-  const handleWheel = (event) => {
+  const handleWheel = event => {
     event.preventDefault()
     const delta = event.deltaY > 0 ? 2 : -2
     animateZoom(delta)
@@ -148,7 +166,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       const z = zoomDistance.current * Math.cos(angleRef.current)
 
       camera.position.set(x, cameraHeight.current, z)
-      camera.lookAt(0, 5, 0) // Ajusta el punto de enfoque
+      camera.rotation.x = -0.2
     }
 
     document.body.style.touchAction = 'none'
@@ -176,7 +194,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         const x = zoomDistance.current * Math.sin(angleRef.current)
         const z = zoomDistance.current * Math.cos(angleRef.current)
         camera.position.set(x, 5, z) // Inicia en 5.5 de altura
-        camera.lookAt(0, 5, 0) // Enfoca en la misma altura
+        camera.rotation.x = -0.2 // Inclinación inicial hacia abajo
       }}
     >
       <directionalLight
@@ -197,7 +215,10 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         background
         backgroundIntensity={0.2}
       />
-      <BuildingModel activeMeshIndex={activeMeshIndex} handleClick={handleClick} />
+      <BuildingModel
+        activeMeshIndex={activeMeshIndex}
+        handleClick={handleClick}
+      />
     </Canvas>
   )
 })

@@ -10,7 +10,7 @@ import ReturnIcon from './icons/ReturnIcon'
 import modelPaths from '../data/modelPaths'
 import typologiesData from '../data/building.json'
 import FloorCameraController from './FloorCameraController'
-import { Environment } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import FocusIcon from './icons/FocusIcon'
 import EyeIcon from './icons/EyeIcon'
 
@@ -147,6 +147,7 @@ function FloorPage ({ activeModel, isLoaded }) {
             resetSelection={resetSelection}
           />
           <Environment files='/models/hdri/TypoB.jpg' />
+          {/* <OrbitControls /> */}
           <FloorCameraController zoom={zoom} resetPosition={resetPosition} />
         </Suspense>
       </Canvas>
