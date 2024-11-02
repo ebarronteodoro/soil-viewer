@@ -10,26 +10,29 @@ import ReturnIcon from './icons/ReturnIcon'
 import modelPaths from '../data/modelPaths'
 import typologiesData from '../data/building.json'
 import FloorCameraController from './FloorCameraController'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { Environment } from '@react-three/drei'
 import FocusIcon from './icons/FocusIcon'
 import EyeIcon from './icons/EyeIcon'
+import Text3D from './Text3D'
+import NumbersPositions from '../data/NumbersPositions'
 
 function FloorPage ({ activeModel, isLoaded }) {
   const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(0.2)
-  const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
+  const [zoom, setZoom] = useState(40)
+  const [modelLimits, setModelLimits] = useState(null)
   const [selectedObjectName, setSelectedObjectName] = useState('')
   const [selectedTypologyData, setSelectedTypologyData] = useState(null)
   const [resetSelection, setResetSelection] = useState(false)
-
   const [resetPosition, setResetPosition] = useState(false)
-  const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 })
 
   const { modelId } = useParams()
+  const navigate = useNavigate()
 
-  const minZoom = 0.15
-  const maxZoom = 0.7
-  const zoomStep = 0.05
+  const minZoom = 15
+  const maxZoom = 50
+  const zoomStep = 5
+
+  const texts = NumbersPositions[`planta_${modelId.split('_')[1]}`] || []
 
   useEffect(() => {
     const handleWheel = e => {
@@ -49,36 +52,13 @@ function FloorPage ({ activeModel, isLoaded }) {
   const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
   const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
 
-  const zoomIn = () => {
-    setZoom(prev => {
-      const newZoom = Math.min(prev + zoomStep, maxZoom)
-      centerCamera()
-      return newZoom
-    })
-  }
+  const zoomIn = () => setZoom(prev => Math.max(prev - zoomStep, minZoom))
+  const zoomOut = () => setZoom(prev => Math.min(prev + zoomStep, maxZoom))
 
-  const zoomOut = () => {
-    setZoom(prev => {
-      const newZoom = Math.max(prev - zoomStep, minZoom)
-      centerCamera()
-      return newZoom
-    })
-  }
-
-  const navigate = useNavigate()
   const returnHome = () => {
     setTimeout(() => {
       navigate('/')
     }, 1)
-  }
-
-  const centerCamera = () => {
-    setCurrentPosition({ x: 0, y: 0 })
-  }
-
-  const handleResetPosition = () => {
-    setResetPosition(true)
-    setTimeout(() => setResetPosition(false), 100)
   }
 
   const viewTypology = () => {
@@ -87,7 +67,6 @@ function FloorPage ({ activeModel, isLoaded }) {
         .replace('-parent', '')
         .replace('-aprent', '')
         .replace('tipo-', 't-')
-
       if (modelPaths[baseTypology]) {
         setTimeout(() => {
           navigate(`/${baseTypology}`)
@@ -104,51 +83,70 @@ function FloorPage ({ activeModel, isLoaded }) {
   useEffect(() => {
     if (selectedObjectName) {
       const typologyId = parseInt(selectedObjectName.replace('tipo-', ''))
-      const floorData = typologiesData[modelId] // Obtener datos del piso actual
+      const floorData = typologiesData[modelId]
 
       if (floorData) {
         const typologyData = floorData.find(t => t.tipologia === typologyId)
-        setSelectedTypologyData(typologyData || null) // Guardar datos de la tipología seleccionada
+        setSelectedTypologyData(typologyData || null)
       }
     } else {
-      setSelectedTypologyData(null) // Limpiar si no hay selección
+      setSelectedTypologyData(null)
     }
   }, [selectedObjectName, modelId])
 
-  // Obtener la ruta de la imagen de la tipología seleccionada
   const getImagePath = () => {
     if (!selectedObjectName) return null
-
     const typologyNumber = selectedObjectName
       .replace('tipo-', '')
       .replace('-parent', '')
-    const imagePath = `/typologies images/TIPO-${typologyNumber}.jpg`
-
-    return imagePath
+    return `/typologies images/TIPO-${typologyNumber}.jpg`
   }
 
   return (
     <div>
-      <Canvas camera={{ fov: 15, position: [0, 0, 10] }} shadows>
+      <Canvas camera={{ fov: 15, position: [0, zoom, 0] }} shadows>
         <Suspense fallback={null}>
-          <ambientLight intensity={1.5} />
+          <ambientLight intensity={2.5} />
           <directionalLight
             color='#fade85'
-            position={[60, 30, 160]}
-            intensity={2}
+            position={[-10, 30, 5]}
+            intensity={1.5}
+            scale={[2, 2, 2]}
             castShadow
+            shadow-mapSize-width={8192} // Aumenta la resolución de sombra
+            shadow-mapSize-height={8192}
+            shadow-camera-near={1}
+            shadow-camera-far={150} // Aumenta la distancia de sombras
+            shadow-camera-left={-50} // Amplía el área de sombra
+            shadow-camera-right={50}
+            shadow-camera-top={50}
+            shadow-camera-bottom={-50}
           />
           <FloorModel
-            targetRotation={rotation}
-            targetScale={zoom}
-            stateView={stateView}
             object={activeModel.scene}
             setSelectedObjectName={setSelectedObjectName}
             resetSelection={resetSelection}
+            setModelLimits={setModelLimits}
           />
           <Environment files='/models/hdri/TypoB.jpg' />
-          {/* <OrbitControls /> */}
-          <FloorCameraController zoom={zoom} resetPosition={resetPosition} />
+
+          {texts.map(({ text, position, rotation }, index) => (
+            <Text3D
+              key={index}
+              text={text}
+              position={position}
+              rotation={rotation}
+              size={0.5}
+              depth={0.2}
+              color={0x033f35}
+            />
+          ))}
+
+          <FloorCameraController
+            zoom={zoom}
+            resetPosition={resetPosition}
+            modelLimits={modelLimits}
+          />
         </Suspense>
       </Canvas>
 
@@ -172,12 +170,6 @@ function FloorPage ({ activeModel, isLoaded }) {
       {isLoaded && (
         <div className='menubar'>
           <AnimatedButton
-            style={{ display: 'flex', border: 'none', background: 'none' }}
-            onClick={rotateLeft}
-          >
-            <GlobalRotateIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton
             style={{
               display: 'flex',
               border: 'none',
@@ -198,22 +190,6 @@ function FloorPage ({ activeModel, isLoaded }) {
             onClick={zoomIn}
           >
             <ZoomInIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton
-            style={{ display: 'flex', border: 'none', background: 'none' }}
-            onClick={rotateRight}
-          >
-            <GlobalRotateIcon
-              width='30px'
-              height='30px'
-              style={{ transform: 'scaleX(-1)' }}
-            />
-          </AnimatedButton>
-          <AnimatedButton
-            style={{ display: 'flex', border: 'none', background: 'none' }}
-            onClick={handleResetPosition}
-          >
-            <FocusIcon width='30px' height='30px' />
           </AnimatedButton>
         </div>
       )}
@@ -245,7 +221,7 @@ function FloorPage ({ activeModel, isLoaded }) {
             </>
           )}
           <button className='view-typo' onClick={viewTypology}>
-            Ver Departamento <EyeIcon width="20px" height="20px" />
+            Ver Departamento <EyeIcon width='20px' height='20px' />
           </button>
         </aside>
       )}

@@ -16,7 +16,7 @@ import GlobalRotateIcon from './icons/GlobalRotateIcon'
 import ZoomOutIcon from './icons/ZoomOutIcon'
 import ZoomInIcon from './icons/ZoomInIcon'
 import IconChecklist from './icons/IconChecklist'
-import { Environment, useGLTF } from '@react-three/drei'
+import { ContactShadows, Environment, useGLTF } from '@react-three/drei'
 
 const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
   const cameraRef = useRef()
@@ -25,30 +25,24 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
   const targetAngleRef = useRef(Math.PI / 2)
   const targetZoomDistance = useRef(zoomDistance.current)
   const cameraHeight = useRef(3.7)
+  const lookAtY = useRef(cameraHeight.current)
   const isAnimating = useRef(false)
   const isDragging = useRef(false)
   const previousMouseX = useRef(0)
   const previousMouseY = useRef(0)
-  const zoomSpeed = 0.03 // Controla la velocidad de zoom, más suave
-  const rotationSpeed = 0.0015 // Ajusta la velocidad de rotación, más lenta
-  const baseVerticalSpeed = 0.0003 // Reducido para suavizar el arrastre
-
-  const maxYLimitBase = 4.1 // Límite base ajustable del eje Y
-  const minYLimit = 3.2 // Límite mínimo en el eje Y
+  const zoomSpeed = 0.02
+  const rotationSpeed = 0.0012
+  const baseVerticalSpeed = 0.0002
+  const maxYLimitBase = 4.1
+  const minYLimit = 3.2
+  const heightThreshold = 3.4
+  const lookAtTransitionSpeed = 0.02
 
   useImperativeHandle(ref, () => ({
-    rotateCameraLeft: () => {
-      updateTargetAngle(0.15)
-    },
-    rotateCameraRight: () => {
-      updateTargetAngle(-0.15)
-    },
-    zoomIn: () => {
-      animateZoom(-0.2)
-    },
-    zoomOut: () => {
-      animateZoom(0.2)
-    }
+    rotateCameraLeft: () => updateTargetAngle(0.15),
+    rotateCameraRight: () => updateTargetAngle(-0.15),
+    zoomIn: () => animateZoom(-0.15),
+    zoomOut: () => animateZoom(0.15)
   }))
 
   const updateTargetAngle = deltaAngle => {
@@ -56,16 +50,46 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     animateCameraRotation()
   }
 
+  const setLookAtPosition = () => {
+    const targetLookAtY =
+      cameraHeight.current >= heightThreshold
+        ? cameraHeight.current - 0.2
+        : cameraHeight.current
+
+    lookAtY.current = THREE.MathUtils.lerp(
+      lookAtY.current,
+      targetLookAtY,
+      lookAtTransitionSpeed
+    )
+    cameraRef.current.lookAt(0, lookAtY.current, 0)
+
+    console.log(
+      `Camera Height: ${cameraHeight.current}, LookAt Y: ${lookAtY.current}`
+    )
+  }
+
+  const setCameraPosition = () => {
+    const x = zoomDistance.current * Math.sin(angleRef.current)
+    const z = zoomDistance.current * Math.cos(angleRef.current)
+    cameraRef.current.position.set(x, cameraHeight.current, z)
+  }
+
+  const enforceHeightLimits = () => {
+    const maxYLimit = zoomDistance.current >= 0.7 ? 3.8 : maxYLimitBase * 0.9
+    cameraHeight.current = THREE.MathUtils.clamp(
+      cameraHeight.current,
+      minYLimit,
+      maxYLimit
+    )
+  }
+
   const animateCameraRotation = () => {
     if (isAnimating.current) return
 
     const animate = () => {
-      angleRef.current += (targetAngleRef.current - angleRef.current) * 0.1
-      const x = zoomDistance.current * Math.sin(angleRef.current)
-      const z = zoomDistance.current * Math.cos(angleRef.current)
-
-      cameraRef.current.position.set(x, cameraHeight.current, z)
-      cameraRef.current.lookAt(0, cameraHeight.current, 0)
+      angleRef.current += (targetAngleRef.current - angleRef.current) * 0.08
+      setCameraPosition()
+      setLookAtPosition()
 
       if (Math.abs(targetAngleRef.current - angleRef.current) > 0.01) {
         requestAnimationFrame(animate)
@@ -84,26 +108,30 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     targetZoomDistance.current = THREE.MathUtils.clamp(
       targetZoomDistance.current + delta,
       0.5,
-      1
+      0.85
     )
 
     const zoomAnimate = () => {
       zoomDistance.current +=
         (targetZoomDistance.current - zoomDistance.current) * zoomSpeed
 
-      const x = zoomDistance.current * Math.sin(angleRef.current)
-      const z = zoomDistance.current * Math.cos(angleRef.current)
+      // Ajuste suave de `cameraHeight` si se sale de los límites
+      const maxYLimit = zoomDistance.current >= 0.7 ? 3.8 : maxYLimitBase * 0.9
+      if (
+        cameraHeight.current > maxYLimit ||
+        cameraHeight.current < minYLimit
+      ) {
+        cameraHeight.current = THREE.MathUtils.lerp(
+          cameraHeight.current,
+          THREE.MathUtils.clamp(cameraHeight.current, minYLimit, maxYLimit),
+          0.1 // Transición suave para el ajuste
+        )
+      }
 
-      let maxYLimit =
-        zoomDistance.current >= 0.9
-          ? 3.8
-          : zoomDistance.current < 0.6
-          ? maxYLimitBase * 0.9
-          : maxYLimitBase * (2 - zoomDistance.current)
+      setCameraPosition()
+      setLookAtPosition()
 
-      cameraRef.current.position.set(x, cameraHeight.current, z)
-
-      if (Math.abs(targetZoomDistance.current - zoomDistance.current) > 0.05) {
+      if (Math.abs(targetZoomDistance.current - zoomDistance.current) > 0.01) {
         requestAnimationFrame(zoomAnimate)
       }
     }
@@ -129,9 +157,8 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
     updateTargetAngle(-deltaX * rotationSpeed)
 
     const verticalSpeed = baseVerticalSpeed * (2 - zoomDistance.current)
-
     let maxYLimit =
-      zoomDistance.current >= 0.9
+      zoomDistance.current >= 0.7
         ? 3.8
         : zoomDistance.current < 0.6
         ? maxYLimitBase * 0.9
@@ -143,10 +170,8 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       maxYLimit
     )
 
-    const x = zoomDistance.current * Math.sin(angleRef.current)
-    const z = zoomDistance.current * Math.cos(angleRef.current)
-
-    cameraRef.current.position.set(x, cameraHeight.current, z)
+    setCameraPosition()
+    setLookAtPosition()
   }
 
   const handleMouseUp = () => {
@@ -162,10 +187,8 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
   useEffect(() => {
     const camera = cameraRef.current
     if (camera) {
-      const x = zoomDistance.current * Math.sin(angleRef.current)
-      const z = zoomDistance.current * Math.cos(angleRef.current)
-
-      camera.position.set(x, cameraHeight.current, z)
+      setCameraPosition()
+      setLookAtPosition()
       camera.rotation.x = -0.2
     }
 
@@ -191,16 +214,15 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
       shadows
       onCreated={({ camera }) => {
         cameraRef.current = camera
-        const x = zoomDistance.current * Math.sin(angleRef.current)
-        const z = zoomDistance.current * Math.cos(angleRef.current)
-        camera.position.set(x, 5, z) // Inicia en 5.5 de altura
-        camera.rotation.x = -0.2 // Inclinación inicial hacia abajo
+        setCameraPosition()
+        setLookAtPosition()
       }}
     >
       <directionalLight
-        position={[10, 20, 10]}
-        intensity={2}
+        position={[0, 15, -10]}
+        intensity={5}
         castShadow
+        color={"#fad6a5"}
         shadow-mapSize-width={4096}
         shadow-mapSize-height={4096}
         shadow-camera-near={0.1}
@@ -209,16 +231,40 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         shadow-camera-right={50}
         shadow-camera-top={50}
         shadow-camera-bottom={-50}
+        shadow-bias={-0.0009}
+        shadow-normalBias={0.005}
+      />
+      <directionalLight
+        position={[1, .4, 0]}
+        intensity={1}
+        color={"#fad6a5"}
+      />
+      <directionalLight
+        position={[-1, .4, 0]}
+        intensity={1}
+        color={"#fad6a5"}
+      />
+      <directionalLight
+        position={[0, 0, 5]}
+        intensity={.5}
+        
+        color={"#c6edff"}
+     
       />
       <Environment
-        files='/models/hdri/sky-4.hdr'
+        files='/models/hdri/prueba_cielo (4).hdr'
         background
         backgroundIntensity={0.2}
+        environmentIntensity={1}
+        sha
+        backgroundRotation={[0, Math.PI / 1.375, 0]}
+        environmentRotation={[0, Math.PI / 1.375, 0]} // Rota el HDR 90 grados en el eje Y
       />
       <BuildingModel
         activeMeshIndex={activeMeshIndex}
         handleClick={handleClick}
       />
+      <ContactShadows opacity={1} scale={10} blur={1} far={10} resolution={256} color="#000000" />
     </Canvas>
   )
 })

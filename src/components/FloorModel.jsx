@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
-function FloorModel({ targetRotation, targetScale, stateView, object, setSelectedObjectName, resetSelection }) {
+function FloorModel ({
+  targetRotation = 0,
+  targetScale = 1,
+  stateView = [0, 0, 0],
+  object,
+  setSelectedObjectName,
+  resetSelection
+}) {
   const meshRef = useRef()
   const { gl, camera, size } = useThree()
   const raycaster = useRef(new THREE.Raycaster())
@@ -11,7 +18,17 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
 
   useEffect(() => {
     gl.toneMappingExposure = 1
-  }, [gl])
+
+    if (object) {
+      const box = new THREE.Box3().setFromObject(object)
+      const size = box.getSize(new THREE.Vector3())
+      console.log(
+        `Tamaño del modelo: X=${size.x.toFixed(2)}, Y=${size.y.toFixed(
+          2
+        )}, Z=${size.z.toFixed(2)}`
+      )
+    }
+  }, [gl, object])
 
   useFrame(() => {
     if (meshRef.current) {
@@ -25,7 +42,7 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
       )
       meshRef.current.rotation.x = THREE.MathUtils.lerp(
         meshRef.current.rotation.x,
-        stateView[0],
+        stateView[0] || 0,
         rotationSpeed
       )
 
@@ -36,20 +53,31 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
     }
   })
 
-  const handleClick = (event) => {
+  const handleClick = event => {
     const { clientX, clientY } = event
     const { width, height } = size
 
-    // Convert mouse position to normalized device coordinates (NDC)
+    // Convertir la posición del mouse a coordenadas de dispositivo normalizadas (NDC)
     mouse.current.x = (clientX / width) * 2 - 1
     mouse.current.y = -(clientY / height) * 2 + 1
 
     raycaster.current.setFromCamera(mouse.current, camera)
-    const intersects = raycaster.current.intersectObjects(meshRef.current.children, true)
+    const intersects = raycaster.current.intersectObjects(
+      meshRef.current.children,
+      true
+    )
 
     if (intersects.length > 0) {
       const intersectedObject = intersects[0].object
+      const intersectionPoint = intersects[0].point // Punto de intersección en el modelo
       console.log('Objeto seleccionado:', intersectedObject.name)
+      console.log(
+        `Posición del mouse en el modelo: X=${intersectionPoint.x.toFixed(
+          2
+        )}, Y=${intersectionPoint.y.toFixed(
+          2
+        )}, Z=${intersectionPoint.z.toFixed(2)}`
+      )
 
       if (intersectedObject.name.startsWith('tipo')) {
         if (selectedObject) {
@@ -90,7 +118,7 @@ function FloorModel({ targetRotation, targetScale, stateView, object, setSelecte
       gl.domElement.removeEventListener('click', handleClick)
       gl.domElement.removeEventListener('touchstart', handleClick)
     }
-  }, [gl, selectedObject, size])  // Add size as dependency to handle resize
+  }, [gl, selectedObject, size])
 
   return (
     <>
