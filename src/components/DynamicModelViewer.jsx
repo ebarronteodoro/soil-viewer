@@ -71,12 +71,15 @@ function DynamicModelViewer({
     return <div>Cargando...</div>;
   }
 
+  console.log(models);
+  
+
   return (
     <Suspense fallback={<div>Cargando...</div>}>
       {activeModel === models.edificio ? (
         <HomePage
           key={canvasKey}
-          models={models.edificio}
+          models={activeModel}
           isLoaded={isLoaded}
           isOpened={isOpened}
           setIsOpened={setIsOpened}

@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle
 } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import * as THREE from 'three'
 import BuildingModel from './BuildingModel'
 import NavigateButton from './NavigateButton'
@@ -18,7 +18,7 @@ import ZoomInIcon from './icons/ZoomInIcon'
 import IconChecklist from './icons/IconChecklist'
 import { ContactShadows, Environment, useGLTF } from '@react-three/drei'
 
-const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
+const Scene = forwardRef(({ activeMeshIndex, handleClick, object }, ref) => {
   const cameraRef = useRef()
   const zoomDistance = useRef(0.85)
   const angleRef = useRef(Math.PI / 2)
@@ -256,13 +256,13 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick }, ref) => {
         background
         backgroundIntensity={0.2}
         environmentIntensity={1}
-        sha
         backgroundRotation={[0, Math.PI / 1.375, 0]}
-        environmentRotation={[0, Math.PI / 1.375, 0]} // Rota el HDR 90 grados en el eje Y
+        environmentRotation={[0, Math.PI / 1.375, 0]}
       />
       <BuildingModel
         activeMeshIndex={activeMeshIndex}
         handleClick={handleClick}
+        object={object}
       />
       <ContactShadows opacity={1} scale={10} blur={1} far={10} resolution={256} color="#000000" />
     </Canvas>
@@ -278,7 +278,7 @@ function HomePage ({
 }) {
   const [rotation, setRotation] = useState(Math.PI / 1.5)
   const [zoom, setZoom] = useState(0.16)
-  const [activeModel, setActiveModel] = useState(null)
+  const [activeModel, setActiveModel] = useState('')
   const [mouseDown, setMouseDown] = useState(false)
   const [startX, setStartX] = useState(0)
   const [autoRotate, setAutoRotate] = useState(true)
@@ -340,7 +340,7 @@ function HomePage ({
       passive: false
     })
     return () => window.removeEventListener('touchmove', preventDefaultTouch)
-  }, [])
+  }, [])  
 
   return (
     <div className='viewport-container'>
@@ -348,6 +348,7 @@ function HomePage ({
         ref={sceneRef}
         activeMeshIndex={activeMeshIndex}
         handleClick={handleClick}
+        object={models}
       />
 
       {showContent && (

@@ -10,6 +10,7 @@ import InstructionsModal from './components/InstructionsModal'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import NotFound from './components/NotFound'
 import modelPaths from './data/modelPaths'
+import * as THREE from 'three'
 
 const DynamicModelViewer = lazy(() => import('./components/DynamicModelViewer'))
 
@@ -37,16 +38,40 @@ function App () {
                   (++progressRef.current / Object.keys(modelPaths).length) * 100
                 )
                 setLoadingProgress(totalProgress)
-                totalProgress === 100 && setIsRouteModelLoaded(true)
+                if (totalProgress === 100) setIsRouteModelLoaded(true)
 
                 gltf.scene.traverse(child => {
                   if (child.isMesh) {
-                    child.material.metalness =
-                      modelName === 'edificio' ? 0.5 : 0.7
-                    child.material.roughness =
-                      modelName === 'edificio' ? 0.3 : 0.3
-                    child.castShadow = true
-                    child.receiveShadow = true
+                    if (modelName === 'edificio') {
+                      // Configura las propiedades del material para optimización
+                      child.material.metalness = 0
+                      child.material.roughness = 1
+                      child.material.flatShading = true
+                      child.castShadow = true
+                      child.receiveShadow = true
+
+                      // Ajustes adicionales de la textura
+                      if (child.material.map) {
+                        child.material.map.minFilter = THREE.NearestFilter // Reduce la interpolación
+                        child.material.map.magFilter = THREE.LinearFilter
+                        child.material.map.generateMipmaps = false // Desactiva mipmaps
+                        child.material.map.anisotropy = 1 // Reduce la anisotropía para menos procesamiento
+                        
+                        // Reduce la resolución de la textura a la mitad
+                        const canvas = document.createElement('canvas')
+                        const context = canvas.getContext('2d')
+                        canvas.width = child.material.map.image.width / 2
+                        canvas.height = child.material.map.image.height / 2
+                        context.drawImage(child.material.map.image, 0, 0, canvas.width, canvas.height)
+                        const lowResTexture = new THREE.CanvasTexture(canvas)
+                        child.material.map = lowResTexture
+                      }
+                    } else {
+                      child.material.metalness = 0.7
+                      child.material.roughness = 0.3
+                      child.castShadow = true
+                      child.receiveShadow = true
+                    }
                   }
                 })
 
@@ -72,7 +97,6 @@ function App () {
     }
 
     loadAllModels()
-    console.log(models)
   }, [])
 
   return (
@@ -148,7 +172,7 @@ function ModelViewerWrapper ({
   const { modelId } = useParams()
 
   const modelExists = Object.keys(modelPaths).includes(modelId)
-  
+
   useEffect(() => {
     setIs404(!modelExists)
   }, [modelExists, setIs404])
