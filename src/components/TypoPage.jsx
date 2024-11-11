@@ -19,7 +19,7 @@ import FocusIcon from './icons/FocusIcon'
 
 function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(0.85)
+  const [zoom, setZoom] = useState(1)
   const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
   const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] =
     useState(false)
@@ -28,9 +28,9 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [resetPosition, setResetPosition] = useState(false)
 
-  const minZoom = 0.6
-  const maxZoom = 1.5
-  const zoomStep = 0.05
+  const minZoom = 1
+  const maxZoom = 7
+  const zoomStep = 0.5
 
   const getTypologyImage = typology => {
     const typologyImages = {
@@ -64,10 +64,21 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
     }
   }, [])
 
+  const smoothZoom = (targetZoom) => {
+    const deltaZoom = targetZoom - zoom
+    if (Math.abs(deltaZoom) < 0.01) {
+      setZoom(targetZoom)
+    } else {
+      const newZoom = zoom + deltaZoom * 0.1 // Ajusta 0.1 para más o menos suavidad
+      setZoom(newZoom)
+      requestAnimationFrame(() => smoothZoom(targetZoom))
+    }
+  }
+
   const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
   const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
-  const zoomIn = () => setZoom(prev => Math.min(prev + zoomStep, maxZoom))
-  const zoomOut = () => setZoom(prev => Math.max(prev - zoomStep, minZoom))
+  const zoomIn = () => smoothZoom(Math.min(zoom + zoomStep, maxZoom))
+  const zoomOut = () => smoothZoom(Math.max(zoom - zoomStep, minZoom))
   const navigate = useNavigate()
 
   const returnHome = () => {
@@ -132,14 +143,14 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
             position={[10, 40, 20]}
             intensity={2}
             castShadow
-            shadow-mapSize-width={1024}
-            shadow-mapSize-height={1024}
-            shadow-camera-far={50}
-            shadow-camera-near={2}
-            shadow-camera-left={-10}
-            shadow-camera-right={10}
-            shadow-camera-top={10}
-            shadow-camera-bottom={-10}
+            shadow-mapSize-width={8192}
+            shadow-mapSize-height={8192}
+            shadow-camera-near={1}
+            shadow-camera-far={150}
+            shadow-camera-left={-50}
+            shadow-camera-right={50}
+            shadow-camera-top={50}
+            shadow-camera-bottom={-50}
             shadow-radius={3}
           />
           <Model

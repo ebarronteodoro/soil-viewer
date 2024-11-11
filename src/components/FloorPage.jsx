@@ -113,11 +113,11 @@ function FloorPage ({ activeModel, isLoaded }) {
             intensity={1.5}
             scale={[2, 2, 2]}
             castShadow
-            shadow-mapSize-width={8192} // Aumenta la resolución de sombra
+            shadow-mapSize-width={8192}
             shadow-mapSize-height={8192}
             shadow-camera-near={1}
-            shadow-camera-far={150} // Aumenta la distancia de sombras
-            shadow-camera-left={-50} // Amplía el área de sombra
+            shadow-camera-far={150}
+            shadow-camera-left={-50}
             shadow-camera-right={50}
             shadow-camera-top={50}
             shadow-camera-bottom={-50}

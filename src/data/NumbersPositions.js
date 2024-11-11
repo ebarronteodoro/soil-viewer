@@ -1,22 +1,22 @@
 const NumbersPositions = {
   planta_3: [
     {
-      text: '301',
+      text: '303',
       position: [-7.2544, 1.5, -1.4418],
       rotation: [-Math.PI / 2, 0, 0]
     },
     {
-      text: '302',
+      text: '304',
       position: [-3.1462, 1.5, -1.7679],
       rotation: [-Math.PI / 2, 0, 0]
     },
     {
-      text: '303',
+      text: '302',
       position: [-7.5687, 1.5, 2.0466],
       rotation: [-Math.PI / 2, 0, 0]
     },
     {
-      text: '304',
+      text: '301',
       position: [-3.5649, 1.5, 2.1062],
       rotation: [-Math.PI / 2, 0, 0]
     },
@@ -225,7 +225,7 @@ const NumbersPositions = {
       rotation: [-Math.PI / 2, 0, 0]
     },
     {
-      text: '805',
+      text: '802',
       position: [-7.9687, 1.5, 2.0466],
       rotation: [-Math.PI / 2, 0, 0]
     },
@@ -240,7 +240,7 @@ const NumbersPositions = {
       rotation: [-Math.PI / 2, 0, 0]
     },
     {
-      text: '306',
+      text: '806',
       position: [5.9435, 1.5, -1.8159],
       rotation: [-Math.PI / 2, 0, 0]
     },
