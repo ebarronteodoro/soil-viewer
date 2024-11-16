@@ -1,7 +1,5 @@
-// LobbyPage.js
 import React, { useState, useEffect, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import GlobalRotateIcon from './icons/GlobalRotateIcon';
 import ZoomInIcon from './icons/ZoomInIcon';
 import ZoomOutIcon from './icons/ZoomOutIcon';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +11,6 @@ import LobbyModels from './LobbyModels';
 import ReturnIcon from './icons/ReturnIcon';
 
 function LobbyPage({ activeModels, isLoaded }) {
-  const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(0.2);
   const [stateView, setStateView] = useState([Math.PI / 2, 0, 0]);
   const [selectedObjectName, setSelectedObjectName] = useState('');
@@ -21,9 +18,9 @@ function LobbyPage({ activeModels, isLoaded }) {
   const [resetSelection, setResetSelection] = useState(false);
   const [currentFloor, setCurrentFloor] = useState(0);
 
-  const minZoom = 0.15;
-  const maxZoom = 0.7;
-  const zoomStep = 0.05;
+  const minZoom = 15
+  const maxZoom = 50
+  const zoomStep = 5
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -40,8 +37,6 @@ function LobbyPage({ activeModels, isLoaded }) {
     };
   }, []);
 
-  const rotateLeft = () => setRotation((prev) => prev + Math.PI / 8);
-  const rotateRight = () => setRotation((prev) => prev - Math.PI / 8);
   const zoomIn = () => setZoom((prev) => Math.min(prev + zoomStep, maxZoom));
   const zoomOut = () => setZoom((prev) => Math.max(prev - zoomStep, minZoom));
 
@@ -88,7 +83,6 @@ function LobbyPage({ activeModels, isLoaded }) {
       const floorData = typologiesData[currentFloor === 0 ? 'lobby' : 'planta_2'];
 
       console.log(floorData);
-      
 
       if (floorData) {
         const typologyData = floorData.find((t) => t.tipologia === typologyId);
@@ -101,22 +95,27 @@ function LobbyPage({ activeModels, isLoaded }) {
 
   return (
     <div>
-      <Canvas camera={{ fov: 15, position: [0, 0, 10] }} shadows>
+      <Canvas camera={{ fov: 15, position: [0, 15, 0] }} shadows>
         <Suspense fallback={null}>
           <ambientLight intensity={1.5} />
-          <directionalLight color='#fade85' position={[60, 30, 180]} intensity={2} castShadow />
+          <directionalLight
+            color="#fade85"
+            position={[60, 30, 180]}
+            intensity={2}
+            castShadow
+          />
           <LobbyModels
-            targetRotation={rotation}
             targetScale={zoom}
             stateView={stateView}
-            objects={activeModels.map((model) => model.scene)}
+            objects={activeModels}
             currentFloor={currentFloor}
             setSelectedObjectName={setSelectedObjectName}
             resetSelection={resetSelection}
           />
-          <FloorCameraController zoom={zoom} resetPosition={resetSelection} />
+          <FloorCameraController stateView={stateView} />
         </Suspense>
       </Canvas>
+
 
       {isLoaded && (
         <div className='left-section'>
@@ -127,28 +126,20 @@ function LobbyPage({ activeModels, isLoaded }) {
         </div>
       )}
 
-      {isLoaded && (
-        <div className='menubar'>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateLeft}>
-            <GlobalRotateIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomOut}>
-            <ZoomOutIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomIn}>
-            <ZoomInIcon width='30px' height='30px' />
-          </AnimatedButton>
-          <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none' }} onClick={rotateRight}>
-            <GlobalRotateIcon width='30px' height='30px' style={{ transform: 'scaleX(-1)' }} />
-          </AnimatedButton>
-        </div>
-      )}
+      <div className="menubar">
+        <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomOut}>
+          <ZoomOutIcon width='30px' height='30px' />
+        </AnimatedButton>
+        <AnimatedButton style={{ display: 'flex', border: 'none', background: 'none', color: 'white' }} onClick={zoomIn}>
+          <ZoomInIcon width='30px' height='30px' />
+        </AnimatedButton>
+      </div>
 
       {isLoaded && (
         <aside className={`typo-selector ${selectedObjectName !== '' && 'active'}`}>
           {selectedObjectName && (
-            <div className='typology-image'>
-              <img src={getImagePath()} alt={`Tipología ${selectedObjectName}`} />
+            <div className="typology-image">
+              <img src={`/typologies images/TIPO-${selectedObjectName.replace('tipo-', '')}.jpg`} alt={`Tipología ${selectedObjectName}`} />
             </div>
           )}
           <h2>Tipología:</h2>
@@ -162,7 +153,7 @@ function LobbyPage({ activeModels, isLoaded }) {
               <p>Baños: {selectedTypologyData.banos}</p>
             </>
           )}
-          <button className='view-typo' onClick={viewTypology}>
+          <button className="view-typo" onClick={viewTypology}>
             Ver Tipología
           </button>
           <button onClick={toggleFloor}>
