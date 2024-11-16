@@ -72,6 +72,7 @@ function DynamicModelViewer({
   }
 
   console.log(models);
+  console.log(activeModel);
   
 
   return (

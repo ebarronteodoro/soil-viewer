@@ -29,34 +29,33 @@ function InstructionsModal ({ setIsOpened, setInstructionStep }) {
     },
     {
       title: '1. Rotar el edificio',
-      description: 'Utilice las flechas de rotación en la parte inferior o arrastre con el mouse o su dedo para girar el edificio y verlo desde diferentes ángulos.'
+      description: 'Utiliza los botones de rotacion de la parte inferior o arrastra con el mouse para girar el edificio y verlo desde diferentes ángulos'
     },
     {
       title: '2. Zoom',
-      description: 'Acérquese o aléjese utilizando los botones de zoom (íconos de lupa) o la rueda del mouse para ver el edificio más de cerca y apreciar los detalles.'
+      description: 'Acercate o alejate utilizando los botones de zoom o la rueda del mouse para ver el edificio mas cerca y apreciar detalles'
     },
     {
       title: '3. Seleccione un piso',
-      description: 'Haga clic en los pisos del edificio para descubrir los departamentos disponibles en cada nivel.'
+      description: 'Haz click en la planta que deseas ver y luego en "Ver planta"'
     },
     {
       title: '4. Contáctenos',
-      description: 'Si tiene alguna consulta o está interesado, haga clic en el número de contacto para copiarlo y llámenos. Estamos aquí para ayudarle.'
+      description: 'Si deseas mas informacion haz click en el numero de contacto para comunicarse con un asesor. Estamos aqui para ayudarte'
     },
     {
       title: 'Instrucciones',
-      description: 'Si desea volver a ver las instrucciones, puede hacer clic en el botón "Ver Instrucciones" en la parte inferior de la pantalla en cualquier momento.'
+      description: 'Para volver a ver la guia puedes hacer click en el boton de Instrucciones en la parte inferior de la pantalla en cualquier momento'
     },
     {
       title: '¡Listo para explorar!',
-      description: 'Ya tiene toda la información que necesita. Comience a explorar y descubra su nuevo hogar en Soil Pueblo Libre.'
+      description: '¡Ya estas listo!'
     }
   ]
 
   return (
     <div className='instructions-modal'>
       <div className='instructions-content'>
-        <img src='/images/soil_logo.png' alt='Soil-logo' />
         <h2>{stepsContent[step].title}</h2>
         <p>{stepsContent[step].description}</p>
 
@@ -72,7 +71,7 @@ function InstructionsModal ({ setIsOpened, setInstructionStep }) {
               <>
                 <button onClick={nextStep}>SIGUIENTE</button>
                 <button title='Omitir Tutorial' className='skipButton' onClick={handleClose}>
-                  OMITIR
+                  OMITIR &gt;
                 </button>
               </>
               )

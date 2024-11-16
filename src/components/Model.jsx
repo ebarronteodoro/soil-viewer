@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Environment } from '@react-three/drei'
 
-function Model ({
+function Model({
   targetRotation,
   targetScale,
   playAnimation,
@@ -66,9 +66,11 @@ function Model ({
         new THREE.Vector3(targetScale, targetScale, targetScale),
         0.25
       )
+
+      // Verificar que stateView esté definido y tenga al menos un valor
       meshRef.current.rotation.x = THREE.MathUtils.lerp(
         meshRef.current.rotation.x,
-        stateView[0],
+        stateView ? stateView[0] : Math.PI / 2, // Valor predeterminado
         0.2
       )
     }

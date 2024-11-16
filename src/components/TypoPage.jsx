@@ -1,38 +1,38 @@
-import React, { useState, useEffect, Suspense } from 'react'
-import { Canvas } from '@react-three/fiber'
-import CameraController from './CameraController'
-import Model from './Model'
-import GlobalRotateIcon from './icons/GlobalRotateIcon'
-import ZoomInIcon from './icons/ZoomInIcon'
-import ZoomOutIcon from './icons/ZoomOutIcon'
-import { useNavigate } from 'react-router-dom'
-import AnimatedButton from './AnimatedButton'
-import * as THREE from 'three'
-import ReturnIcon from './icons/ReturnIcon'
-import BuildingIcon from './icons/BuildingIcon'
-import View3dIcon from './icons/View3dIcon'
-import Hide3dIcon from './icons/Hide3dIcon'
-import CameraUpIcon from './icons/CameraUpIcon'
-import CameraDownIcon from './icons/CameraDownIcon'
-import { Environment } from '@react-three/drei'
-import FocusIcon from './icons/FocusIcon'
+import React, { useState, useEffect, Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import CameraController from './CameraController';
+import Model from './Model';
+import GlobalRotateIcon from './icons/GlobalRotateIcon';
+import ZoomInIcon from './icons/ZoomInIcon';
+import ZoomOutIcon from './icons/ZoomOutIcon';
+import { useNavigate } from 'react-router-dom';
+import AnimatedButton from './AnimatedButton';
+import * as THREE from 'three';
+import ReturnIcon from './icons/ReturnIcon';
+import BuildingIcon from './icons/BuildingIcon';
+import View3dIcon from './icons/View3dIcon';
+import Hide3dIcon from './icons/Hide3dIcon';
+import CameraUpIcon from './icons/CameraUpIcon';
+import CameraDownIcon from './icons/CameraDownIcon';
+import { Environment } from '@react-three/drei';
+import FocusIcon from './icons/FocusIcon';
 
-function TypoPage ({ activeModel, isLoaded, activeTypology }) {
-  const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(1)
-  const [isAnimationTriggered, setIsAnimationTriggered] = useState(false)
-  const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] =
-    useState(false)
-  const [stateView, setStateView] = useState([Math.PI / 2, 0, 0])
-  const [isToggleActive, setIsToggleActive] = useState(false)
-  const [isImageOpen, setIsImageOpen] = useState(false)
-  const [resetPosition, setResetPosition] = useState(false)
+function TypoPage({ activeModel, isLoaded, activeTypology }) {
+  const [rotation, setRotation] = useState(0);
+  const [zoom, setZoom] = useState(1);
+  const [isAnimationTriggered, setIsAnimationTriggered] = useState(false);
+  const [isReverseAnimationTriggered, setIsReverseAnimationTriggered] = useState(false);
+  const [stateView, setStateView] = useState([Math.PI / 2, 0, 0]);
+  const [isToggleActive, setIsToggleActive] = useState(false);
+  const [isImageOpen, setIsImageOpen] = useState(false);
+  const [resetPosition, setResetPosition] = useState(false);
+  const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
 
-  const minZoom = 1
-  const maxZoom = 7
-  const zoomStep = 0.5
+  const minZoom = 1;
+  const maxZoom = 7;
+  const zoomStep = 0.5;
 
-  const getTypologyImage = typology => {
+  const getTypologyImage = (typology) => {
     const typologyImages = {
       't-1': '/typologies images/TIPO-1.jpg',
       't-2': '/typologies images/TIPO-2.jpg',
@@ -43,103 +43,107 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
       't-7': '/typologies images/TIPO-7.jpg',
       't-8': '/typologies images/TIPO-8.jpg',
       't-19': '/typologies images/TIPO-19.jpg',
-      't-23': '/typologies images/TIPO-23.jpg'
-    }
-
-    return typologyImages[typology] || '/typologies images/default.jpg'
-  }
+      't-23': '/typologies images/TIPO-23.jpg',
+    };
+    return typologyImages[typology] || '/typologies images/default.jpg';
+  };
 
   useEffect(() => {
-    const handleWheel = e => {
-      e.preventDefault()
+    const handleWheel = (e) => {
+      e.preventDefault();
       if (e.deltaY < 0) {
-        zoomIn()
+        zoomIn();
       } else {
-        zoomOut()
+        zoomOut();
       }
-    }
-    window.addEventListener('wheel', handleWheel, { passive: false })
+    };
+    window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
-      window.removeEventListener('wheel', handleWheel)
-    }
-  }, [])
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   const smoothZoom = (targetZoom) => {
-    const deltaZoom = targetZoom - zoom
+    const deltaZoom = targetZoom - zoom;
     if (Math.abs(deltaZoom) < 0.01) {
-      setZoom(targetZoom)
+      setZoom(targetZoom);
     } else {
-      const newZoom = zoom + deltaZoom * 0.1 // Ajusta 0.1 para más o menos suavidad
-      setZoom(newZoom)
-      requestAnimationFrame(() => smoothZoom(targetZoom))
+      const newZoom = zoom + deltaZoom * 0.1;
+      setZoom(newZoom);
+      requestAnimationFrame(() => smoothZoom(targetZoom));
     }
-  }
+  };
 
-  const rotateLeft = () => setRotation(prev => prev + Math.PI / 8)
-  const rotateRight = () => setRotation(prev => prev - Math.PI / 8)
-  const zoomIn = () => smoothZoom(Math.min(zoom + zoomStep, maxZoom))
-  const zoomOut = () => smoothZoom(Math.max(zoom - zoomStep, minZoom))
-  const navigate = useNavigate()
+  const rotateLeft = () => setRotation((prev) => prev + Math.PI / 8);
+  const rotateRight = () => setRotation((prev) => prev - Math.PI / 8);
+  const zoomIn = () => {
+    const newZoom = Math.min(zoom + zoomStep, maxZoom);
+    smoothZoom(newZoom);
+  };
+
+  const zoomOut = () => {
+    const newZoom = Math.max(zoom - zoomStep, minZoom);
+    smoothZoom(newZoom);
+  };
+  const navigate = useNavigate();
 
   const returnHome = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   const triggerAnimation = () => {
-    setIsAnimationTriggered(true)
-    setIsReverseAnimationTriggered(false)
-    setResetPosition(true) // Centrar la cámara al activar la animación
+    setIsAnimationTriggered(true);
+    setIsReverseAnimationTriggered(false);
+    setResetPosition(true);
     setTimeout(() => {
-      setResetPosition(false)
-      toggleView()
-      rotateRight()
-      rotateRight()
-    }, 500)
-  }
+      setResetPosition(false);
+      toggleView();
+      rotateRight();
+      rotateRight();
+    }, 500);
+  };
 
   const triggerResetPosition = () => {
-    setResetPosition(true)
-    setTimeout(() => setResetPosition(false), 500)
-  }
+    setResetPosition(true);
+    setTimeout(() => setResetPosition(false), 500);
+  };
 
   const triggerReverseAnimation = () => {
-    setIsReverseAnimationTriggered(true)
-    setIsAnimationTriggered(false)
-    setStateView([Math.PI / 2, 0, 0])
-    setResetPosition(true) // Centrar la cámara al desactivar la animación
-    setTimeout(() => setResetPosition(false), 500)
-  }
+    setIsReverseAnimationTriggered(true);
+    setIsAnimationTriggered(false);
+    setCameraPosition((prev) => (prev[1] === 0 ? [0, -5, 5] : [0, 0, 5]));
+    setIsToggleActive((prev) => !prev);
+
+    setStateView([Math.PI / 2, 0, 0]);
+    setResetPosition(true);
+    setTimeout(() => setResetPosition(false), 500);
+  };
 
   const toggleView = () => {
-    const currentRotation = stateView[0]
-    const newRotation =
-      currentRotation === Math.PI / 2 ? Math.PI / 4 : Math.PI / 2
-    setStateView([newRotation, 0, 0])
-    setIsToggleActive(prev => !prev)
-    setResetPosition(true) // Centrar la cámara al cambiar el toggle view
-    setTimeout(() => setResetPosition(false), 500)
-  }
+    setCameraPosition((prev) => (prev[1] === 0 ? [0, -5, 5] : [0, 0, 5]));
+    setIsToggleActive((prev) => !prev);
+    setResetPosition(true);
+  };
 
   const backIndex = () => {
-    navigate('/')
-  }
+    navigate('/');
+  };
 
   const openImageModal = () => {
-    setIsImageOpen(true)
-  }
+    setIsImageOpen(true);
+  };
 
   const closeImageModal = () => {
-    setIsImageOpen(false)
-  }
+    setIsImageOpen(false);
+  };
 
   return (
     <div>
-      <Canvas fog={new THREE.Fog(0xcccccc, 5, 50)} shadows>
+      <Canvas shadows>
         <Suspense fallback={null}>
           <ambientLight intensity={0.8} />
-
           <directionalLight
-            color='#fade85'
+            color="#fade85"
             position={[10, 40, 20]}
             intensity={2}
             castShadow
@@ -163,12 +167,14 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
             animations={activeModel.animations}
           />
           <CameraController
-            zoom={zoom}
+            zoom={zoom} // Pasa el estado de zoom a CameraController
             resetPosition={resetPosition}
-            isAnimationTriggered={isAnimationTriggered}
+            isToggleActive={isToggleActive}
+            cameraPosition={cameraPosition}
           />
         </Suspense>
       </Canvas>
+
       {isLoaded && (
         <div
           style={{
@@ -176,81 +182,90 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
             top: '20px',
             left: '20px',
             display: 'flex',
-            gap: '15px'
+            gap: '15px',
           }}
         >
           <AnimatedButton onClick={returnHome}>
-            <ReturnIcon width='30px' height='30px' />
+            <ReturnIcon width="30px" height="30px" />
           </AnimatedButton>
+
           {!isAnimationTriggered && (
             <AnimatedButton onClick={triggerAnimation}>
-              <View3dIcon width='30px' height='30px' />
+              <View3dIcon width="30px" height="30px" />
             </AnimatedButton>
           )}
+
           {isAnimationTriggered && (
             <>
               <AnimatedButton onClick={toggleView}>
                 {isToggleActive ? (
-                  <CameraUpIcon width='30px' height='30px' />
+                  <CameraUpIcon width="30px" height="30px" />
                 ) : (
-                  <CameraDownIcon width='30px' height='30px' />
+                  <CameraDownIcon width="30px" height="30px" />
                 )}
               </AnimatedButton>
               <AnimatedButton onClick={triggerReverseAnimation}>
-                <Hide3dIcon width='30px' height='30px' />
+                <Hide3dIcon width="30px" height="30px" />
               </AnimatedButton>
             </>
           )}
+
           <AnimatedButton onClick={triggerResetPosition}>
-            <FocusIcon width='30px' height='30px' />
+            <FocusIcon width="30px" height="30px" />
           </AnimatedButton>
+
           <AnimatedButton onClick={backIndex}>
-            <BuildingIcon width='30px' height='30px' />
+            <BuildingIcon width="30px" height="30px" />
           </AnimatedButton>
         </div>
       )}
+
       {isLoaded && (
-        <div className='menubar'>
+        <div className="menubar">
           <AnimatedButton
             style={{ display: 'flex', border: 'none', background: 'none' }}
             onClick={rotateLeft}
           >
-            <GlobalRotateIcon width='30px' height='30px' />
+            <GlobalRotateIcon width="30px" height="30px" />
           </AnimatedButton>
+
           <AnimatedButton
             style={{
               display: 'flex',
               border: 'none',
               background: 'none',
-              color: 'white'
+              color: 'white',
             }}
             onClick={zoomOut}
           >
-            <ZoomOutIcon width='30px' height='30px' />
+            <ZoomOutIcon width="30px" height="30px" />
           </AnimatedButton>
+
           <AnimatedButton
             style={{
               display: 'flex',
               border: 'none',
               background: 'none',
-              color: 'white'
+              color: 'white',
             }}
             onClick={zoomIn}
           >
-            <ZoomInIcon width='30px' height='30px' />
+            <ZoomInIcon width="30px" height="30px" />
           </AnimatedButton>
+
           <AnimatedButton
             style={{ display: 'flex', border: 'none', background: 'none' }}
             onClick={rotateRight}
           >
             <GlobalRotateIcon
-              width='30px'
-              height='30px'
+              width="30px"
+              height="30px"
               style={{ transform: 'scaleX(-1)' }}
             />
           </AnimatedButton>
         </div>
       )}
+
       {isLoaded && (
         <div className='typo-img' onClick={openImageModal}>
           <img
@@ -295,4 +310,4 @@ function TypoPage ({ activeModel, isLoaded, activeTypology }) {
   )
 }
 
-export default TypoPage
+export default TypoPage;

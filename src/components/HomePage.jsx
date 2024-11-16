@@ -18,7 +18,7 @@ import ZoomInIcon from './icons/ZoomInIcon'
 import IconChecklist from './icons/IconChecklist'
 import { ContactShadows, Environment, useGLTF } from '@react-three/drei'
 
-const Scene = forwardRef(({ activeMeshIndex, handleClick, object }, ref) => {
+const Scene = forwardRef(({ activeMeshIndex, handleClick, object, isOpened }, ref) => {
   const cameraRef = useRef()
   const zoomDistance = useRef(0.85)
   const angleRef = useRef(Math.PI / 2)
@@ -263,6 +263,7 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick, object }, ref) => {
         activeMeshIndex={activeMeshIndex}
         handleClick={handleClick}
         object={object}
+        isOpened={isOpened}
       />
       <ContactShadows opacity={1} scale={10} blur={1} far={10} resolution={256} color="#000000" />
     </Canvas>
@@ -349,11 +350,12 @@ function HomePage ({
         activeMeshIndex={activeMeshIndex}
         handleClick={handleClick}
         object={models}
+        isOpened={isOpened}
       />
 
       {showContent && (
         <>
-          <div className={`soil-info ${applyTransition ? 'show' : ''}`}>
+          <div className={`soil-info ${applyTransition ? 'show' : ''} ${isOpened && 'hidden'}`}>
             <img src='/images/soil_logo.png' alt='Soil-logo' />
             <h1>Soil Pueblo Libre</h1>
             <a href='#'>ventas.soil@verdant.pe</a>
@@ -411,7 +413,7 @@ function HomePage ({
             </AnimatedButton>
           </div>
 
-          <div className={`floors-info ${selectedFloor && 'active'}`}>
+          <div className={`floors-info ${selectedFloor && 'active'} ${isOpened && 'hidden'}`}>
             <span className='floor-name'>
               {selectedFloor === 1
                 ? 'Planta 1 y 2'

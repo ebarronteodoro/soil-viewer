@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
@@ -9,8 +9,8 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
           index === 0
             ? 3.025
             : floorPositions
-                .slice(1, index + 1)
-                .reduce((acc, currentFloor) => acc + currentFloor.args[1], 3.06)
+              .slice(1, index + 1)
+              .reduce((acc, currentFloor) => acc + currentFloor.args[1], 3.06)
 
         return (
           <mesh
@@ -35,19 +35,31 @@ const Floors = ({ floorPositions, activeMeshIndex, handleClick }) => {
   )
 }
 
-const BuildingModel = ({ activeMeshIndex, handleClick, object }) => {
-  const meshRef = useRef()
-  // const { scene } = useGLTF('/models/EDIFICIO/edificio_final.glb');
+const RotateLeftModel = () => {
+  const { scene } = useGLTF('/models/direction_arrow.glb') // Cambia por la ruta real del modelo
+  return (
+    <primitive
+      object={scene}
+      position={[0.25, 3.3, 0]}
+      scale={[0.05, 0.05, 0.05]}
+      rotation={[0, Math.PI / 2, 0]}
+    />
+  )
+}
 
-  // useEffect(() => {
-  //   scene.traverse((child) => {
-  //     if (child.isMesh) {
-  //       child.castShadow = true;
-  //       child.receiveShadow = true;
-  //     }
-  //   });
-  // }, [scene]);
+const RotateRightModel = () => {
+  const { scene } = useGLTF('/models/direction_arrow2.glb') // Cambia por la ruta real del modelo
+  return (
+    <primitive
+      object={scene}
+      position={[-0.13, 3.3, 0]}
+      scale={[0.05, 0.05, 0.05]}
+      rotation={[0, -Math.PI / 2, 0]}
+    />
+  )
+}
 
+const BuildingModel = ({ activeMeshIndex, handleClick, object, isOpened }) => {
   const floorPositions = [
     {
       position: [0.038, 1, -0.015],
@@ -156,13 +168,19 @@ const BuildingModel = ({ activeMeshIndex, handleClick, object }) => {
       <primitive
         object={object.scene}
         scale={[0.1, 0.1, 0.1]}
-        position={[0.06, 3, 0]}
+        position={[0.06, 2.1, 0]}
       />
       <Floors
         floorPositions={floorPositions}
         activeMeshIndex={activeMeshIndex}
         handleClick={handleClick}
       />
+      {isOpened && (
+        <>
+          <RotateLeftModel />
+          <RotateRightModel />
+        </>
+      )}
     </>
   )
 }

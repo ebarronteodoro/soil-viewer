@@ -1,12 +1,12 @@
 // Archivo: modelPaths.js
 const modelPaths = {
-  edificio: '/models/EDIFICIO/edifico_decimado_alamitad2.glb',
+  edificio: '/models/EDIFICIO/prueba-151124.glb',
   't-1': '/models/DEPARTAMENTOS/TIPO-1.glb',
   't-2': '/models/DEPARTAMENTOS/TIPO-2.glb',
-  't-3': '/models/DEPARTAMENTOS/tipo-3.glb',
-  't-4': '/models/DEPARTAMENTOS/tipo-4.glb',
-  't-5': '/models/DEPARTAMENTOS/tipo-5.glb',
-  't-6': '/models/DEPARTAMENTOS/tipo-6.glb',
+  't-3': '/models/DEPARTAMENTOS/TIPO-3.glb',
+  't-4': '/models/DEPARTAMENTOS/TIPO-4.glb',
+  't-5': '/models/DEPARTAMENTOS/TIPO-5.glb',
+  't-6': '/models/DEPARTAMENTOS/TIPO-6.glb',
   't-7': '/models/DEPARTAMENTOS/TIPO-7.glb',
   't-8': '/models/DEPARTAMENTOS/TIPO-8.glb',
   't-16': '/models/DEPARTAMENTOS/TIPO-21.glb',
