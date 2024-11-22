@@ -71,10 +71,6 @@ function DynamicModelViewer({
     return <div>Cargando...</div>;
   }
 
-  console.log(models);
-  console.log(activeModel);
-  
-
   return (
     <Suspense fallback={<div>Cargando...</div>}>
       {activeModel === models.edificio ? (

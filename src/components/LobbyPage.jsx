@@ -12,6 +12,7 @@ import FloorCameraController from './FloorCameraController'
 import LobbyModels from './LobbyModels'
 import ReturnIcon from './icons/ReturnIcon'
 import { OrbitControls } from '@react-three/drei'
+import EyeIcon from './icons/EyeIcon'
 
 function LobbyPage ({ activeModels, isLoaded }) {
   const [zoom, setZoom] = useState(40)
@@ -200,8 +201,6 @@ function LobbyPage ({ activeModels, isLoaded }) {
               />
             </picture>
           )}
-          <h2>Tipología:</h2>
-          <span>{selectedObjectName}</span>
           {isLoaded && selectedTypologyData && (
             <>
               <p>N°: {selectedTypologyData.numero}</p>
