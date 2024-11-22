@@ -248,21 +248,6 @@ const Scene = forwardRef(
           shadow-bias={-0.0009}
           shadow-normalBias={0.005}
         />
-        <directionalLight
-          position={[1, 0.4, 0]}
-          intensity={1}
-          color={'#fad6a5'}
-        />
-        <directionalLight
-          position={[-1, 0.4, 0]}
-          intensity={1}
-          color={'#fad6a5'}
-        />
-        <directionalLight
-          position={[0, 0, 5]}
-          intensity={0.5}
-          color={'#c6edff'}
-        />
         <Environment
           // files='/models/hdri/prueba_cielo (4).hdr'
           files='/models/hdri/new_city.hdr'

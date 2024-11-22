@@ -8,13 +8,19 @@ function FloorModel ({
   stateView = [0, 0, 0],
   object,
   setSelectedObjectName,
-  resetSelection
+  resetSelection,
+  isClicked,
+  setIsClicked
 }) {
   const meshRef = useRef()
   const { gl, camera, size } = useThree()
   const raycaster = useRef(new THREE.Raycaster())
   const mouse = useRef(new THREE.Vector2())
   const [selectedObject, setSelectedObject] = useState(null)
+
+  useEffect(() => {
+    console.log(isClicked)
+  }, [isClicked])
 
   useEffect(() => {
     gl.toneMappingExposure = 1
@@ -68,11 +74,13 @@ function FloorModel ({
       )
 
       if (intersectedObject.name.startsWith('tipo')) {
-        if (selectedObject) {
+        if (selectedObject && isClicked) {
           selectedObject.material.color.set('white')
           selectedObject.material.opacity = 1
+          setIsClicked(false)
         }
 
+        setIsClicked(true)
         intersectedObject.material.color.set('#c3ff91')
         intersectedObject.material.transparent = true
         intersectedObject.material.opacity = 0.8

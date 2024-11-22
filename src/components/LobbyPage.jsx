@@ -54,6 +54,8 @@ function LobbyPage ({ activeModels, isLoaded }) {
     setTimeout(() => {
       navigate('/')
     }, 1)
+    setResetSelection(true)
+    setTimeout(() => setResetSelection(false), 100)
   }
 
   const viewTypology = () => {

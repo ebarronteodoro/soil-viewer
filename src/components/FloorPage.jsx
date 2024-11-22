@@ -24,6 +24,7 @@ function FloorPage ({ activeModel, isLoaded }) {
   const [selectedTypologyData, setSelectedTypologyData] = useState(null)
   const [resetSelection, setResetSelection] = useState(false)
   const [resetPosition, setResetPosition] = useState(false)
+  const [isClicked, setIsClicked] = useState(false)
 
   const { modelId } = useParams()
   const navigate = useNavigate()
@@ -59,6 +60,8 @@ function FloorPage ({ activeModel, isLoaded }) {
     setTimeout(() => {
       navigate('/')
     }, 1)
+    setResetSelection(true)
+    setTimeout(() => setResetSelection(false), 100)
   }
 
   const viewTypology = () => {
@@ -127,6 +130,8 @@ function FloorPage ({ activeModel, isLoaded }) {
             setSelectedObjectName={setSelectedObjectName}
             resetSelection={resetSelection}
             setModelLimits={setModelLimits}
+            isClicked={isClicked}
+            setIsClicked={setIsClicked}
           />
           <Environment files='/models/hdri/TypoB.jpg' />
 
