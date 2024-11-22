@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { Environment } from '@react-three/drei';
 
 function LobbyModels({
-  targetScale,
+  targetScale = 1,
   stateView,
   objects,
   currentFloor,
@@ -33,17 +33,14 @@ function LobbyModels({
 
   useFrame(() => {
     meshesRef.current.forEach((mesh, index) => {
-      // Verificar que el mesh y la opacidad existen antes de usarlos
       if (mesh && opacity[index] !== undefined) {
         const scaleSpeed = 0.25;
 
-        // Aplicar escala suave
         mesh.scale.lerp(
           new THREE.Vector3(targetScale, targetScale, targetScale),
           scaleSpeed
         );
 
-        // Aplicar transición suave de opacidad
         mesh.traverse((child) => {
           if (child.isMesh) {
             child.material.opacity = THREE.MathUtils.lerp(
@@ -62,15 +59,13 @@ function LobbyModels({
     const { clientX, clientY } = event;
     const { width, height } = size;
 
-    // Convertir posición del ratón a coordenadas de dispositivo normalizadas (NDC)
     mouse.current.x = (clientX / width) * 2 - 1;
     mouse.current.y = -(clientY / height) * 2 + 1;
 
     raycaster.current.setFromCamera(mouse.current, camera);
 
-    // Solo intersecta con el modelo de la planta actual (usando `currentFloor`)
     const intersects = raycaster.current.intersectObjects(
-      meshesRef.current[currentFloor]?.children || [], // Solo busca en la planta activa
+      meshesRef.current[currentFloor]?.children || [],
       true
     );
 
@@ -79,24 +74,20 @@ function LobbyModels({
       console.log('Objeto seleccionado:', intersectedObject.name);
 
       if (intersectedObject.name.startsWith('tipo')) {
-        // Restablecer selección anterior
         if (selectedObject) {
           selectedObject.material.color.set('white');
           selectedObject.material.opacity = 1;
         }
 
-        // Aplicar color y opacidad al objeto seleccionado
         intersectedObject.material.color.set('#9bff46');
         intersectedObject.material.transparent = true;
         intersectedObject.material.opacity = 0.5;
 
-        // Remover "-parent" del nombre antes de actualizar `selectedObjectName`
         const cleanedName = intersectedObject.name.replace('-parent', '');
         setSelectedObject(intersectedObject);
         setSelectedObjectName(cleanedName);
       }
     } else {
-      // Si no hay intersecciones, reiniciar selección
       if (selectedObject) {
         selectedObject.material.color.set('white');
         selectedObject.material.opacity = 1;
@@ -106,7 +97,6 @@ function LobbyModels({
     }
   };
 
-  // Efecto para resetear la selección cuando `resetSelection` es `true`
   useEffect(() => {
     if (resetSelection && selectedObject) {
       selectedObject.material.color.set('white');
@@ -116,7 +106,6 @@ function LobbyModels({
     }
   }, [resetSelection, selectedObject, setSelectedObjectName]);
 
-  // Manejo de eventos de clic y toque
   useEffect(() => {
     gl.domElement.addEventListener('click', handleClick);
     gl.domElement.addEventListener('touchstart', handleClick);

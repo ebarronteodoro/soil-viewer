@@ -32,19 +32,7 @@ function FloorModel ({
 
   useFrame(() => {
     if (meshRef.current) {
-      const rotationSpeed = 0.08
       const scaleSpeed = 0.25
-
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        targetRotation,
-        rotationSpeed
-      )
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(
-        meshRef.current.rotation.x,
-        stateView[0] || 0,
-        rotationSpeed
-      )
 
       meshRef.current.scale.lerp(
         new THREE.Vector3(targetScale, targetScale, targetScale),

@@ -252,9 +252,10 @@ const Scene = forwardRef(({ activeMeshIndex, handleClick, object, isOpened }, re
      
       />
       <Environment
-        files='/models/hdri/prueba_cielo (4).hdr'
+        // files='/models/hdri/prueba_cielo (4).hdr'
+        files='/models/hdri/ciudad.JPG'
         background
-        backgroundIntensity={0.2}
+        backgroundIntensity={1}
         environmentIntensity={1}
         backgroundRotation={[0, Math.PI / 1.375, 0]}
         environmentRotation={[0, Math.PI / 1.375, 0]}

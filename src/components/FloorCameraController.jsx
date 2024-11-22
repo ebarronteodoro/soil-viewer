@@ -12,17 +12,15 @@ function FloorCameraController ({ zoom, resetPosition, modelLimits }) {
   const zoomSmoothness = 0.1
   const moveSpeed = 0.05
 
-  // Valores mínimos y máximos de zoom para calcular el límite de arrastre
   const minZoom = 15
   const maxZoom = 50
 
   useEffect(() => {
-    camera.position.set(0, 10, 0) // Posición inicial de la cámara en el centro en x y z
+    camera.position.set(0, 10, 0)
     camera.lookAt(0, 0, 0)
   }, [camera])
 
   useEffect(() => {
-    // Centrar la cámara cuando el zoom alcance el máximo
     if (zoom >= maxZoom) {
       setTargetPosition({ x: 0, z: 0 })
     }
