@@ -1,100 +1,94 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
-import TerrazaModel from './TerrazaModel';
-import GlobalRotateIcon from './icons/GlobalRotateIcon';
-import ZoomInIcon from './icons/ZoomInIcon';
-import ZoomOutIcon from './icons/ZoomOutIcon';
-import AnimatedButton from './AnimatedButton';
+import React, { useState, useEffect, useRef, Suspense } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Environment } from '@react-three/drei'
+import TerrazaModel from './TerrazaModel'
+import GlobalRotateIcon from './icons/GlobalRotateIcon'
+import ZoomInIcon from './icons/ZoomInIcon'
+import ZoomOutIcon from './icons/ZoomOutIcon'
+import AnimatedButton from './AnimatedButton'
+import TerrazaCameraController from './TerrazaCameraController'
+import ReturnIcon from './icons/ReturnIcon'
+import { useNavigate } from 'react-router-dom'
 
-function CustomCameraControls({ cameraRef }) {
-  const { camera } = useThree();
-  const [isDragging, setIsDragging] = useState(false);
-  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
-  const [rotationAngles, setRotationAngles] = useState({ phi: 0, theta: 0 });
-  const thetaMin = -Math.PI / 2.5; // Límite de ángulo hacia abajo
-  const thetaMax = Math.PI / 2.5;  // Límite de ángulo hacia arriba
-  const zoomMin = 5;               // Límite mínimo de zoom
-  const zoomMax = 50;              // Límite máximo de zoom
+function TerrazaPage ({ activeModel, isLoaded }) {
+  const cameraRef = useRef()
+  const [zoom, setZoom] = useState(70)
+  const [zoom2, setZoom2] = useState(0.4)
+  const [rotateFront, setRotateFront] = useState(false)
+  const navigate = useNavigate()
 
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setLastMousePosition({ x: e.clientX, y: e.clientY });
-  };
+  const minZoom = 15
+  const maxZoom = 85
+  const zoomStep = 5
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  // Controla la rotación hacia la izquierda
+  const handleRotateLeft = () => {
+    cameraRef.current.position.x += 2
+  }
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    const deltaX = (e.clientX - lastMousePosition.x) * -0.002;
-    const deltaY = (e.clientY - lastMousePosition.y) * 0.002;
+  // Controla la rotación hacia la derecha
+  const handleRotateRight = () => {
+    cameraRef.current.position.x -= 2
+  }
 
-    setRotationAngles((prev) => ({
-      phi: prev.phi + deltaX,
-      theta: Math.max(thetaMin, Math.min(thetaMax, prev.theta + deltaY)),
-    }));
+  // Zoom con el scroll
+  const handleWheel = e => {
+    e.preventDefault()
+    if (rotateFront) {
+      // Zoom para el estado de rotación front
+      if (e.deltaY < 0) {
+        setZoom2(prev => Math.min(Math.max(prev + 0.1, 0.3), 1.2))
+      } else {
+        setZoom2(prev => Math.min(Math.max(prev - 0.1, 0.3), 1.2))
+      }
+    } else {
+      // Zoom normal
+      if (e.deltaY < 0) {
+        setZoom(prev => Math.max(prev - zoomStep, minZoom)) // Acerca zoom
+      } else {
+        setZoom(prev => Math.min(prev + zoomStep, maxZoom)) // Aleja zoom
+      }
+    }
+  }
 
-    setLastMousePosition({ x: e.clientX, y: e.clientY });
-  };
+  // Maneja el zoom con los botones
+  const zoomIn = () => {
+    if (rotateFront) {
+      setZoom2(prev => Math.min(Math.max(prev + 0.1, 0.3), 1.2))
+    } else {
+      setZoom(prev => Math.max(prev - zoomStep, minZoom)) // Acerca zoom
+    }
+  }
 
-  const handleWheel = (e) => {
-    camera.position.z -= e.deltaY * 0.01;
-    camera.position.z = Math.max(zoomMin, Math.min(zoomMax, camera.position.z));
-  };
+  const zoomOut = () => {
+    if (rotateFront) {
+      // setZoom2(prev => Math.min(prev - 0.1, 0.3))
+      setZoom2(prev => Math.min(Math.max(prev - 0.1, 0.3), 1.2))
+    } else {
+      setZoom(prev => Math.min(prev + zoomStep, maxZoom)) // Aleja zoom
+    }
+  }
 
   useEffect(() => {
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('wheel', handleWheel);
+    console.log(zoom2)
+  }, [zoom2])
 
+  // Cambia el estado de rotación
+  const handleToggleRotateFront = () => {
+    setRotateFront(prev => !prev)
+    rotateFront === true ? setZoom(70) : setZoom2(0.4)
+  }
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheel, { passive: false })
     return () => {
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('wheel', handleWheel);
-    };
-  }, [isDragging, lastMousePosition]);
-
-  useFrame(() => {
-    camera.position.x = 20 * Math.sin(rotationAngles.phi) * Math.cos(rotationAngles.theta);
-    camera.position.y = 20 * Math.sin(rotationAngles.theta);
-    camera.position.z = 20 * Math.cos(rotationAngles.phi) * Math.cos(rotationAngles.theta);
-    camera.lookAt(0, 0, 0);
-  });
-
-  return null;
-}
-
-function TerrazaPage({ activeModel, isLoaded }) {
-  const cameraRef = useRef();
-
-  const handleRotateLeft = () => {
-    cameraRef.current.position.x += 2;
-  };
-
-  const handleRotateRight = () => {
-    cameraRef.current.position.x -= 2;
-  };
-
-  const handleZoomIn = () => {
-    if (cameraRef.current.position.z > 5) {
-      cameraRef.current.position.z -= 2; // Acerca el zoom
+      window.removeEventListener('wheel', handleWheel)
     }
-  };
-
-  const handleZoomOut = () => {
-    if (cameraRef.current.position.z < 50) {
-      cameraRef.current.position.z += 2; // Aleja el zoom
-    }
-  };
+  }, [rotateFront])
 
   return (
     <div>
-      <Canvas shadows>
-        <CustomCameraControls cameraRef={cameraRef} />
+      <Canvas camera={{ fov: 15, position: [0, zoom, 0] }} shadows>
         <ambientLight intensity={1} />
         <directionalLight
           color='#fade85'
@@ -114,9 +108,29 @@ function TerrazaPage({ activeModel, isLoaded }) {
         <Suspense fallback={null}>
           <TerrazaModel object={activeModel.scene} />
         </Suspense>
+        <TerrazaCameraController
+          zoom={zoom}
+          rotateFront={rotateFront}
+          zoom2={zoom2}
+        />
       </Canvas>
 
-      {/* Botones de control */}
+      {isLoaded && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '1rem',
+            left: '2rem',
+            display: 'flex'
+          }}
+          className='left-section'
+        >
+          <button onClick={() => navigate('/')}>
+            <ReturnIcon width='30px' height='30px' />
+          </button>
+        </div>
+      )}
+
       <div className='menubar'>
         <AnimatedButton
           style={{ display: 'flex', border: 'none', background: 'none' }}
@@ -131,7 +145,7 @@ function TerrazaPage({ activeModel, isLoaded }) {
             background: 'none',
             color: 'white'
           }}
-          onClick={handleZoomOut}
+          onClick={zoomOut}
         >
           <ZoomOutIcon width='30px' height='30px' />
         </AnimatedButton>
@@ -142,7 +156,7 @@ function TerrazaPage({ activeModel, isLoaded }) {
             background: 'none',
             color: 'white'
           }}
-          onClick={handleZoomIn}
+          onClick={zoomIn}
         >
           <ZoomInIcon width='30px' height='30px' />
         </AnimatedButton>
@@ -156,9 +170,10 @@ function TerrazaPage({ activeModel, isLoaded }) {
             style={{ transform: 'scaleX(-1)' }}
           />
         </AnimatedButton>
+        <button onClick={handleToggleRotateFront}>Toggle Rotate Front</button>
       </div>
     </div>
-  );
+  )
 }
 
-export default TerrazaPage;
+export default TerrazaPage

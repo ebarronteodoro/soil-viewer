@@ -43,8 +43,60 @@ const Scene = forwardRef(
       rotateCameraLeft: () => updateTargetAngle(0.15),
       rotateCameraRight: () => updateTargetAngle(-0.15),
       zoomIn: () => animateZoom(-0.15),
-      zoomOut: () => animateZoom(0.15)
+      zoomOut: () => animateZoom(0.15),
+      setCameraTopView: () => {
+        let targetCameraPosition = new THREE.Vector3(0, 10, 0) // Ajusta las coordenadas de la cámara
+        cameraAnimation(targetCameraPosition) // Llamar a la animación con la posición deseada
+      }
     }))
+
+    const animateLookAt = (targetX, targetY, targetZ, lerpFactor) => {
+      const currentLookAt = new THREE.Vector3().copy(cameraRef.current.position)
+      const targetLookAt = new THREE.Vector3(targetX, targetY, targetZ)
+
+      const animate = () => {
+        // Interpolamos la posición con lerp
+        currentLookAt.lerp(targetLookAt, lerpFactor)
+        cameraRef.current.lookAt(currentLookAt) // Aplicamos el lookAt suavizado
+
+        // Si no hemos llegado al objetivo, continuamos la animación
+        if (currentLookAt.distanceTo(targetLookAt) > 0.01) {
+          requestAnimationFrame(animate)
+        }
+      }
+
+      animate()
+    }
+
+    const cameraAnimation = () => {
+      // const targetPosition = new THREE.Vector3(0, 3.8, 0)
+      const targetPosition = new THREE.Vector3(0, 3.5, 0)
+      animateCameraPosition(targetPosition, 0.03)
+    }
+
+    const animateCameraPosition = (targetPosition, speed) => {
+      if (isAnimating.current) return
+
+      if (!cameraRef.current.position) {
+        cameraRef.current.position.set(0, cameraHeight.current, 0)
+      }
+
+      const animate = () => {
+        cameraRef.current.position.lerp(targetPosition, speed) // Velocidad ajustable
+
+        if (cameraRef.current.position.distanceTo(targetPosition) > 0.01) {
+          requestAnimationFrame(animate)
+        } else {
+          cameraRef.current.position.copy(targetPosition)
+          isAnimating.current = false
+        }
+      }
+
+      if (!isAnimating.current) {
+        isAnimating.current = true
+        animate()
+      }
+    }
 
     const updateTargetAngle = deltaAngle => {
       targetAngleRef.current += deltaAngle
@@ -452,6 +504,9 @@ function HomePage ({
               route={buttonRoute}
               floor={selectedFloor}
               clearSelection={() => handleClick(null)}
+              animation={() => {
+                sceneRef.current?.setCameraTopView()
+              }}
             />
           </div>
         </>

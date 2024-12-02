@@ -55,7 +55,8 @@ function DynamicModelViewer({
   useEffect(() => {
     
     if (modelId && modelId.startsWith('t-')) {
-      document.body.style.backgroundImage = "url('/models/hdri/typo.jpg')";
+      document.body.style.backgroundImage = 'none';
+      // document.body.style.backgroundImage = "url('/models/hdri/typo.jpg')";
     } else {
       document.body.style.backgroundImage = 'none';
     }

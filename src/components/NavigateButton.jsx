@@ -4,14 +4,19 @@ import { invalidate } from '@react-three/fiber'
 import './NavigateButton.css'
 import EyeIcon from './icons/EyeIcon'
 
-function NavigateButton ({ route, floor, clearSelection }) {
+function NavigateButton ({ route, floor, clearSelection, animation }) {
   const navigate = useNavigate()
 
   const handleClick = () => {
     clearSelection()
     if (route) {
       cleanUpScene()
-      navigate(route)
+      animation()
+      setTimeout(() => {
+        console.log('hola')
+        navigate(route)
+        // animateLookAt(0, 0, 0, 0.05)
+      }, 600)
     } else {
       window.alert(`No hay página disponible para el piso ${floor}`)
     }
