@@ -1,6 +1,6 @@
 // Archivo: modelPaths.js
 const modelPaths = {
-  edificio: '/models/EDIFICIO/prueba-151124.glb',
+  edificio: '/models/EDIFICIO/prueba2.glb',
   't-1': '/models/DEPARTAMENTOS/TIPO-1.glb',
   't-2': '/models/DEPARTAMENTOS/TIPO-2.glb',
   't-3': '/models/DEPARTAMENTOS/TIPO-3.glb',
