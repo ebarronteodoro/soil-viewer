@@ -15,57 +15,50 @@ function TerrazaPage ({ activeModel, isLoaded }) {
   const [zoom, setZoom] = useState(70)
   const [zoom2, setZoom2] = useState(0.4)
   const [rotateFront, setRotateFront] = useState(false)
+  const [rotation, setRotation] = useState(0) // Estado para la rotación actual
+  const [targetRotation, setTargetRotation] = useState(0) // Estado para la rotación objetivo
   const navigate = useNavigate()
 
   const minZoom = 15
   const maxZoom = 85
   const zoomStep = 5
 
-  // Controla la rotación hacia la izquierda
-  const handleRotateLeft = () => {
-    cameraRef.current.position.x += 2
-  }
-
-  // Controla la rotación hacia la derecha
-  const handleRotateRight = () => {
-    cameraRef.current.position.x -= 2
-  }
+  // Funciones para rotar a la izquierda y derecha
+  const rotateLeft = () => setTargetRotation(prev => prev + Math.PI / 8)
+  const rotateRight = () => setTargetRotation(prev => prev - Math.PI / 8)
 
   // Zoom con el scroll
   const handleWheel = e => {
     e.preventDefault()
     if (rotateFront) {
-      // Zoom para el estado de rotación front
       if (e.deltaY < 0) {
         setZoom2(prev => Math.min(Math.max(prev + 0.1, 0.3), 1.2))
       } else {
         setZoom2(prev => Math.min(Math.max(prev - 0.1, 0.3), 1.2))
       }
     } else {
-      // Zoom normal
       if (e.deltaY < 0) {
-        setZoom(prev => Math.max(prev - zoomStep, minZoom)) // Acerca zoom
+        setZoom(prev => Math.max(prev - zoomStep, minZoom))
       } else {
-        setZoom(prev => Math.min(prev + zoomStep, maxZoom)) // Aleja zoom
+        setZoom(prev => Math.min(prev + zoomStep, maxZoom))
       }
     }
   }
 
-  // Maneja el zoom con los botones
+  // Funciones de zoom con los botones
   const zoomIn = () => {
     if (rotateFront) {
       setZoom2(prev => Math.min(Math.max(prev + 0.1, 0.3), 1.2))
     } else {
-      setZoom(prev => Math.max(prev - zoomStep, minZoom)) // Acerca zoom
+      setZoom(prev => Math.max(prev - zoomStep, minZoom))
     }
   }
 
   const zoomOut = () => {
     if (rotateFront) {
-      // setZoom2(prev => Math.min(prev - 0.1, 0.3))
       setZoom2(prev => Math.min(Math.max(prev - 0.1, 0.3), 1.2))
     } else {
-      setZoom(prev => Math.min(prev + zoomStep, maxZoom)) // Aleja zoom
+      setZoom(prev => Math.min(prev + zoomStep, maxZoom))
     }
   }
 
@@ -106,7 +99,8 @@ function TerrazaPage ({ activeModel, isLoaded }) {
         />
         <Environment files='/models/hdri/typo.jpg' backgroundIntensity={0.4} />
         <Suspense fallback={null}>
-          <TerrazaModel object={activeModel.scene} />
+          {/* Pasamos targetRotation como propiedad */}
+          <TerrazaModel object={activeModel.scene} targetRotation={targetRotation} />
         </Suspense>
         <TerrazaCameraController
           zoom={zoom}
@@ -134,7 +128,7 @@ function TerrazaPage ({ activeModel, isLoaded }) {
       <div className='menubar'>
         <AnimatedButton
           style={{ display: 'flex', border: 'none', background: 'none' }}
-          onClick={handleRotateLeft}
+          onClick={rotateLeft}
         >
           <GlobalRotateIcon width='30px' height='30px' />
         </AnimatedButton>
@@ -162,7 +156,7 @@ function TerrazaPage ({ activeModel, isLoaded }) {
         </AnimatedButton>
         <AnimatedButton
           style={{ display: 'flex', border: 'none', background: 'none' }}
-          onClick={handleRotateRight}
+          onClick={rotateRight}
         >
           <GlobalRotateIcon
             width='30px'

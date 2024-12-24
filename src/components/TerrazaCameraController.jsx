@@ -66,7 +66,7 @@ function TerrazaCameraController ({
                 -dragLimitX,
                 dragLimitX
               ),
-              z: THREE.MathUtils.clamp(prev.z - deltaZ, 20, 30) // Limita el Z entre 20 y 30
+              z: THREE.MathUtils.clamp(prev.z - deltaZ, 20, 30)
             }
           : {
               x: THREE.MathUtils.clamp(
@@ -113,7 +113,7 @@ function TerrazaCameraController ({
     camera.position.y = THREE.MathUtils.lerp(
       camera.position.y,
       zoom,
-      zoomSmoothness
+      zoomSmoothness // Aplicamos suavizado al zoom
     )
 
     camera.zoom = THREE.MathUtils.lerp(
@@ -149,7 +149,7 @@ function TerrazaCameraController ({
         dragSmoothness
       )
 
-      camera.position.set(camera.position.x, zoom, camera.position.z)
+      camera.position.set(camera.position.x, zoom, camera.position.z) // Usamos zoom aquí
       camera.lookAt(camera.position.x, 0, camera.position.z)
       camera.zoom = 1
       camera.updateProjectionMatrix()
