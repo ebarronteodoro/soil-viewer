@@ -286,7 +286,7 @@ const Scene = forwardRef(
       >
         <directionalLight
           position={[0, 15, -10]}
-          intensity={5}
+          intensity={10}
           castShadow
           color={'#fad6a5'}
           shadow-mapSize-width={2048}
@@ -306,7 +306,7 @@ const Scene = forwardRef(
           background
           blur={1}
           backgroundIntensity={1}
-          environmentIntensity={1}
+          environmentIntensity={1.3}
           backgroundRotation={[0, Math.PI / 1.375, 0]}
           environmentRotation={[0, Math.PI / 1.375, 0]}
         />

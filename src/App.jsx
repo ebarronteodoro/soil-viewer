@@ -43,26 +43,26 @@ function App () {
                 gltf.scene.traverse(child => {
                   if (child.isMesh) {
                     if (modelName === 'edificio') {
-                      // child.material.metalness = 0.3
-                      // child.material.roughness = 0.2
-                      child.material.flatShading = true
+                      child.material.metalness = 0.3
+                      child.material.roughness = 0.2
                       child.castShadow = true
                       child.receiveShadow = true
+                      // child.material.flatShading = true
 
-                      if (child.material.map) {
-                        child.material.map.minFilter = THREE.NearestFilter // Reduce la interpolación
-                        child.material.map.magFilter = THREE.LinearFilter
-                        child.material.map.generateMipmaps = false // Desactiva mipmaps
-                        child.material.map.anisotropy = 1 // Reduce la anisotropía para menos procesamiento
+                      // if (child.material.map) {
+                      //   child.material.map.minFilter = THREE.NearestFilter // Reduce la interpolación
+                      //   child.material.map.magFilter = THREE.LinearFilter
+                      //   child.material.map.generateMipmaps = false // Desactiva mipmaps
+                      //   child.material.map.anisotropy = 1 // Reduce la anisotropía para menos procesamiento
                         
-                        const canvas = document.createElement('canvas')
-                        const context = canvas.getContext('2d')
-                        canvas.width = child.material.map.image.width / 2
-                        canvas.height = child.material.map.image.height / 2
-                        context.drawImage(child.material.map.image, 0, 0, canvas.width, canvas.height)
-                        const lowResTexture = new THREE.CanvasTexture(canvas)
-                        child.material.map = lowResTexture
-                      }
+                      //   const canvas = document.createElement('canvas')
+                      //   const context = canvas.getContext('2d')
+                      //   canvas.width = child.material.map.image.width / 2
+                      //   canvas.height = child.material.map.image.height / 2
+                      //   context.drawImage(child.material.map.image, 0, 0, canvas.width, canvas.height)
+                      //   const lowResTexture = new THREE.CanvasTexture(canvas)
+                      //   child.material.map = lowResTexture
+                      // }
                     } else {
                       child.material.metalness = 0.5
                       child.material.roughness = 0.3

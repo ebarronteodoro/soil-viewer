@@ -168,7 +168,7 @@ const BuildingModel = ({ activeMeshIndex, handleClick, object, isOpened }) => {
       <primitive
         object={object.scene}
         scale={[0.1, 0.1, 0.1]}
-        position={[0.06, 2.1, 0]}
+        position={[0.06, 2.35, 0]}
       />
       <Floors
         floorPositions={floorPositions}
