@@ -1,122 +1,162 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { useThree, useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
+import { useEffect, useState } from 'react'
 import * as THREE from 'three'
 
-const CameraController = ({
-  zoom = 5,
-  resetPosition = false,
-  isToggleActive = false,
-  cameraPosition = [0, 0, 5]
-}) => {
-  const { camera, gl } = useThree()
-  const cameraRef = useRef()
-  const [dragging, setDragging] = useState(false)
-  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 })
-  const [cameraTarget, setCameraTarget] = useState(
-    new THREE.Vector3(...cameraPosition)
-  )
-  const [currentZoom, setCurrentZoom] = useState(zoom) // Estado para el zoom
-  const dragSpeed = 0.005 // Velocidad de arrastre
-  const fovSpeed = 1 // Velocidad de cambio del FOV
-  const minFov = 1 // Límite mínimo del FOV
-  const maxFov = 7 // Límite máximo del FOV
+function CameraController ({
+  zoom,
+  zoom2,
+  resetPosition,
+  modelLimits,
+  rotateFront = true
+}) {
+  const { camera } = useThree()
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [startZ, setStartZ] = useState(0)
+  const [targetPosition, setTargetPosition] = useState({ x: 0, z: 0 })
+  const dragSmoothness = 0.15
+  const zoomSmoothness = 0.1
+  const moveSpeed = 0.05
 
-  // Actualiza la posición inicial de la cámara y su proyección
+  const minZoom = 15
+  const maxZoom = 85
+
   useEffect(() => {
-    if (cameraRef.current) {
-      cameraRef.current.position.set(...cameraPosition)
-      cameraRef.current.updateProjectionMatrix()
+    camera.position.set(0, 10, 0)
+    if (!rotateFront) {
+      camera.lookAt(0, 0, 0)
     }
-  }, [cameraPosition])
+  }, [camera, rotateFront])
 
-  // Resetea la posición de la cámara
   useEffect(() => {
-    if (resetPosition) {
-      camera.position.set(0, 0, currentZoom)
-      setCameraTarget(new THREE.Vector3(0, 0, currentZoom))
+    if (zoom >= maxZoom) {
+      setTargetPosition({ x: 0, z: 0 })
     }
-  }, [resetPosition, currentZoom, camera])
+  }, [zoom, maxZoom])
 
-  // Movimiento suave de la cámara
-  useFrame(() => {
-    camera.position.lerp(cameraTarget, 0.1) // Transición suave hacia la posición objetivo
-    camera.lookAt(0, 0, 0) // Siempre mirando al centro
-  })
-
-  // Alterna entre las vistas activas
   useEffect(() => {
-    if (isToggleActive) {
-      const targetPosition = new THREE.Vector3(0, -5, currentZoom)
-      setCameraTarget(targetPosition)
-    } else {
-      const targetPosition = new THREE.Vector3(0, 0, currentZoom)
-      setCameraTarget(targetPosition)
-    }
-  }, [isToggleActive, currentZoom])
+    rotateFront === false && setTargetPosition({ x: 0, z: 0 })
+  }, [rotateFront])
 
-  // Control de arrastre del mouse
   const handleMouseDown = event => {
-    setDragging(true)
-    setLastMousePosition({ x: event.clientX, y: event.clientY })
+    setIsDragging(true)
+    setStartX(event.clientX)
+    setStartZ(event.clientY)
   }
 
-  const handleMouseUp = () => {
-    setDragging(false)
-  }
+  const handleMouseUp = () => setIsDragging(false)
 
   const handleMouseMove = event => {
-    if (dragging) {
-      const deltaX = (event.clientX - lastMousePosition.x) * dragSpeed
-      const deltaY = (event.clientY - lastMousePosition.y) * dragSpeed
+    if (isDragging) {
+      const deltaX = (event.clientX - startX) * moveSpeed
+      const deltaZ = (event.clientY - startZ) * moveSpeed
 
-      // Mueve la cámara de forma horizontal y vertical
-      cameraTarget.x -= deltaX
-      cameraTarget.y += deltaY
+      const dragLimitX = THREE.MathUtils.lerp(
+        13,
+        4,
+        (zoom - minZoom) / (maxZoom - minZoom)
+      )
+      const dragLimitZ = dragLimitX * 0.5
 
-      setLastMousePosition({ x: event.clientX, y: event.clientY })
+      setTargetPosition(prev =>
+        rotateFront
+          ? {
+              x: THREE.MathUtils.clamp(
+                prev.x - deltaX,
+                -dragLimitX,
+                dragLimitX
+              ),
+              z: THREE.MathUtils.clamp(prev.z - deltaZ, 25, 35)
+            }
+          : {
+              x: THREE.MathUtils.clamp(
+                prev.x - deltaX,
+                -dragLimitX,
+                dragLimitX
+              ),
+              z: THREE.MathUtils.clamp(prev.z - deltaZ, -dragLimitZ, dragLimitZ)
+            }
+      )
+
+      setStartX(event.clientX)
+      setStartZ(event.clientY)
     }
   }
 
-  // Función para el zoom suave
-  const smoothZoom = targetZoom => {
-    const deltaZoom = targetZoom - currentZoom
-    if (Math.abs(deltaZoom) < 0.01) {
-      setCurrentZoom(targetZoom) // Actualiza el estado del zoom
-    } else {
-      const newZoom = currentZoom + deltaZoom * 0.1
-      setCurrentZoom(newZoom) // Actualiza el estado del zoom
-      requestAnimationFrame(() => smoothZoom(targetZoom))
-    }
-  }
-
-  // Función para manejar el evento de la rueda del mouse (zoom)
-  const handleWheel = event => {
-    event.preventDefault()
-    if (event.deltaY < 0) {
-      // Zoom in
-      smoothZoom(Math.max(currentZoom - fovSpeed, minFov))
-    } else {
-      // Zoom out
-      smoothZoom(Math.min(currentZoom + fovSpeed, maxFov))
-    }
-  }
-
-  // Añade y elimina listeners de eventos del DOM
   useEffect(() => {
-    gl.domElement.addEventListener('mousedown', handleMouseDown)
-    gl.domElement.addEventListener('mousemove', handleMouseMove)
-    gl.domElement.addEventListener('mouseup', handleMouseUp)
-    gl.domElement.addEventListener('wheel', handleWheel)
+    window.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mouseup', handleMouseUp)
+    window.addEventListener('mousemove', handleMouseMove)
 
     return () => {
-      gl.domElement.removeEventListener('mousedown', handleMouseDown)
-      gl.domElement.removeEventListener('mousemove', handleMouseMove)
-      gl.domElement.removeEventListener('mouseup', handleMouseUp)
-      gl.domElement.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [dragging, lastMousePosition, currentZoom])
+  }, [isDragging, startX, startZ, zoom, zoom2, minZoom, maxZoom, rotateFront])
 
-  return <perspectiveCamera ref={cameraRef} />
+  useEffect(() => {
+    if (resetPosition) {
+      setTargetPosition({ x: 0, z: 0 })
+    }
+  }, [resetPosition])
+
+  useFrame(() => {
+    const clampedZoom2 = THREE.MathUtils.clamp(zoom2, 0.6, 1.4)
+
+    camera.position.x = THREE.MathUtils.lerp(
+      camera.position.x,
+      targetPosition.x,
+      dragSmoothness
+    )
+
+    camera.position.y = THREE.MathUtils.lerp(
+      camera.position.y,
+      zoom,
+      zoomSmoothness // Aplicamos suavizado al zoom
+    )
+
+    camera.zoom = THREE.MathUtils.lerp(
+      camera.zoom,
+      clampedZoom2,
+      zoomSmoothness
+    )
+    camera.updateProjectionMatrix()
+
+    if (rotateFront) {
+      const targetRotationX = -Math.PI / 4
+      camera.rotation.x = THREE.MathUtils.lerp(
+        camera.rotation.x,
+        targetRotationX,
+        dragSmoothness
+      )
+      camera.position.z = THREE.MathUtils.lerp(
+        camera.position.z,
+        THREE.MathUtils.clamp(targetPosition.z, 25, 35),
+        dragSmoothness
+      )
+      camera.position.set(camera.position.x, 25, camera.position.z)
+    } else {
+      const originalRotationX = 0
+      camera.rotation.x = THREE.MathUtils.lerp(
+        camera.rotation.x,
+        originalRotationX,
+        dragSmoothness
+      )
+      camera.position.z = THREE.MathUtils.lerp(
+        camera.position.z,
+        targetPosition.z,
+        dragSmoothness
+      )
+
+      camera.position.set(camera.position.x, zoom, camera.position.z) // Usamos zoom aquí
+      camera.lookAt(camera.position.x, 0, camera.position.z)
+      camera.zoom = 1
+      camera.updateProjectionMatrix()
+    }
+  })
+
+  return null
 }
 
 export default CameraController

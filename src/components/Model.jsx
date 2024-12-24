@@ -1,94 +1,100 @@
 import React, { useEffect, useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Environment } from '@react-three/drei'
 
-function Model({
+function Model ({
   targetRotation,
-  targetScale,
   playAnimation,
   reverseAnimation,
-  stateView,
   environmentPath,
   object,
-  animations
+  animations,
+  selectedAnimationIndex = 0
 }) {
   const meshRef = useRef()
-  const mixerRef = useRef(null) // Referencia para el AnimationMixer
-  const actionRef = useRef(null) // Referencia para la acción de animación
+  const { gl } = useThree()
+  const currentRotation = useRef(targetRotation)
+  const mixerRef = useRef(null)
+  const actionRef = useRef(null)
 
   useEffect(() => {
-    if (animations && animations.length > 0) {
-      // Crear el mixer de animaciones si hay animaciones disponibles
-      mixerRef.current = new THREE.AnimationMixer(object)
+    gl.toneMappingExposure = 0.8
+  }, [gl])
 
-      // Crear la acción de animación (ejecutaremos la primera animación por defecto)
-      actionRef.current = mixerRef.current.clipAction(animations[0])
+  useEffect(() => {
+    if (animations && animations.length > 0 && object) {
+      if (!mixerRef.current) {
+        mixerRef.current = new THREE.AnimationMixer(object)
+      }
 
-      // Configuración para que la animación solo se ejecute una vez y se quede al final
+      // Detener cualquier acción previa
+      if (actionRef.current) {
+        actionRef.current.stop()
+      }
+
+      // Selección de la animación correcta por índice
+      const selectedAnimation = animations[selectedAnimationIndex]
+      actionRef.current = mixerRef.current.clipAction(selectedAnimation)
+
+      // Configuración de la animación
       actionRef.current.setLoop(THREE.LoopOnce)
-      actionRef.current.clampWhenFinished = true // Mantiene el último frame al finalizar
+      actionRef.current.clampWhenFinished = true
 
-      // Reproducir la animación si playAnimation es true
+      // Control de la animación en función de los props
       if (playAnimation) {
         actionRef.current.reset().play()
-        actionRef.current.setEffectiveTimeScale(1) // Normal playback
+        actionRef.current.setEffectiveTimeScale(1) // Reproducir normalmente
       }
 
-      // Si reverseAnimation es true, reproducirla en reversa suavemente
       if (reverseAnimation) {
-        // Setear el tiempo de la animación al final
         actionRef.current.reset().play()
         actionRef.current.time = actionRef.current.getClip().duration // Iniciar desde el final
-        actionRef.current.setEffectiveTimeScale(-1) // Reverso progresivo
-        actionRef.current.setEffectiveWeight(1)
+        actionRef.current.setEffectiveTimeScale(-1) // Reversa la animación
       }
 
-      // Cleanup al desmontar el componente
+      // Limpiar el efecto al desmontar
       return () => {
-        mixerRef.current.stopAllAction()
+        if (mixerRef.current) {
+          mixerRef.current.stopAllAction()
+        }
       }
     }
-  }, [animations, playAnimation, reverseAnimation, object])
+  }, [
+    animations,
+    playAnimation,
+    reverseAnimation,
+    object,
+    selectedAnimationIndex
+  ])
 
-  useFrame((_, delta) => {
+  // Actualización de la rotación del objeto
+  useFrame((state, delta) => {
     if (mixerRef.current) {
-      mixerRef.current.update(delta) // Actualiza el mixer en cada frame
+      mixerRef.current.update(delta) // Esto asegura que el mixer actualice las animaciones
     }
 
+    currentRotation.current = THREE.MathUtils.lerp(
+      currentRotation.current,
+      targetRotation,
+      0.1
+    )
     if (meshRef.current) {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        targetRotation,
-        0.02
-      )
-      meshRef.current.scale.lerp(
-        new THREE.Vector3(targetScale, targetScale, targetScale),
-        0.25
-      )
-
-      // Verificar que stateView esté definido y tenga al menos un valor
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(
-        meshRef.current.rotation.x,
-        stateView ? stateView[0] : Math.PI / 2, // Valor predeterminado
-        0.2
-      )
+      meshRef.current.rotation.y = currentRotation.current
     }
   })
 
   return (
     <>
       {object && (
-        <group ref={meshRef} position={[0, 0, 0]}>
-          <primitive
-            object={object}
-            scale={[0.6, 0.6, 0.6]}
-            position={[0, 0, 0]}
-            castShadow
-          />
+        <group ref={meshRef} position={[0, -3, 0]}>
+          <primitive object={object} />
         </group>
       )}
-      <Environment files='/models/hdri/typologie.hdr' blur={0} />
+      <Environment
+        files={environmentPath || '/models/hdri/typologie.hdr'}
+        blur={0}
+      />
     </>
   )
 }
